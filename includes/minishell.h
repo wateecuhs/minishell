@@ -27,4 +27,10 @@ typedef struct s_token{
     struct s_token *next;
 } t_token;
 
+int		is_whitespace(char c);
+int		ft_strncmp(char *s1, char *s2, size_t n);
+int		ft_strlen(char *s);
+int		expand_single_quotes(char *s, int *i);
+char	*ft_strjoin_free(char *s1, char *s2, size_t size);
+
 #endif
