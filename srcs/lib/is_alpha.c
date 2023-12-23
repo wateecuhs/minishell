@@ -1,27 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   is_alpha.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: waticouz <waticouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/22 22:43:12 by waticouz          #+#    #+#             */
-/*   Updated: 2023/12/23 16:27:41 by waticouz         ###   ########.fr       */
+/*   Created: 2023/12/23 15:03:37 by waticouz          #+#    #+#             */
+/*   Updated: 2023/12/23 15:03:52 by waticouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-int	ft_strncmp(char *s1, char *s2, size_t n)
+int	ft_isalpha(int c)
 {
-	unsigned int	i;
-
-	i = 0;
-	while (s1[i] && s1[i] == s2[i] && (i < n))
-	{
-		i ++;
-	}
-	if (i == n)
-		return (0);
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+		return (1);
+	return (0);
 }

@@ -1,35 +1,8 @@
-expanding
-
 echo "$echo test"
 
-iterate over string until quotes or dollar sign
+start = 6 ($)
+stop  = 10 (o)
 
-if quotes
-only look for dollar sign
+replace everything in start-stop with expanded word
 
 "$echo test"
-
-we find dollar sign
-
-$echo test"
-
-now we parse until whitespace or end 
-
-store string we got
-
-echo
-
-iterate over env and strcmp every line looking for a match
-
-if match, replace the variable name in the string by its env value
-
-e.g. :
-if echo env value is test123
-replace $echo by test123
-
-echo "test123 test"
-
-when 2nd quote is reached, removed them
-(can be done by offsetting to the left everything after first quote once and once more after the 2nd quote)
-
-echo test123 test

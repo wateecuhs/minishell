@@ -6,7 +6,7 @@
 /*   By: waticouz <waticouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/22 23:20:17 by waticouz          #+#    #+#             */
-/*   Updated: 2023/12/22 23:20:27 by waticouz         ###   ########.fr       */
+/*   Updated: 2023/12/23 15:28:12 by waticouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,4 +17,5 @@ int	expand_single_quotes(char *s, int *i)
 	*i += 1;
 	while (s[*i] && s[*i] != '\'')
 		*i += 1;
+	return (*i);
 }

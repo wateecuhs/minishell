@@ -1,27 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: waticouz <waticouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: panger <panger@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/22 22:43:12 by waticouz          #+#    #+#             */
-/*   Updated: 2023/12/23 16:27:41 by waticouz         ###   ########.fr       */
+/*   Created: 2023/10/09 22:11:02 by panger            #+#    #+#             */
+/*   Updated: 2023/10/12 23:35:58 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-int	ft_strncmp(char *s1, char *s2, size_t n)
+int	ft_isalnum(int c)
 {
-	unsigned int	i;
-
-	i = 0;
-	while (s1[i] && s1[i] == s2[i] && (i < n))
-	{
-		i ++;
-	}
-	if (i == n)
-		return (0);
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')
+		|| (c >= '0' && c <= '9'))
+		return (1);
+	return (0);
 }

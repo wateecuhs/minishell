@@ -6,7 +6,7 @@
 /*   By: waticouz <waticouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/22 23:25:02 by waticouz          #+#    #+#             */
-/*   Updated: 2023/12/22 23:26:02 by waticouz         ###   ########.fr       */
+/*   Updated: 2023/12/23 14:55:37 by waticouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,23 @@ char	*ft_strdup(char *s)
 	if (!dest)
 		return (NULL);
 	while (i < srclen)
+	{
+		dest[i] = s[i];
+		i ++;
+	}
+	dest[i] = '\0';
+	return (dest);
+}
+char	*ft_strndup(char *s, int size)
+{
+	size_t	i;
+	char	*dest;
+
+	i = 0;
+	dest = (char *)malloc((size + 1) * sizeof(char));
+	if (!dest)
+		return (NULL);
+	while (i < (size_t)size)
 	{
 		dest[i] = s[i];
 		i ++;
