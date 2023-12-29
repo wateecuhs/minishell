@@ -6,7 +6,7 @@
 /*   By: waticouz <waticouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/22 23:24:09 by waticouz          #+#    #+#             */
-/*   Updated: 2023/12/23 14:31:37 by waticouz         ###   ########.fr       */
+/*   Updated: 2023/12/29 15:59:05 by waticouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*ft_strns1join(char *s1, char *s2, size_t size)
 {
 	size_t		i;
 	size_t		j;
-	char	*str;
+	char		*str;
 
 	if (!s1 && !s2)
 		return (NULL);
@@ -44,7 +44,7 @@ char	*ft_strns2join(char *s1, char *s2, size_t size)
 {
 	size_t		i;
 	size_t		j;
-	char	*str;
+	char		*str;
 
 	if (!s1 && !s2)
 		return (NULL);
@@ -72,7 +72,7 @@ char	*ft_strjoin_free(char *s1, char *s2)
 {
 	size_t		i;
 	size_t		j;
-	char	*str;
+	char		*str;
 
 	if (!s1 && !s2)
 		return (NULL);

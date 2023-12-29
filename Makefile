@@ -9,7 +9,7 @@ DEPS				=	$(patsubst %.c, $(DIR_BUILD)%.d, $(SRCS))
 DEPS_FLAGS			=	-MMD -MP
 BASE_CFLAGS			=	-g3 -Wall -Wextra #-Werror
 BASE_DEBUG_CFLAGS	=	-g3
-DEBUG_CLFAGS		=	$(BASE_DEBUG_CFLAGS) -pthread -fsanitize=address
+DEBUG_CLFAGS		=	$(BASE_DEBUG_CFLAGS) -fsanitize=address
 # DEBUG_CLFAGS		=	$(BASE_DEBUG_CFLAGS) -fsanitize=memory -fsanitize-memory-track-origins
 # FLAGS				=	$(BASE_CFLAGS) -g3
 # FLAGS				=	$(BASE_CFLAGS) -g3
@@ -44,7 +44,7 @@ fclean:	clean
 			$(RM) $(NAME)
 
 .PHONY:	debug
-debug:
+debug:	fclean
 			$(MAKE) -j FLAGS="$(DEBUG_CLFAGS)"
 
 .PHONY:	re

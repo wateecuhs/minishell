@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   single_quotes.c                                    :+:      :+:    :+:   */
+/*   ft_offset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: waticouz <waticouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/22 23:20:17 by waticouz          #+#    #+#             */
-/*   Updated: 2023/12/29 15:02:57 by waticouz         ###   ########.fr       */
+/*   Created: 2023/12/26 18:51:59 by waticouz          #+#    #+#             */
+/*   Updated: 2023/12/29 15:59:36 by waticouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	expand_single_quotes(char **src, size_t *i)
+char	*ft_offset(char *s, int i)
 {
-	char	*s;
-
-	s = *src;
-	s = ft_offset(s, *i);
-	*i += 1;
-	while (s[*i] && s[*i] != '\'')
-		*i += 1;
-	s = ft_offset(s, *i);
-	*src = s;
-	return (*i);
+	while (s[i] && s[i + 1])
+	{
+		s[i] = s[i + 1];
+		i++;
+	}
+	s[i] = '\0';
+	return (s);
 }

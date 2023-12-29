@@ -6,7 +6,7 @@
 /*   By: waticouz <waticouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/22 23:25:02 by waticouz          #+#    #+#             */
-/*   Updated: 2023/12/23 14:55:37 by waticouz         ###   ########.fr       */
+/*   Updated: 2023/12/29 15:58:52 by waticouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ char	*ft_strdup(char *s)
 	dest[i] = '\0';
 	return (dest);
 }
+
 char	*ft_strndup(char *s, int size)
 {
 	size_t	i;

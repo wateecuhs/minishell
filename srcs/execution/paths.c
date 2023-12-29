@@ -1,45 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   paths.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: waticouz <waticouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/06 16:08:28 by panger            #+#    #+#             */
-/*   Updated: 2023/12/26 18:17:31 by waticouz         ###   ########.fr       */
+/*   Created: 2023/12/29 15:49:35 by waticouz          #+#    #+#             */
+/*   Updated: 2023/12/29 15:59:48 by waticouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_strchr(const char *s, int c)
+char	**get_paths(char **env)
 {
-	unsigned int	i;
+	char	**paths;
+	int		i;
 
 	i = 0;
-	while (s[i])
+	while (env[i])
 	{
-		if (s[i] == (unsigned char)c)
-			return (i);
+		if (ft_strncmp(env[i], "PATH=", 5) == 0)
+		{
+			paths = ft_split(&env[i][5], ":");
+		}
 		i++;
 	}
-	if (s[i] == (unsigned char)c)
-		return (i);
-	return (-1);
+	return (paths);
 }
 
-int	ft_strnchr_dollar(const char *s, int len)
+char	*join_paths(char *s1, char *s2)
 {
-	unsigned int	i;
+	char	*ret;
+	char	*temp;
+	char	*temp2;
+	int		i;
 
+	temp2 = ft_strjoin(s1, "/");
+	temp = ft_strdup(s2);
 	i = 0;
-	if (len <= -1)
-		return (-1);
-	while (s[i] && i < (unsigned int)len)
-	{
-		if (s[i] == '$' && is_valid_char(s[i + 1] == 1))
-			return (i);
+	while (temp[i] && temp[i] != ' ')
 		i++;
-	}
-	return (-1);
+	if (temp[i])
+		temp[i] = '\0';
+	ret = ft_strjoin(temp2, temp);
+	free(temp2);
+	free(temp);
+	return (ret);
 }

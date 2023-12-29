@@ -6,7 +6,7 @@
 /*   By: waticouz <waticouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 15:02:05 by waticouz          #+#    #+#             */
-/*   Updated: 2023/12/23 15:38:52 by waticouz         ###   ########.fr       */
+/*   Updated: 2023/12/29 15:59:20 by waticouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_valid_char(int c)
 {
-	if (c == '_' || ft_isalnum(c)  == 1)
+	if (c == '_' || ft_isalnum(c) == 1)
 		return (1);
 	return (0);
 }
