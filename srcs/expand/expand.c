@@ -6,7 +6,7 @@
 /*   By: waticouz <waticouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 18:55:11 by waticouz          #+#    #+#             */
-/*   Updated: 2023/12/29 15:52:03 by waticouz         ###   ########.fr       */
+/*   Updated: 2023/12/29 16:21:47 by waticouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,12 @@ int	expand(t_token *head, char **env)
 	}
 	return (0);
 }
-/* 
-int	main(int argc, char **argv, char **env)
+
+/* int	main(int argc, char **argv, char **env)
 {
 	(void)argc;
 	(void)argv;
-	char	*tmp = ft_strdup("echo \"$test2\"");
+	char	*tmp = ft_strdup("echo \"$test $rien $|ok test\" \'$test $rien $nothing test\'");
 	printf("expanding:\n%s\n", tmp);
 	tmp = expand_word(tmp, env);
 	printf("expanded:\n%s\n", tmp);

@@ -6,7 +6,7 @@
 /*   By: waticouz <waticouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 15:55:28 by waticouz          #+#    #+#             */
-/*   Updated: 2023/12/29 15:58:32 by waticouz         ###   ########.fr       */
+/*   Updated: 2023/12/29 16:17:21 by waticouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,17 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <fcntl.h>
+# include <errno.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <stdarg.h>
+# include <string.h>
+
+# define IN 1
+# define OUT 0
+# define READ 0
+# define WRITE 1
 
 typedef enum tokenTypes
 {
@@ -60,5 +71,10 @@ char	*ft_offset(char *s, int i);
 int		expand_double_quotes(char **src, size_t *i, char **env);
 int		get_var_name(char *s, size_t i);
 char	*parse_env(char **env, char *to_find);
+
+char	*get_next_line(int fd);
+int		ft_strlen(char *str);
+char	*ft_strdupset(char const *s, int start, int stop);
+char	*ft_stradd(char *s1, char *s2, int size);
 
 #endif

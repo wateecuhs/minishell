@@ -1,5 +1,7 @@
-SRCS		=		$(SRCS_LIB) \
-					$(SRCS_EXPAND)
+SRCS		=		minishell.c \
+					$(SRCS_LIB) \
+					$(SRCS_EXPAND) \
+					$(SRCS_GNL)
 
 SRCS_EXPAND =		expand/expand.c \
 					expand/single_quotes.c \
@@ -17,3 +19,6 @@ SRCS_LIB	=		lib/ft_expand_var.c \
 					lib/is_whitespace.c \
 					lib/ft_strchr.c \
 					lib/ft_offset.c
+				
+SRCS_GNL=			get_next_line/get_next_line.c \
+					get_next_line/get_next_line_utils.c
