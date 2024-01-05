@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: waticouz <waticouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 16:12:09 by waticouz          #+#    #+#             */
-/*   Updated: 2023/12/29 16:22:05 by waticouz         ###   ########.fr       */
+/*   Updated: 2024/01/05 16:12:56 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+/* #include "minishell.h"
 
 int	main(void)
 {
@@ -22,5 +22,5 @@ int	main(void)
 		printf("%s", test);
 		test = get_next_line(0);
 	}
-}
+} */
 

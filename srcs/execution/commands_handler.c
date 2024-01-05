@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands_handler.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: waticouz <waticouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:29:27 by panger            #+#    #+#             */
-/*   Updated: 2023/12/29 16:07:54 by waticouz         ###   ########.fr       */
+/*   Updated: 2024/01/05 16:52:15 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,29 +78,26 @@ int	fork_exec(char *cmd, int *fds, char **env, int *pid_tab)
 	return (pid);
 }
 
-int	command_receiver(int nb_cmd, char **cmds, char **env, int *fd_in_and_out)
+//need to null terminate cmds
+int	command_receiver(char **cmds, char **env, int *fd_in_and_out, t_token *input)
 {
 	int	fds[4];
 	int	*pid;
 	int	i;
 
-	i = -1;
-	pid = (int *)malloc(sizeof(int) * nb_cmd);
+	i = 0;
+	pid = (int *)malloc(sizeof(int) * ft_tablen(cmds));
 	if (!pid)
 		error_msg("malloc");
-	while (++i < nb_cmd)
+	while (cmds[i])
 	{
 		if (pipe(fds) == -1)
 			error_msg(NULL);
-		if (i == 0)
-			set_fd_to_use(fds, fd_in_and_out[IN], fds[WRITE]);
-		else if (i == nb_cmd - 1)
-			set_fd_to_use(fds, fds[2 + IN], fd_in_and_out[OUT]);
-		else
-			set_fd_to_use(fds, fds[2 + IN], fds[2 + OUT]);
+		get_fds(fds, input, i);
+		set_fd_to_use(fds, fds[2 + IN], fds[2 + OUT]);
 		pid[i] = fork_exec(cmds[i], fds, env, pid);
 		parent_process(&fds[2], fds);
 	}
-	i = wait_pids(pid, nb_cmd);
+	i = wait_pids(pid, ft_tablen(cmds));
 	return (i);
 }

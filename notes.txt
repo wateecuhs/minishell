@@ -1,0 +1,2 @@
+cmd is first word after you removed all redirections
+only one cmd in "blocks" (a block is delimited by start, end or pipe)

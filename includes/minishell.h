@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: waticouz <waticouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 15:55:28 by waticouz          #+#    #+#             */
-/*   Updated: 2023/12/29 16:17:21 by waticouz         ###   ########.fr       */
+/*   Updated: 2024/01/05 16:47:41 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,12 @@ typedef struct s_token
 	t_tokenType		type;
 	char			*value;
 	struct s_token	*next;
+	struct s_token	*prev;
 }	t_token;
 
 int		is_whitespace(char c);
 int		ft_strncmp(char *s1, char *s2, size_t n);
+int		ft_tablen(char **s);
 int		ft_strlen(char *s);
 int		expand_single_quotes(char **src, size_t *i);
 char	*ft_strjoin_free(char *s1, char *s2);
