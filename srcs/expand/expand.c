@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 18:55:11 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/05 16:16:30 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/08 16:50:12 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ char	*expand_word(char *s, char **env)
 	int		val;
 
 	i = 0;
-	(void)env;
+	if (!s)
+		return (NULL);
 	while (s[i])
 	{
 		if (s[i] == '\'')
@@ -39,6 +40,8 @@ int	expand(t_token *head, char **env)
 {
 	t_token	*tmp;
 
+	if (!head)
+		return (-1);
 	tmp = head;
 	while (tmp)
 	{
@@ -55,7 +58,7 @@ int	expand(t_token *head, char **env)
 	}
 	return (0);
 }
-
+/* 
 int	main(int argc, char **argv, char **env)
 {
 	(void)argc;
@@ -65,4 +68,4 @@ int	main(int argc, char **argv, char **env)
 	tmp = expand_word(tmp, env);
 	printf("expanded:\n%s\n", tmp);
 	free(tmp);
-}
+} */

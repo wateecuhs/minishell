@@ -1,39 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   lst_addback_blocks.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/22 22:43:12 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/08 16:26:16 by panger           ###   ########.fr       */
+/*   Created: 2024/01/08 18:12:38 by panger            #+#    #+#             */
+/*   Updated: 2024/01/08 18:38:13 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_strncmp(char *s1, char *s2, size_t n)
+void	lst_addback_blocks(t_block **lst, t_block *new)
 {
-	unsigned int	i;
+	t_block	*temp;
 
-	i = 0;
-	while (s1[i] && s1[i] == s2[i] && (i < n))
+	if (!(*lst))
 	{
-		i ++;
+		*lst = new;
+		return ;
 	}
-	if (i == n)
-		return (0);
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	temp = *lst;
+	while (temp->next)
+		temp = temp->next;
+	temp->next = new;
 }
 
-int ft_strcmp(const char *s1, const char *s2)
+void	lst_addback_redirs(t_redirs **lst, t_redirs *new)
 {
-    int i;
+	t_redirs	*temp;
 
-	if (s1 == NULL || s2 == NULL)
-        return (-1);
-	i = 0;
-	while (s1[i] && s2[i] == s1[i])
-		i++;
-	return (s1[i] - s2[i]);
+	if (!(*lst))
+	{
+		*lst = new;
+		return ;
+	}
+	temp = *lst;
+	while (temp->next)
+		temp = temp->next;
+	temp->next = new;	
 }

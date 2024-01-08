@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fds.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: waticouz <waticouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 16:05:44 by waticouz          #+#    #+#             */
-/*   Updated: 2023/12/29 16:07:27 by waticouz         ###   ########.fr       */
+/*   Updated: 2024/01/08 16:57:57 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	*set_fd_heredoc(int *fd_in_out, char *limiter, char *outfile)
 	while (ft_strcmp_hd(string, limiter) != 0 && string != NULL)
 	{
 		if (write(p[WRITE], string, ft_strlen(string)) == -1)
-			ft_printf("pipex: write error: %s\n", strerror(errno));
+			ft_printf("minishell: write error: %s\n", strerror(errno));
 		string = get_next_line(0);
 	}
 	close(p[WRITE]);

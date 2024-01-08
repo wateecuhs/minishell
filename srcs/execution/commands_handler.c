@@ -6,12 +6,12 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:29:27 by panger            #+#    #+#             */
-/*   Updated: 2024/01/05 16:52:15 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/08 17:27:08 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+	
 void	command_exec(char *cmd, int fd[2], char **env)
 {
 	char	**args;
@@ -32,11 +32,11 @@ void	command_exec(char *cmd, int fd[2], char **env)
 	if (!path)
 	{
 		freetab(args);
-		ft_printf("pipex: command not found: %s\n", cmd);
+		ft_printf("minishell: command not found: %s\n", cmd);
 		exit(EXIT_FAILURE);
 	}
 	execve(path, args, env);
-	ft_printf("pipex: failed to execute a command: %s\n", cmd);
+	ft_printf("minishell: failed to execute a command: %s\n", cmd);
 	exit(EXIT_FAILURE);
 }
 
@@ -97,6 +97,7 @@ int	command_receiver(char **cmds, char **env, int *fd_in_and_out, t_token *input
 		set_fd_to_use(fds, fds[2 + IN], fds[2 + OUT]);
 		pid[i] = fork_exec(cmds[i], fds, env, pid);
 		parent_process(&fds[2], fds);
+		i++;
 	}
 	i = wait_pids(pid, ft_tablen(cmds));
 	return (i);

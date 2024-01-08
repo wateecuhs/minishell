@@ -1,2 +1,15 @@
-cmd is first word after you removed all redirections
+cmd is the first word after you remove all redirections
 only one cmd in "blocks" (a block is delimited by start, end or pipe)
+
+< test < Makefile cat -e > out1 > out2 > out3 < in4 | echo test | wc > outfile
+
+get each block into strings without their redirections
+
+eg:
+	cat -e
+	echo test
+	wc
+
+join non redirection words within a block into an array of strings
+join these arrays into an array
+iterate over blocks in commands handler, get the fds then execute the array of strings

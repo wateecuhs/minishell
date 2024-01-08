@@ -6,19 +6,23 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/22 22:45:42 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/05 14:39:22 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/08 16:24:07 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_strlen(char *s)
-{
-	unsigned int	i;
+#include "minishell.h"
 
-	if (!s)
+size_t	ft_strlen(char *str)
+{
+	size_t	i;
+
+	if (!str)
 		return (0);
 	i = 0;
-	while (s[i])
+	while (str[i])
+	{
 		i++;
+	}
 	return (i);
 }
 
