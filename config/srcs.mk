@@ -25,11 +25,17 @@ SRCS_LIB	=		lib/ft_expand_var.c \
 					lib/ft_substr.c \
 					lib/ft_split.c \
 					lib/ft_calloc.c \
-					lib/lst_addback_blocks.c
+					lib/lst_addback_blocks.c \
+					lib/ft_split_s.c \
+					lib/ft_freetab.c
 
 SRCS_EXEC	=		execution/get_data.c \
 					execution/prepare_exec.c \
-					execution/hub.c
+					execution/hub.c \
+					execution/get_fd.c \
+					execution/commands_handler.c\
+					execution/errors.c \
+					execution/paths.c
 
 SRCS_PARSING=		parsing/first_parse.c \
 					parsing/lexer.c \

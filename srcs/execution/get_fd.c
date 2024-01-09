@@ -6,62 +6,71 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 14:45:19 by panger            #+#    #+#             */
-/*   Updated: 2024/01/08 16:18:59 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/09 14:01:05 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	get_out_fd(int fd, t_token *start)
+int	*set_fd_to_use(int *fd, int fd_in, int fd_out)
 {
-	fd = 0;
-	while (start->prev && start->prev->type != PIPE)
-		start = start->prev;
-	while (start->next && start->next->type != PIPE)
-	{
-		if (start->type == REDIRECT_IN)
-		{
-			start = start->next;
-			if (fd != 0)
-				close(fd);
-			fd = open(start->value, O_RDONLY);
-			if (fd == -1)
-				return (perror(start->type), -1);
-		}
-		start = start->next;
-	}
+	fd[3] = fd_in;
+	fd[2] = fd_out;
 	return (fd);
 }
 
-int	get_in_fd(int fd, t_token *start)
+int	get_out(int *fd, t_redirs *redirs)
 {
-	fd = 0;
-	while (start->prev && start->prev->type != PIPE)
-		start = start->prev;
-	while (start->next && start->next->type != PIPE)
+	if (redirs->type == REDIRECT_OUT || redirs->type == REDIRECT_APPEND)
 	{
-		if (start->type == REDIRECT_IN)
-		{
-			start = start->next;
-			if (fd != 0)
-				close(fd);
-			fd = open(start->value, O_RDONLY);
-			if (fd == -1)
-				return (perror(start->type), -1);
-		}
-		start = start->next;
+		if (*fd != 0)
+			close(*fd);
+		if (redirs->type == REDIRECT_OUT)
+			*fd =  open(redirs->value, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+		else if (redirs->type == REDIRECT_APPEND)
+			*fd = open(redirs->value, O_CREAT | O_WRONLY | O_APPEND, 0644);
+		if (*fd == -1)
+			return (perror(redirs->value), -1);
 	}
-	return (fd);
+	return (0);
 }
 
-int	get_fd(int fd[4], t_token *input, int i, char *cmd)
+int	get_in(int *fd, t_redirs *redirs)
 {
-	int	count;
+	if (redirs->type == REDIRECT_IN)
+	{
+		if (*fd != 0)
+			close(*fd);
+		*fd = open(redirs->value, O_RDONLY);
+		if (*fd == -1)
+			return (perror(redirs->value), -1);
+	}
+	redirs = redirs->next;
+	return (0);
+}
 
-	count = 0;
-	while (input && ft_strcmp(input->value, cmd) != 0)
-		input = input->next;
-	if (!input)
-		return (-1);
-	get_fd_block(&fd[2], input);
+int	get_fd(int fd[4], t_block *block, int i)
+{
+	int	in;
+	int	out;
+
+	in = fd[2 + IN];
+	if (i == 0)
+		in = 0;
+	out	= fd[WRITE];
+	if (block->next == NULL)
+		out = 1;
+	while (block->redirs)
+	{
+		if (block->redirs->type == REDIRECT_IN)
+			get_in(&in, block->redirs);
+		if (block->redirs->type == REDIRECT_OUT || block->redirs->type == REDIRECT_APPEND)
+			get_out(&out, block->redirs);
+		block->redirs = block->redirs->next;
+		if (in == -1|| out == -1)
+			break;
+	}
+	fd[2 + IN] = in;
+	fd[2 + OUT] = out;
+	return (0);
 }

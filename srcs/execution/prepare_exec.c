@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 17:23:52 by panger            #+#    #+#             */
-/*   Updated: 2024/01/08 18:29:53 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/09 12:51:30 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,9 @@ t_token	*next_block(t_token *tokens)
 
 t_block	*words_to_blocks(t_token *tokens)
 {
-	int		i;
 	t_token *lst;
 	t_block	*blocks;
 
-	i = 0;
 	blocks = NULL;
 	lst = tokens;
 	while (lst)

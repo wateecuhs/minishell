@@ -6,11 +6,12 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 16:12:09 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/08 18:50:11 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/09 14:18:23 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 // Main function for testing
 int	main(int argc, char **argv, char **env)
 {
@@ -31,9 +32,7 @@ int	main(int argc, char **argv, char **env)
 		}
 		if (*input)
 			add_history(input);
-		print_lst(tokens);
 		execution_hub(tokens, env);
-
 		free(input);
 		lst_free(tokens);
 	}

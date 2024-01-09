@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 15:55:28 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/08 18:47:54 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/09 13:54:12 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct s_block
 	char			**args;
 	t_redirs		*redirs;
 	struct s_block	*next;
+	int				pid;
 }	t_block;
 
 //lib
@@ -101,6 +102,10 @@ void	lst_addback_blocks(t_block **lst, t_block *new);
 void	lst_addback_redirs(t_redirs **lst, t_redirs *new);
 void	print_lst(t_token *lst);
 void 	free_tokens(t_token *tokens);
+int		command_receiver(t_block *blocks, char **env, int heredoc);
+int		get_fd(int fd[4], t_block *block, int i);
+char	**ft_split_s(char *s, char *c);
+void	freetab(char **tab);
 
 int		expand(t_token *head, char **env);
 int		expand_double_quotes(char **src, size_t *i, char **env);
@@ -115,6 +120,12 @@ char	*get_cmd(t_token *token);
 char	**get_args(t_token *token);
 t_redirs	*assign_redir(t_token *token);
 t_redirs	*get_redirs(t_token *token);
+int			parsing(char *input, t_token *tokens);
+int		get_fd(int fd[4], t_block *block, int i);
+int		*set_fd_to_use(int *fd, int fd_in, int fd_out);
+char	*find_path(char *cmd, char **env);
+void	error_msg(char *string);
+char	*ft_strjoin(char *s1, char *s2);
 
 //gnl
 char	*get_next_line(int fd);

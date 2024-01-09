@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   paths.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: waticouz <waticouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/29 15:49:35 by waticouz          #+#    #+#             */
-/*   Updated: 2023/12/29 15:59:48 by waticouz         ###   ########.fr       */
+/*   Created: 2024/01/09 13:49:30 by panger            #+#    #+#             */
+/*   Updated: 2024/01/09 13:53:48 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	**get_paths(char **env)
 	{
 		if (ft_strncmp(env[i], "PATH=", 5) == 0)
 		{
-			paths = ft_split(&env[i][5], ":");
+			paths = ft_split_s(&env[i][5], ":");
 		}
 		i++;
 	}
@@ -47,4 +47,32 @@ char	*join_paths(char *s1, char *s2)
 	free(temp2);
 	free(temp);
 	return (ret);
+}
+
+char	*find_path(char *cmd, char **env)
+{
+	int		j;
+	char	**paths;
+	char	*temp;
+	int		found;
+
+	found = 0;
+	j = 0;
+	if (access(cmd, F_OK) != -1)
+	{
+		return (cmd);
+	}
+	paths = get_paths(env);
+	while (paths[j] && found == 0)
+	{
+		temp = join_paths(paths[j++], cmd);
+		if (access(temp, F_OK) != -1 && access(temp, X_OK) != -1)
+			found = 1;
+		else
+			free(temp);
+	}
+	if (found == 1)
+		return (freetab(paths), temp);
+	freetab(paths);
+	return (NULL);
 }

@@ -33,7 +33,7 @@ all:
 
 
 $(NAME):	$(OBJS)
-	$(CC) $(FLAGS) -lreadline $(INCLUDES) $(OBJS) -o $(NAME)
+	$(CC) $(FLAGS) $(INCLUDES) $(OBJS) -o $(NAME) -lreadline
 
 .PHONY:	clean
 clean:

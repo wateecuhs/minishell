@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 17:57:42 by panger            #+#    #+#             */
-/*   Updated: 2024/01/08 18:30:15 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/09 12:59:13 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ t_redirs	*get_redirs(t_token *token)
 		if (node->type == REDIRECT_IN || node->type == REDIRECT_OUT
 			|| node->type == REDIRECT_APPEND || node->type == HEREDOC)
 			{
-				lst_addback_redirs(&ret, assign_redir(token));
+				lst_addback_redirs(&ret, assign_redir(node));
 				node = node->next;
 			}
 		node = node->next;

@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hub.c                                              :+:      :+:    :+:   */
+/*   ft_freetab.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/08 16:53:52 by panger            #+#    #+#             */
-/*   Updated: 2024/01/09 14:18:26 by panger           ###   ########.fr       */
+/*   Created: 2023/11/27 17:34:56 by panger            #+#    #+#             */
+/*   Updated: 2024/01/09 13:50:37 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	execution_hub(t_token *tokens, char **env)
+void	freetab(char **tab)
 {
-	t_block	*blocks;
+	int	i;
 
-	if (expand(tokens, env) == -1)
-		return (-1);
-	blocks = words_to_blocks(tokens);
-	command_receiver(blocks, env, 0);
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
 }
