@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:29:27 by panger            #+#    #+#             */
-/*   Updated: 2024/01/09 14:15:42 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/09 17:21:28 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,10 @@ void	command_exec(t_block *block, int fd[2], char **env)
 
 void	parent_process(int *fds, int *p)
 {
-	close(fds[IN]);
-	close(fds[OUT]);
+	if (fds[IN] != 0)
+		close(fds[IN]);
+	if (fds[OUT] != 1)
+		close(fds[OUT]);
 	fds[IN] = p[READ];
 }
 

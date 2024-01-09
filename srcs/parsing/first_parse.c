@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 16:27:17 by panger            #+#    #+#             */
-/*   Updated: 2024/01/09 14:18:05 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/09 14:22:30 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	check_unclosed(char *str)
 	int	quote;
 
 	quote = 0;
+	if (!str)
+		return (0);
 	while (*str)
 	{
 		if (*str == '\'' || *str == '\"')
@@ -91,6 +93,8 @@ int	check_if_broken_enum(char *str)
 	int	pos;
 
 	i = 0;
+	if (!str)
+		return (0);
 	while (str[i])
 	{
 		if (str[i] == '\"' || str[i] == '\'')
