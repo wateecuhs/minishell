@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:29:27 by panger            #+#    #+#             */
-/*   Updated: 2024/01/10 18:15:07 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/10 18:17:02 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,13 @@ void	command_exec(t_block *block, int fd[2], char **env)
 		dup2(2, 1);
 		close(2);
 		if (access(block->cmd, F_OK) == -1)
+		{
 			printf("minishell: %s: command not found\n", block->cmd);
+			exit(127);
+		}
 		else if (access(block->cmd, F_OK) != -1  && access(block->cmd, X_OK) == -1)
 			printf("minishell: %s: permission denied\n", block->cmd);
-		exit(127);
+		exit(126);
 	}
 	execve(path, block->args, env);
 	dup2(2, 1);
