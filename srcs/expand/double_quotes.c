@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   double_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: waticouz <waticouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 15:07:33 by waticouz          #+#    #+#             */
-/*   Updated: 2023/12/29 15:59:59 by waticouz         ###   ########.fr       */
+/*   Updated: 2024/01/10 17:37:38 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ char	*parse_env(char **env, char *to_find)
 	int		j;
 
 	i = 0;
+	if (strcmp(to_find, "?") == 0)
+		return (free(to_find), ft_itoa(g_status_code));
 	len = ft_strlen(to_find);
 	while (env[i])
 	{
@@ -29,20 +31,20 @@ char	*parse_env(char **env, char *to_find)
 			while (env[i][j] && env[i][j] != '=')
 				j++;
 			ret = ft_strdup(&env[i][j + 1]);
-			free(to_find);
 			if (!ret)
-				return (NULL);
-			return (ret);
+				return (free(to_find), NULL);
+			return (free(to_find), ret);
 		}
 		i++;
 	}
-	free(to_find);
-	return (NULL);
+	return (free(to_find), NULL);
 }
 
 int	get_var_name(char *s, size_t i)
 {
 	i++;
+	if (s[i] == '?')
+		return (i);
 	if (is_valid_char(s[i]) == 0)
 		return (-1);
 	if (ft_isdigit(s[i]) == 1)

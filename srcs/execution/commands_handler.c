@@ -6,16 +6,14 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:29:27 by panger            #+#    #+#             */
-/*   Updated: 2024/01/09 17:21:28 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/10 17:40:40 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-	
-void	command_exec(t_block *block, int fd[2], char **env)
-{
-	char	*path;
 
+void	dup_job(int fd[2])
+{
 	if (fd[IN] == -1 || fd[OUT] == -1)
 		exit(EXIT_FAILURE);
 	if (fd[IN] != 0)
@@ -30,6 +28,13 @@ void	command_exec(t_block *block, int fd[2], char **env)
 			error_msg(NULL);
 		close(fd[OUT]);
 	}
+}
+
+void	command_exec(t_block *block, int fd[2], char **env)
+{
+	char	*path;
+
+	dup_job(fd);
 	path = find_path(block->cmd, env);
 	if (!path)
 	{
@@ -50,16 +55,16 @@ void	parent_process(int *fds, int *p)
 	fds[IN] = p[READ];
 }
 
-int	wait_pids(t_block *blocks)
+int	wait_pids(t_block *blocks, int code)
 {
-	int	status;
-
 	while (blocks)
 	{
-		waitpid(blocks->pid, &status, 0);
+		waitpid(blocks->pid, &g_status_code, 0);
 		blocks = blocks->next;
 	}
-	return (status);
+	if (code != -1)
+		g_status_code = code;
+	return (g_status_code);
 }
 
 int	fork_exec(t_block *block, int *fds, char **env)
@@ -77,25 +82,27 @@ int	fork_exec(t_block *block, int *fds, char **env)
 	return (pid);
 }
 
-//need to null terminate cmds
-int	command_receiver(t_block *blocks, char **env, int heredoc)
+int	command_receiver(t_block *blocks, char **env)
 {
 	t_block *head;
 	int		fds[4];
 	int		i;
+	int		code;
 
 	i = 0;
+	code = -1;
 	head = blocks;
 	while (blocks)
 	{
 		if (pipe(fds) == -1)
 			error_msg(NULL);
 		get_fd(fds, blocks, i);
-		blocks->pid = fork_exec(blocks, fds, env);
+		if (is_builtin(blocks, &env, &code) == -1)
+			blocks->pid = fork_exec(blocks, fds, env);
 		parent_process(&fds[2], fds);
 		blocks = blocks->next;
 		i++;
 	}
-	i = wait_pids(head);
+	i = wait_pids(head, code);
 	return (i);
 }

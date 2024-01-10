@@ -1,9 +1,11 @@
 SRCS		=		minishell.c \
+					dup_env.c \
 					$(SRCS_LIB) \
 					$(SRCS_EXPAND) \
 					$(SRCS_GNL) \
 					$(SRCS_PARSING) \
-					$(SRCS_EXEC)
+					$(SRCS_EXEC) \
+					$(SRCS_BUILTINS)
 
 SRCS_EXPAND =		expand/expand.c \
 					expand/single_quotes.c \
@@ -27,7 +29,8 @@ SRCS_LIB	=		lib/ft_expand_var.c \
 					lib/ft_calloc.c \
 					lib/lst_addback_blocks.c \
 					lib/ft_split_s.c \
-					lib/ft_freetab.c
+					lib/ft_freetab.c \
+					lib/ft_itoa.c
 
 SRCS_EXEC	=		execution/get_data.c \
 					execution/prepare_exec.c \
@@ -35,7 +38,12 @@ SRCS_EXEC	=		execution/get_data.c \
 					execution/get_fd.c \
 					execution/commands_handler.c\
 					execution/errors.c \
-					execution/paths.c
+					execution/paths.c \
+					execution/heredoc.c
+
+SRCS_BUILTINS=		builtins/cd.c \
+					builtins/is_builtin.c \
+					execution/exec_builtins.c
 
 SRCS_PARSING=		parsing/first_parse.c \
 					parsing/lexer.c \

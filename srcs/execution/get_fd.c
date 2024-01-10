@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 14:45:19 by panger            #+#    #+#             */
-/*   Updated: 2024/01/09 14:01:05 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/10 14:54:37 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int	get_out(int *fd, t_redirs *redirs)
 {
 	if (redirs->type == REDIRECT_OUT || redirs->type == REDIRECT_APPEND)
 	{
-		if (*fd != 0)
-			close(*fd);
+			if (*fd != 1)
+				close(*fd);
 		if (redirs->type == REDIRECT_OUT)
 			*fd =  open(redirs->value, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 		else if (redirs->type == REDIRECT_APPEND)
@@ -45,7 +45,12 @@ int	get_in(int *fd, t_redirs *redirs)
 		if (*fd == -1)
 			return (perror(redirs->value), -1);
 	}
-	redirs = redirs->next;
+	if (redirs->type == HEREDOC)
+	{
+		if (*fd != 0)
+			close(*fd);
+		*fd = redirs->heredoc_fd;		
+	}
 	return (0);
 }
 
@@ -62,7 +67,7 @@ int	get_fd(int fd[4], t_block *block, int i)
 		out = 1;
 	while (block->redirs)
 	{
-		if (block->redirs->type == REDIRECT_IN)
+		if (block->redirs->type == REDIRECT_IN || block->redirs->type == HEREDOC)
 			get_in(&in, block->redirs);
 		if (block->redirs->type == REDIRECT_OUT || block->redirs->type == REDIRECT_APPEND)
 			get_out(&out, block->redirs);

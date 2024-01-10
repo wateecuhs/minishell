@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 15:55:28 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/09 13:54:12 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/10 17:36:10 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_redirs
 	TokenType		type;
 	char			*value;
 	struct s_redirs	*next;
+	int				heredoc_fd;
 }	t_redirs;
 
 typedef struct s_block
@@ -102,10 +103,18 @@ void	lst_addback_blocks(t_block **lst, t_block *new);
 void	lst_addback_redirs(t_redirs **lst, t_redirs *new);
 void	print_lst(t_token *lst);
 void 	free_tokens(t_token *tokens);
-int		command_receiver(t_block *blocks, char **env, int heredoc);
+int		command_receiver(t_block *blocks, char **env);
 int		get_fd(int fd[4], t_block *block, int i);
+int		ft_strcmp_hd(char *s1, char *s2);
+char	*ft_strjoin_free2(char *s1, char *s2);
+void	freetabn(char **tab, size_t n);
+int		dup_env(char ***env);
+char	*ft_itoa(int n);
+
 char	**ft_split_s(char *s, char *c);
 void	freetab(char **tab);
+char	*has_heredoc(t_token *tokens);
+int		get_heredoc(char *limiter);
 
 int		expand(t_token *head, char **env);
 int		expand_double_quotes(char **src, size_t *i, char **env);
@@ -121,11 +130,12 @@ char	**get_args(t_token *token);
 t_redirs	*assign_redir(t_token *token);
 t_redirs	*get_redirs(t_token *token);
 int			parsing(char *input, t_token *tokens);
-int		get_fd(int fd[4], t_block *block, int i);
 int		*set_fd_to_use(int *fd, int fd_in, int fd_out);
 char	*find_path(char *cmd, char **env);
 void	error_msg(char *string);
 char	*ft_strjoin(char *s1, char *s2);
+int		is_builtin(t_block *blocks, char ***env, int *code);
+int		expand_dquotes_var(char **src, size_t *i, char **env);
 
 //gnl
 char	*get_next_line(int fd);
@@ -133,9 +143,15 @@ char	*ft_strdupset(char const *s, int start, int stop);
 char	*ft_stradd(char *s1, char *s2, int size);
 
 //lexer - parse
-int tokenize(t_token **token , char *input);
-int	get_token_type(char *tokenValue);
-int check_unclosed(char *str);
-int check_if_broken_enum(char *str);
+int 	tokenize(t_token **token , char *input);
+int		get_token_type(char *tokenValue);
+int 	check_unclosed(char *str);
+int 	check_if_broken_enum(char *str);
+
+//builtins
+int		builtin_cd(char **args, char ***env);
+
+//static
+extern int g_status_code;
 
 #endif

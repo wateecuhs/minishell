@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 16:27:09 by panger            #+#    #+#             */
-/*   Updated: 2024/01/08 18:43:21 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/10 17:37:26 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ int	get_token_type(char *tokenValue)
 		return (REDIRECT_APPEND);
 	else if (ft_strcmp(tokenValue, "<<") == 0)
 		return (HEREDOC);
-	else if (ft_strcmp(tokenValue, "$?") == 0)
-		return (EXIT_STATUS);
 	else
 		return (WORD);
 }

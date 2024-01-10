@@ -1,40 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   dup_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/09 15:07:51 by panger            #+#    #+#             */
-/*   Updated: 2024/01/10 16:55:45 by panger           ###   ########.fr       */
+/*   Created: 2024/01/10 16:43:52 by panger            #+#    #+#             */
+/*   Updated: 2024/01/10 17:14:06 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	builtin_cd(char **args, char ***env)
+int	dup_env(char ***env)
 {
 	char	**tmp;
-	int	i;
-	int	j;
+	int		len;
+	int		i;
 
+	len = ft_tablen(*env);
+	tmp = (char **)malloc(sizeof(char *) * (len + 1));
+	if (!tmp)
+		return (-1);
 	i = 0;
-	tmp = *env;
-	if (ft_tablen(args) > 2)
+	while ((*env)[i])
 	{
-		write(2, "minishell: cd: too many arguments\n", 34);
-		return (1);
-	}
-	while (ft_strncmp(tmp[i], "OLDPWD=", 7) != 0)
+		tmp[i] = ft_strdup((*env)[i]);
+		if (!(tmp[i]))
+			return (freetabn(tmp, i - 1), -1);
 		i++;
-	j = 0;
-	while (ft_strncmp(tmp[j], "PWD=", 4) != 0)
-		j++;
-	if (chdir(args[1]) == -1)
-		return (perror("minishell:"), 1);
-	tmp[i] = ft_strjoin("OLDPWD", &tmp[j][3]);
-	free(tmp[j]);
-	tmp[j] = ft_strjoin_free2("PWD=", getcwd(NULL, 0));
+	}
+	tmp[i] = NULL;
 	*env = tmp;
 	return (0);
 }

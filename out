@@ -1,57 +1,59 @@
-NAME				=	minishell$
-$
-include config/srcs.mk$
-SRC_PATH			=	srcs/$
-DIR_BUILD			=	.build/$
-OBJS				=	$(patsubst %.c, $(DIR_BUILD)%.o, $(SRCS))$
-OBJS_TEST			=	$(patsubst %.c, $(DIR_BUILD)%.o, $(TEST))$
-DEPS				=	$(patsubst %.c, $(DIR_BUILD)%.d, $(SRCS))$
-DEPS_FLAGS			=	-MMD -MP$
-BASE_CFLAGS			=	-g3 -Wall -Wextra #-Werror$
-BASE_DEBUG_CFLAGS	=	-g3$
-DEBUG_CLFAGS		=	$(BASE_DEBUG_CFLAGS) -fsanitize=address$
-# DEBUG_CLFAGS		=	$(BASE_DEBUG_CFLAGS) -fsanitize=memory -fsanitize-memory-track-origins$
-# FLAGS				=	$(BASE_CFLAGS) -g3$
-# FLAGS				=	$(BASE_CFLAGS) -g3$
-# FLAGS				=	$(BASE_CFLAGS) $(BASE_DEBUG_CFLAGS)$
-FLAGS				=	$(BASE_CFLAGS)$
-# FLAGS				=	$(BASE_CFLAGS) $(DEBUG_CLFAGS)$
-# FLAGS				=	$(BASE_CFLAGS) $(DEBUG_CLFAGS)$
-RM					=	rm -rf$
-AR					=	ar rcs$
-$
-DIR_INCS =\$
-	includes/$
-$
-INCLUDES =\$
-	$(addprefix -I , $(DIR_INCS))$
-$
-$
-.PHONY:		all$
-all:$
-			$(MAKE) $(NAME)$
-$
-$
-$(NAME):	$(OBJS)$
-	$(CC) $(FLAGS) $(INCLUDES) $(OBJS) -o $(NAME) -lreadline$
-$
-.PHONY:	clean$
-clean:$
-			$(RM) $(DIR_BUILD)$
-	$
-.PHONY:	fclean$
-fclean:	clean$
-			$(RM) $(NAME)$
-$
-.PHONY:	debug$
-debug:	fclean$
-			$(MAKE) -j FLAGS="$(DEBUG_CLFAGS)"$
-$
-.PHONY:	re$
-re:		fclean$
-			$(MAKE) all$
-$
--include $(DEPS)$
-$(DIR_BUILD)%.o : $(SRC_PATH)%.c$
-			@mkdir -p $(shell dirname $@)$
-			$(CC) $(FLAGS) $(DEPS_FLAGS) $(INCLUDES) -c $< -o $@$
+SHELL=/bin/zsh
+LSCOLORS=Gxfxcxdxbxegedabagacad
+SESSION_MANAGER=local/z4r3p1.42lyon.fr:@/tmp/.ICE-unix/273292,unix/z4r3p1.42lyon.fr:/tmp/.ICE-unix/273292
+QT_ACCESSIBILITY=1
+NVM_RC_VERSION=
+COLORTERM=truecolor
+XDG_CONFIG_DIRS=/etc/xdg/xdg-ubuntu:/etc/xdg
+LESS=-R
+XDG_SESSION_PATH=/org/freedesktop/DisplayManager/Session0
+XDG_MENU_PREFIX=gnome-
+GNOME_DESKTOP_SESSION_ID=this-is-deprecated
+LANGUAGE=en
+SSH_AUTH_SOCK=/run/user/102779/keyring/ssh
+XMODIFIERS=@im=ibus
+DESKTOP_SESSION=ubuntu
+SSH_AGENT_PID=273248
+GTK_MODULES=gail:atk-bridge
+PWD=/home/panger/Documents/minishell
+KRB5CCNAME=FILE:/tmp/krb5cc_102779_mvy0zV
+LOGNAME=panger
+XDG_SESSION_DESKTOP=ubuntu
+XDG_SESSION_TYPE=x11
+GPG_AGENT_INFO=/run/user/102779/gnupg/S.gpg-agent:0:1
+XAUTHORITY=/home/panger/.Xauthority
+XDG_GREETER_DATA_DIR=/var/lib/lightdm-data/panger
+GJS_DEBUG_TOPICS=JS ERROR;JS LOG
+GDM_LANG=en
+HOME=/home/panger
+IM_CONFIG_PHASE=1
+LANG=en_US.UTF-8
+LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
+XDG_CURRENT_DESKTOP=ubuntu:GNOME
+VTE_VERSION=6003
+XDG_SEAT_PATH=/org/freedesktop/DisplayManager/Seat0
+GNOME_TERMINAL_SCREEN=/org/gnome/Terminal/screen/be945de1_5353_4baa_b79f_500bff0706c9
+INVOCATION_ID=8677009a7cd542be9b9297c050af155e
+MANAGERPID=272767
+GJS_DEBUG_OUTPUT=stderr
+NVM_DIR=/home/panger/.nvm
+XDG_SESSION_CLASS=user
+TERM=xterm-256color
+ZSH=/home/panger/.oh-my-zsh
+LIBVIRT_DEFAULT_URI=qemu:///system
+USER=panger
+GNOME_TERMINAL_SERVICE=:1.100
+DISPLAY=:0
+SHLVL=2
+NVM_CD_FLAGS=-q
+PAGER=less
+QT_IM_MODULE=ibus
+XDG_RUNTIME_DIR=/run/user/102779
+DOCKER_HOST=unix:///run/user/102779/docker.sock
+JOURNAL_STREAM=9:1650474
+XDG_DATA_DIRS=/usr/share/gnome:/usr/share/ubuntu:/home/panger/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share:/var/lib/snapd/desktop
+PATH=/home/panger/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+GDMSESSION=ubuntu
+DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/102779/bus
+OLDPWD=/home/panger/Documents/minishell
+_=/usr/bin/env

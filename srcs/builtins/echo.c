@@ -1,28 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execution.c                                        :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: waticouz <waticouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/29 15:45:01 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/01 16:02:30 by waticouz         ###   ########.fr       */
+/*   Created: 2024/01/10 16:56:55 by panger            #+#    #+#             */
+/*   Updated: 2024/01/10 17:01:22 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	get_fd_in(t_token *head, t_token *target)
-{
-	int	fd;
-
-	fd = 1;
-	while (head && head != target)
-	{
-		if (head->value == HEREDOC)
-		{
-			
-		}
-		head = head->next;
-	}
-}

@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 18:55:11 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/08 16:50:12 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/10 17:37:44 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,11 @@ char	*expand_word(char *s, char **env)
 			if (val == -1)
 				return (free(s), NULL);
 			i = val;
+		}
+		if (s[i] == '$')
+		{
+			if (expand_dquotes_var(&s, &i, env) == -1)
+				return (free(s), NULL);
 		}
 		i++;
 	}
@@ -58,14 +63,3 @@ int	expand(t_token *head, char **env)
 	}
 	return (0);
 }
-/* 
-int	main(int argc, char **argv, char **env)
-{
-	(void)argc;
-	(void)argv;
-	char	*tmp = ft_strdup("echo $|ok \"$test $rien $|ok test\" \'$test $rien $nothing test\'");
-	printf("expanding:\n%s\n", tmp);
-	tmp = expand_word(tmp, env);
-	printf("expanded:\n%s\n", tmp);
-	free(tmp);
-} */

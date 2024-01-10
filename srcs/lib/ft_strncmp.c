@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/22 22:43:12 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/08 16:26:16 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/10 14:30:58 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,17 @@ int ft_strcmp(const char *s1, const char *s2)
 	i = 0;
 	while (s1[i] && s2[i] == s1[i])
 		i++;
+	return (s1[i] - s2[i]);
+}
+
+int	ft_strcmp_hd(char *s1, char *s2)
+{
+	int	i;
+
+	i = 0;
+	while (s1[i] && s1[i] == s2[i])
+		i++;
+	if (s1[i] == '\n' && s1[i +1] == '\0' && s2[i] == '\0')
+		return (0);
 	return (s1[i] - s2[i]);
 }
