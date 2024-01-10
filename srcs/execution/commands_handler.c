@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:29:27 by panger            #+#    #+#             */
-/*   Updated: 2024/01/10 17:40:40 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/10 18:15:07 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,19 @@ void	command_exec(t_block *block, int fd[2], char **env)
 	path = find_path(block->cmd, env);
 	if (!path)
 	{
-		printf("minishell: command not found: %s\n", block->cmd);
-		exit(EXIT_FAILURE);
+		dup2(2, 1);
+		close(2);
+		if (access(block->cmd, F_OK) == -1)
+			printf("minishell: %s: command not found\n", block->cmd);
+		else if (access(block->cmd, F_OK) != -1  && access(block->cmd, X_OK) == -1)
+			printf("minishell: %s: permission denied\n", block->cmd);
+		exit(127);
 	}
 	execve(path, block->args, env);
-	printf("minishell: failed to execute a command: %s\n", block->cmd);
-	exit(EXIT_FAILURE);
+	dup2(2, 1);
+	close(2);
+	printf("minishell: %s: failed to execute a command\n", block->cmd);
+	exit(126);
 }
 
 void	parent_process(int *fds, int *p)
@@ -62,6 +69,7 @@ int	wait_pids(t_block *blocks, int code)
 		waitpid(blocks->pid, &g_status_code, 0);
 		blocks = blocks->next;
 	}
+	g_status_code = WEXITSTATUS(g_status_code);	
 	if (code != -1)
 		g_status_code = code;
 	return (g_status_code);

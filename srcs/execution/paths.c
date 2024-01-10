@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 13:49:30 by panger            #+#    #+#             */
-/*   Updated: 2024/01/09 13:53:48 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/10 18:14:23 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,25 +54,21 @@ char	*find_path(char *cmd, char **env)
 	int		j;
 	char	**paths;
 	char	*temp;
-	int		found;
 
-	found = 0;
 	j = 0;
-	if (access(cmd, F_OK) != -1)
-	{
+	if (access(cmd, F_OK) != -1  && access(cmd, X_OK) != -1)
 		return (cmd);
-	}
+	if (cmd[0] == '.' && cmd[1] == '/')
+		return (NULL);
 	paths = get_paths(env);
-	while (paths[j] && found == 0)
+	while (paths[j])
 	{
 		temp = join_paths(paths[j++], cmd);
 		if (access(temp, F_OK) != -1 && access(temp, X_OK) != -1)
-			found = 1;
+			return (freetab(paths), temp);
 		else
 			free(temp);
 	}
-	if (found == 1)
-		return (freetab(paths), temp);
 	freetab(paths);
 	return (NULL);
 }
