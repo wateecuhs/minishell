@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:29:27 by panger            #+#    #+#             */
-/*   Updated: 2024/01/10 18:17:02 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/11 17:57:17 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,29 +30,42 @@ void	dup_job(int fd[2])
 	}
 }
 
+void	remove_empty(char ***env)
+{
+	int	i;
+
+	i = 0;
+	while ((*env)[i])
+	{
+		if (ft_strchr((*env)[i], '=') == -1)
+			(*env)[i] = NULL;
+		i++;
+	}
+}
+
 void	command_exec(t_block *block, int fd[2], char **env)
 {
 	char	*path;
+	int		exit_code;
 
+	exit_code = 0;
 	dup_job(fd);
+	if (!(block->cmd))
+		exit(0);
 	path = find_path(block->cmd, env);
 	if (!path)
 	{
-		dup2(2, 1);
-		close(2);
-		if (access(block->cmd, F_OK) == -1)
-		{
-			printf("minishell: %s: command not found\n", block->cmd);
-			exit(127);
-		}
-		else if (access(block->cmd, F_OK) != -1  && access(block->cmd, X_OK) == -1)
-			printf("minishell: %s: permission denied\n", block->cmd);
-		exit(126);
+		close(0);
+		close(1);
+		close(fd[IN]);
+		close(fd[OUT]);
+		if (errno == 13)
+			exit(126);
+		exit(127);
 	}
+	remove_empty(&env);
 	execve(path, block->args, env);
-	dup2(2, 1);
-	close(2);
-	printf("minishell: %s: failed to execute a command\n", block->cmd);
+	perror_prefix(block->cmd);
 	exit(126);
 }
 
@@ -72,7 +85,8 @@ int	wait_pids(t_block *blocks, int code)
 		waitpid(blocks->pid, &g_status_code, 0);
 		blocks = blocks->next;
 	}
-	g_status_code = WEXITSTATUS(g_status_code);	
+	if (WIFEXITED(g_status_code))
+		g_status_code = WEXITSTATUS(g_status_code);	
 	if (code != -1)
 		g_status_code = code;
 	return (g_status_code);
@@ -93,7 +107,7 @@ int	fork_exec(t_block *block, int *fds, char **env)
 	return (pid);
 }
 
-int	command_receiver(t_block *blocks, char **env)
+int	command_receiver(t_block *blocks, char ***env)
 {
 	t_block *head;
 	int		fds[4];
@@ -108,12 +122,14 @@ int	command_receiver(t_block *blocks, char **env)
 		if (pipe(fds) == -1)
 			error_msg(NULL);
 		get_fd(fds, blocks, i);
-		if (is_builtin(blocks, &env, &code) == -1)
-			blocks->pid = fork_exec(blocks, fds, env);
+		if (!(blocks->cmd) || is_builtin(blocks, env, &code, fds) == -1)
+			blocks->pid = fork_exec(blocks, fds, *env);
 		parent_process(&fds[2], fds);
 		blocks = blocks->next;
 		i++;
 	}
+	close(fds[IN]);
+	close(fds[OUT]);
 	i = wait_pids(head, code);
 	return (i);
 }

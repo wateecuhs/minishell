@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 13:49:30 by panger            #+#    #+#             */
-/*   Updated: 2024/01/10 18:14:23 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/11 17:22:28 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,20 @@ char	*join_paths(char *s1, char *s2)
 	return (ret);
 }
 
+void	handle_error(char *cmd)
+{
+	int	tmp;
+
+	if (errno == 13)
+		perror_prefix(cmd);
+	else
+	{
+		write(2, "minishell: ", 11);
+		write(2, cmd, ft_strlen(cmd));
+		write(2, ": command not found\n", 20);
+	}
+}
+
 char	*find_path(char *cmd, char **env)
 {
 	int		j;
@@ -56,19 +70,21 @@ char	*find_path(char *cmd, char **env)
 	char	*temp;
 
 	j = 0;
-	if (access(cmd, F_OK) != -1  && access(cmd, X_OK) != -1)
-		return (cmd);
-	if (cmd[0] == '.' && cmd[1] == '/')
-		return (NULL);
+	if (ft_strchr(cmd, '/') != -1)
+	{
+		if (access(cmd, F_OK) != -1 && access(cmd, X_OK) != -1)
+			return (cmd);
+		return (handle_error(cmd), NULL);
+	}
 	paths = get_paths(env);
 	while (paths[j])
 	{
 		temp = join_paths(paths[j++], cmd);
 		if (access(temp, F_OK) != -1 && access(temp, X_OK) != -1)
-			return (freetab(paths), temp);
-		else
-			free(temp);
+				return (freetab(paths), temp);
+		free(temp);
 	}
 	freetab(paths);
+	handle_error(cmd);
 	return (NULL);
 }

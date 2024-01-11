@@ -1,42 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/10 16:56:55 by panger            #+#    #+#             */
-/*   Updated: 2024/01/11 18:19:36 by panger           ###   ########.fr       */
+/*   Created: 2024/01/11 13:42:00 by panger            #+#    #+#             */
+/*   Updated: 2024/01/11 17:49:01 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	builtin_echo(char **args, char **env)
+int	builtin_env(int fds[4], char ***env)
 {
 	int	i;
-	int	nl;
 
-	nl = 0;
-	if (ft_tablen(args) <= 1)
+	i = 0;
+	while ((*env)[i])
 	{
-		printf("\n");
-		return (0);
-	}
-	i = 1;
-	if (ft_strcmp(args[1], "-n") == 0)
-	{
-		nl = 1;
+		if (ft_strchr((*env)[i], '=') != -1)
+		{
+			printf("%s\n", (*env)[i]);
+		}
 		i++;
 	}
-	while (args[i])
-	{
-		args[i] = expand_word(args[i], env);
-		write(1, args[i], ft_strlen(args[i]));
-		write(1, " ", 1);
-		i++;
-	}
-	if (nl == 0)
-		printf("\n");
 	return (0);
 }

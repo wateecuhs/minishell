@@ -30,7 +30,8 @@ SRCS_LIB	=		lib/ft_expand_var.c \
 					lib/lst_addback_blocks.c \
 					lib/ft_split_s.c \
 					lib/ft_freetab.c \
-					lib/ft_itoa.c
+					lib/ft_itoa.c \
+					lib/free.c
 
 SRCS_EXEC	=		execution/get_data.c \
 					execution/prepare_exec.c \
@@ -42,8 +43,12 @@ SRCS_EXEC	=		execution/get_data.c \
 					execution/heredoc.c
 
 SRCS_BUILTINS=		builtins/cd.c \
-					builtins/is_builtin.c \
-					execution/exec_builtins.c
+					builtins/export.c \
+					builtins/env.c \
+					builtins/pwd.c \
+					builtins/echo.c \
+					builtins/unset.c \
+					builtins/is_builtin.c
 
 SRCS_PARSING=		parsing/first_parse.c \
 					parsing/lexer.c \

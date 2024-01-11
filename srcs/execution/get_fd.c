@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 14:45:19 by panger            #+#    #+#             */
-/*   Updated: 2024/01/10 14:54:37 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/11 16:33:02 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	get_in(int *fd, t_redirs *redirs)
 	return (0);
 }
 
-int	get_fd(int fd[4], t_block *block, int i)
+void	get_fd(int fd[4], t_block *block, int i)
 {
 	int	in;
 	int	out;
@@ -72,10 +72,13 @@ int	get_fd(int fd[4], t_block *block, int i)
 		if (block->redirs->type == REDIRECT_OUT || block->redirs->type == REDIRECT_APPEND)
 			get_out(&out, block->redirs);
 		block->redirs = block->redirs->next;
-		if (in == -1|| out == -1)
+		if (in == -1 || out == -1)
 			break;
 	}
+	if (in != fd[IN])
+		close(fd[IN]);
+	if (in != fd[OUT])
+		close(fd[OUT]);
 	fd[2 + IN] = in;
 	fd[2 + OUT] = out;
-	return (0);
 }

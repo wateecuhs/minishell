@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 15:55:28 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/10 17:36:10 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/11 19:39:34 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@
 # include <readline/history.h>
 # include <signal.h>
 
-# define IN 1
-# define OUT 0
+# define IN 0
+# define OUT 1
 # define READ 0
 # define WRITE 1
 # define READ_END 0
@@ -103,13 +103,15 @@ void	lst_addback_blocks(t_block **lst, t_block *new);
 void	lst_addback_redirs(t_redirs **lst, t_redirs *new);
 void	print_lst(t_token *lst);
 void 	free_tokens(t_token *tokens);
-int		command_receiver(t_block *blocks, char **env);
-int		get_fd(int fd[4], t_block *block, int i);
+int		command_receiver(t_block *blocks, char ***env);
+void	get_fd(int fd[4], t_block *block, int i);
 int		ft_strcmp_hd(char *s1, char *s2);
 char	*ft_strjoin_free2(char *s1, char *s2);
 void	freetabn(char **tab, size_t n);
 int		dup_env(char ***env);
 char	*ft_itoa(int n);
+char	*expand_word(char *s, char **env);
+void	free_blocks(t_block *blocks);
 
 char	**ft_split_s(char *s, char *c);
 void	freetab(char **tab);
@@ -124,7 +126,7 @@ int		expand_single_quotes(char **src, size_t *i);
 int		count_blocks(t_token *tokens);
 int		count_words_in_block(t_token *tokens);
 t_block	*words_to_blocks(t_token *tokens);
-int		execution_hub(t_token *tokens, char **env);
+int		execution_hub(t_token *tokens, char ***env);
 char	*get_cmd(t_token *token);
 char	**get_args(t_token *token);
 t_redirs	*assign_redir(t_token *token);
@@ -132,10 +134,12 @@ t_redirs	*get_redirs(t_token *token);
 int			parsing(char *input, t_token *tokens);
 int		*set_fd_to_use(int *fd, int fd_in, int fd_out);
 char	*find_path(char *cmd, char **env);
+void	perror_prefix(char *string);
 void	error_msg(char *string);
 char	*ft_strjoin(char *s1, char *s2);
-int		is_builtin(t_block *blocks, char ***env, int *code);
+int		is_builtin(t_block *blocks, char ***env, int *code, int fds[4]);
 int		expand_dquotes_var(char **src, size_t *i, char **env);
+void	dup_job(int fd[2]);
 
 //gnl
 char	*get_next_line(int fd);
@@ -150,6 +154,11 @@ int 	check_if_broken_enum(char *str);
 
 //builtins
 int		builtin_cd(char **args, char ***env);
+int		builtin_export(char **args, char ***env, int fds[4]);
+int		builtin_env(int fds[4], char ***env);
+int		builtin_pwd(void);
+int		builtin_echo(char **args, char **env);
+int		builtin_unset(char ***env, char **args);
 
 //static
 extern int g_status_code;

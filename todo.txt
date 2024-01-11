@@ -1,0 +1,5 @@
+replace error_msg by propre error management in commands_handler
+handle directions for builtins
+error management builtins with proper frees
+some mallocs and dups arent protected
+best way i can think of -> print error messages right as they happen but return the errors until hub.c that has access to everything allocated and can free it

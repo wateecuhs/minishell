@@ -6,26 +6,26 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 15:21:36 by panger            #+#    #+#             */
-/*   Updated: 2024/01/10 16:36:57 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/11 19:41:05 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_builtin(t_block *blocks, char ***env, int *code)
+int	is_builtin(t_block *blocks, char ***env, int *code, int fds[4])
 {
-	if (strcmp(blocks->cmd, "echewo") == 0)
-		return (1);
+	if (strcmp(blocks->cmd, "echo") == 0)
+		*code = builtin_echo(blocks->args, *env);
 	else if (strcmp(blocks->cmd, "cd") == 0)
 		*code = builtin_cd(blocks->args, env);
-	else if (strcmp(blocks->cmd, "pwqwed") == 0)
-		return (3);
-	else if (strcmp(blocks->cmd, "eqwexport") == 0)
-		return (4);
-	else if (strcmp(blocks->cmd, "unqweset") == 0)
-		return (5);
-	else if (strcmp(blocks->cmd, "eqwenv") == 0)
-		return (6);
+	else if (strcmp(blocks->cmd, "pwd") == 0)
+		*code = builtin_pwd();
+	else if (strcmp(blocks->cmd, "export") == 0)
+		*code = builtin_export(blocks->args, env, fds);
+	else if (strcmp(blocks->cmd, "unset") == 0)
+		*code = builtin_unset(env, blocks->args);
+	else if (strcmp(blocks->cmd, "env") == 0)
+		*code = builtin_env(fds, env);
 	else if (strcmp(blocks->cmd, "exiqwet") == 0)
 		return (7);
 	else
