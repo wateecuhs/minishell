@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 17:23:52 by panger            #+#    #+#             */
-/*   Updated: 2024/01/09 12:51:30 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/12 13:26:31 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_block	*get_block(t_token *token)
 	ret->cmd = get_cmd(token);
 	ret->args = get_args(token);
 	ret->redirs = get_redirs(token);
+	ret->pid = -1;
 	return (ret);
 }
 

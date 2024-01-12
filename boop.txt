@@ -1,8 +1,0 @@
-echo "$echo test"
-
-start = 6 ($)
-stop  = 10 (o)
-
-replace everything in start-stop with expanded word
-
-"$echo test"

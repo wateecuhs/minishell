@@ -6,13 +6,35 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 15:21:36 by panger            #+#    #+#             */
-/*   Updated: 2024/01/12 12:49:36 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/12 13:59:55 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_builtin(t_block *blocks, char ***env, int fds[4], t_block *head)
+int	is_cmd_builtin(char *cmd)
+{
+	if (!cmd)
+		return (-1);
+	if (strcmp(cmd, "echo") == 0)
+		return (0);
+	else if (strcmp(cmd, "cd") == 0)
+		return (0);
+	else if (strcmp(cmd, "pwd") == 0)
+		return (0);
+	else if (strcmp(cmd, "export") == 0)
+		return (0);
+	else if (strcmp(cmd, "unset") == 0)
+		return (0);
+	else if (strcmp(cmd, "env") == 0)
+		return (0);
+	else if (strcmp(cmd, "exit") == 0)
+		return (0);
+	else
+		return (-1);
+}
+
+int	exec_builtin(t_block *blocks, char ***env, int fds[4], t_block *head)
 {
 	if (strcmp(blocks->cmd, "echo") == 0)
 		return (builtin_echo(blocks->args, *env));
@@ -28,9 +50,5 @@ int	is_builtin(t_block *blocks, char ***env, int fds[4], t_block *head)
 		return (builtin_env(fds, env));
 	else if (strcmp(blocks->cmd, "exit") == 0)
 		return (builint_exit(head, env));
-	else
-		return (-1);
-	if (blocks->next)
-		return (-2);
 	return (0);
 }

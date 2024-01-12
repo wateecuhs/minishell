@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 15:55:28 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/12 12:50:08 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/12 14:11:36 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,13 +137,14 @@ char	*find_path(char *cmd, char **env);
 void	perror_prefix(char *string);
 void	error_msg(char *string);
 char	*ft_strjoin(char *s1, char *s2);
-int		is_builtin(t_block *blocks, char ***env, int fds[4], t_block *head);
+int		exec_builtin(t_block *blocks, char ***env, int fds[4], t_block *head);
 int		expand_dquotes_var(char **src, size_t *i, char **env);
-int		dup_job(int fd[2], char **env);
+int		dup_job(int fd[2]);
 int		expand_word_var(char **src, size_t *i, char **env);
 void	free_env(char **env);
 void	free_single_block(t_block *blocks);
 void	free_and_exit(t_block *blocks, char **env, int exitcode);
+int		is_cmd_builtin(char *cmd);
 
 //gnl
 char	*get_next_line(int fd);

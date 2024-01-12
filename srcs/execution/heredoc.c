@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 14:17:36 by panger            #+#    #+#             */
-/*   Updated: 2024/01/11 16:17:31 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/12 14:16:53 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	get_heredoc(char *limiter)
 
 	pipe(p);
 	string = get_next_line(0);
-	while (ft_strcmp_hd(string, limiter) != 0 && string != NULL)
+	while (string != NULL && ft_strcmp_hd(string, limiter) != 0)
 	{
 		if (write(p[WRITE], string, ft_strlen(string)) == -1)
 			printf("pipex: write error: %s\n", strerror(errno));

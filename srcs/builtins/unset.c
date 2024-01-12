@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 19:22:51 by panger            #+#    #+#             */
-/*   Updated: 2024/01/12 10:39:25 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/12 13:35:21 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int	ft_tablen_unset(char **s, char **args)
 	}
 	return (count);
 }
-
 
 int	dup_env_unset(char ***env,  char **args)
 {

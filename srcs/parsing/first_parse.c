@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 16:27:17 by panger            #+#    #+#             */
-/*   Updated: 2024/01/12 10:25:41 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/12 13:18:12 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,15 @@ static int	nothing_after_pipe(char *str, int i)
 	int	before;
 
 	before = i;
-	before -= 2;
-	while (str[before] != '|')
+	// before -= 2;
+	while (before >= 0 && str[before] != '|')
 		before--;
 	before--;
-	while (str[before] == ' ' || str[before] == '\t' || str[before] == '\n')
+	while (before >= 0 && (str[before] == ' ' || str[before] == '\t' || str[before] == '\n'))
 		before--;
-	if (str[before] == '\0' || str[before] == '|')
+	if (before <= 0 || str[before] == '|')
 		return (1);
-	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\n')
+	while (str[i] && (str[i] == ' ' || str[i] == '\t' || str[i] == '\n'))
 		i++;
 	if (str[i] == '\0')
 		return (1);
