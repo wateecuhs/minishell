@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 15:43:24 by panger            #+#    #+#             */
-/*   Updated: 2024/01/12 16:17:01 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/12 17:12:29 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	print_export(char **env, int fd[2])
 		{
 			write(fd[OUT], env[i], stop + 1);
 			write(fd[OUT], "\"", 1);
-			write(fd[OUT], &env[i][stop + 1], ft_strlen(env[i]) - stop + 1);
+			write(fd[OUT], &env[i][stop + 1], ft_strlen(env[i]) - stop - 1);
 			write(fd[OUT], "\"", 1);
 		}
 		write(fd[OUT], "\n", 1);
@@ -104,22 +104,50 @@ int	print_export(char **env, int fd[2])
 	return (0);
 }
 
+int	check_name(char *s)
+{
+	size_t	i;
+
+	i = 0;
+	if (is_valid_char(s[i]) == 0)
+		return (-1);
+	if (ft_isdigit(s[i]) == 1)
+		return (-1);
+	while (s[i] && s[i] != '=' && s[i] != '\n')
+		i++;
+	if (s[i] == '\0' || s[i] == '=')
+	{
+		return (0);
+	}
+	return (-1);
+}
+
 int	builtin_export(char **args, char ***env, int fd[2])
 {
 	size_t	i;
 	int		value;
+	int		exit_code;
 
 	if (ft_tablen(args) == 1)
 		return (print_export(*env, fd));
 	i = 1;
+	exit_code = 0;
 	while (args[i])
 	{
-		value = in_env(args[i], *env);
-		if (value == 2)
+		if (check_name(args[i]) == -1)
+		{
+			write(fd[OUT], "bash: export: '", 15);
+			write(fd[OUT], args[i], ft_strlen(args[i]));
+			write(fd[OUT], "': not a valid identifier\n", 27);
+			exit_code = 1;
+			i++;
+			continue ;
+		}
+		if (in_env(args[i], *env) == 2)
 			replace_env(args[i], env);
-		else if (value == 0)
+		else if (in_env(args[i], *env) == 0)
 			add_to_env(args[i], env);
 		i++;
 	}
-	return (0);
+	return (exit_code);
 }

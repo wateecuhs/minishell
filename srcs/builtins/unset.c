@@ -6,13 +6,13 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 19:22:51 by panger            #+#    #+#             */
-/*   Updated: 2024/01/12 13:35:21 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/12 17:13:59 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	in_args(char *s, char **args)
+int	in_args(char *env_str, char **args)
 {
 	int	i;
 	int	j;
@@ -21,31 +21,13 @@ int	in_args(char *s, char **args)
 	while (args[i])
 	{
 		j = 0;
-		while (args[i][j] && args[i][j] == s[j])
+		while (env_str[j] && args[i][j] == env_str[j] && env_str[j] != '=')
 			j++;
-		if (s[j] == '=' && args[i][j] == '\0')
-			return (0);
+		if ((env_str[j] == '\0' || env_str[j] == '=') && args[i][j] == '\0')
+			return (1);
 		i++;
 	}
-	return (1);
-}
-
-int	ft_tablen_unset(char **s, char **args)
-{
-	unsigned int	i;
-	unsigned int	count;
-
-	if (!s)
-		return (0);
-	count = 0;
-	i = 0;
-	while (s[i])
-	{
-		if (in_args(s[i], args) != 0)
-			count++;
-		i++;
-	}
-	return (count);
+	return (0);
 }
 
 int	dup_env_unset(char ***env,  char **args)
@@ -53,43 +35,66 @@ int	dup_env_unset(char ***env,  char **args)
 	char	**tmp;
 	int		len;
 	int		i;
+	int		j;
 
 	len = ft_tablen(*env);
 	tmp = (char **)malloc(sizeof(char *) * (len + 1));
 	if (!tmp)
 		return (-1);
 	i = 0;
+	j = 0;
 	while ((*env)[i])
 	{
-		if (in_args((*env)[i], args) != 0)
+		if (in_args((*env)[i], args) == 0)
 		{
-			printf("%s not in args\n", (*env)[i]);
-			tmp[i] = ft_strdup((*env)[i]);
-			if (!(tmp[i]))
-				return (freetabn(tmp, i - 1), -1);
+			tmp[j++] = ft_strdup((*env)[i]);
+			if (!(tmp[j - 1]))
+				return (freetabn(tmp, j - 2), -1);
 		}
-		free((*env)[i]);
-		i++;
+		free((*env)[i++]);
 	}
 	free(*env);
-	tmp[i] = NULL;
+	tmp[j] = NULL;
 	*env = tmp;
 	return (0);
 }
 
-int	builtin_unset(char ***env, char **args)
+int	check_name_unset(char *s)
 {
-	int	i;
+	size_t	i;
+
+	i = 0;
+	if (is_valid_char(s[i]) == 0)
+		return (-1);
+	if (ft_isdigit(s[i]) == 1)
+		return (-1);
+	while (s[i] && s[i] != '=' && s[i] != '\n')
+		i++;
+	if (s[i] == '\0')
+		return (0);
+	return (-1);
+}
+
+int	builtin_unset(char ***env, char **args, int fd[2])
+{
+	size_t	i;
+	int		exit_code;
 
 	if (ft_tablen(args) == 1)
 		return (0);
 	i = 1;
+	exit_code = 0;
 	while (args[i])
 	{
-		args[i] = expand_word(args[i], *env);
+		if (check_name_unset(args[i]) == -1)
+		{
+			write(fd[OUT], "bash: unset: '", 14);
+			write(fd[OUT], args[i], ft_strlen(args[i]));
+			write(fd[OUT], "': not a valid identifier\n", 27);
+			exit_code = 1;
+		}
 		i++;
 	}
-	if (dup_env_unset(env, args) == -1)
-		return (perror_prefix("unset"), 1);
-	return (0);
+	dup_env_unset(env, &args[1]);
+	return (exit_code);
 }

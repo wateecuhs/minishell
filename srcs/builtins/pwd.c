@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 17:45:12 by panger            #+#    #+#             */
-/*   Updated: 2024/01/12 15:17:54 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/12 16:26:31 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	builtin_pwd(int fd[2])
 		return (1);
 	}
 	write(fd[OUT], tmp, ft_strlen(tmp));
+	write(fd[OUT], "\n", 1);
 	free(tmp);
 	return (0);
 }

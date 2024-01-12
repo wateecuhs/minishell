@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 15:55:28 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/12 16:12:15 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/12 16:52:21 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,7 @@ int		builtin_export(char **args, char ***env, int fds[4]);
 int		builtin_env(int fd[2], char ***env);
 int		builtin_pwd(int fd[2]);
 int		builtin_echo(char **args, int fd[2]);
-int		builtin_unset(char ***env, char **args);
+int		builtin_unset(char ***env, char **args, int fd[2]);
 int		builint_exit(t_block *head, char ***env);
 
 //static
