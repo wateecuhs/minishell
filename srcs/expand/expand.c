@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 18:55:11 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/10 17:37:44 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/12 11:31:26 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*expand_word(char *s, char **env)
 		}
 		if (s[i] == '$')
 		{
-			if (expand_dquotes_var(&s, &i, env) == -1)
+			if (expand_word_var(&s, &i, env) == -1)
 				return (free(s), NULL);
 		}
 		i++;

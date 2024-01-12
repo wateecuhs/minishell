@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 16:27:17 by panger            #+#    #+#             */
-/*   Updated: 2024/01/09 14:22:30 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/12 10:25:41 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	check_if_broken_enum(char *str)
 	{
 		if (str[i] == '\"' || str[i] == '\'')
 		{
-			pos = i;
+			pos = i++;
 			while (str[i] != str[pos])
 				i++;
 		}

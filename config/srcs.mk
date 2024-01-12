@@ -9,7 +9,8 @@ SRCS		=		minishell.c \
 
 SRCS_EXPAND =		expand/expand.c \
 					expand/single_quotes.c \
-					expand/double_quotes.c
+					expand/double_quotes.c \
+					expand/no_quotes.c
 
 SRCS_LIB	=		lib/ft_expand_var.c \
 					lib/ft_isalnum.c \
@@ -48,6 +49,7 @@ SRCS_BUILTINS=		builtins/cd.c \
 					builtins/pwd.c \
 					builtins/echo.c \
 					builtins/unset.c \
+					builtins/exit.c \
 					builtins/is_builtin.c
 
 SRCS_PARSING=		parsing/first_parse.c \

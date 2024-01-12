@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 14:45:19 by panger            #+#    #+#             */
-/*   Updated: 2024/01/11 16:33:02 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/12 10:45:38 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,6 @@ void	get_fd(int fd[4], t_block *block, int i)
 		if (in == -1 || out == -1)
 			break;
 	}
-	if (in != fd[IN])
-		close(fd[IN]);
-	if (in != fd[OUT])
-		close(fd[OUT]);
 	fd[2 + IN] = in;
 	fd[2 + OUT] = out;
 }

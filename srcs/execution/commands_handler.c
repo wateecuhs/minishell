@@ -6,28 +6,29 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:29:27 by panger            #+#    #+#             */
-/*   Updated: 2024/01/11 17:57:17 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/12 12:49:13 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	dup_job(int fd[2])
+int	dup_job(int fd[2], char **env)
 {
 	if (fd[IN] == -1 || fd[OUT] == -1)
-		exit(EXIT_FAILURE);
+		return (-1);
 	if (fd[IN] != 0)
 	{
 		if (dup2(fd[IN], STDIN_FILENO) == -1)
-			error_msg(NULL);
+			return (-1);
 		close(fd[IN]);
 	}
 	if (fd[OUT] != 1)
 	{
 		if (dup2(fd[OUT], STDOUT_FILENO) == -1)
-			error_msg(NULL);
+			return (-1);
 		close(fd[OUT]);
 	}
+	return (0);
 }
 
 void	remove_empty(char ***env)
@@ -43,30 +44,27 @@ void	remove_empty(char ***env)
 	}
 }
 
-void	command_exec(t_block *block, int fd[2], char **env)
+void	command_exec(t_block *block, int fd[2], char **env, t_block *head)
 {
 	char	*path;
 	int		exit_code;
 
 	exit_code = 0;
-	dup_job(fd);
+	if (dup_job(fd, env) == -1)
+		free_and_exit(head, env, 1);
 	if (!(block->cmd))
-		exit(0);
+		free_and_exit(head, env, 0);
 	path = find_path(block->cmd, env);
 	if (!path)
 	{
-		close(0);
-		close(1);
-		close(fd[IN]);
-		close(fd[OUT]);
 		if (errno == 13)
-			exit(126);
-		exit(127);
+			free_and_exit(head, env, 126);
+		free_and_exit(head, env, 127);
 	}
 	remove_empty(&env);
 	execve(path, block->args, env);
 	perror_prefix(block->cmd);
-	exit(126);
+	free_and_exit(head, env, 126);
 }
 
 void	parent_process(int *fds, int *p)
@@ -87,14 +85,15 @@ int	wait_pids(t_block *blocks, int code)
 	}
 	if (WIFEXITED(g_status_code))
 		g_status_code = WEXITSTATUS(g_status_code);	
-	if (code != -1)
+	if (code >= 0)
 		g_status_code = code;
 	return (g_status_code);
 }
 
-int	fork_exec(t_block *block, int *fds, char **env)
+int	fork_exec(t_block *block, int *fds, char **env, t_block *head)
 {
 	int	pid;
+	t_block	*tmp;
 
 	pid = fork();
 	if (pid == -1)
@@ -102,7 +101,7 @@ int	fork_exec(t_block *block, int *fds, char **env)
 	if (pid == 0)
 	{
 		close(fds[READ]);
-		command_exec(block, &fds[2], env);
+		command_exec(block, &fds[2], env, head);
 	}
 	return (pid);
 }
@@ -122,8 +121,9 @@ int	command_receiver(t_block *blocks, char ***env)
 		if (pipe(fds) == -1)
 			error_msg(NULL);
 		get_fd(fds, blocks, i);
-		if (!(blocks->cmd) || is_builtin(blocks, env, &code, fds) == -1)
-			blocks->pid = fork_exec(blocks, fds, *env);
+		code = is_builtin(blocks, env, fds, head);
+		if (!(blocks->cmd) || code == -1)
+			blocks->pid = fork_exec(blocks, fds, *env, head);
 		parent_process(&fds[2], fds);
 		blocks = blocks->next;
 		i++;
