@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 15:43:24 by panger            #+#    #+#             */
-/*   Updated: 2024/01/12 17:12:29 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/12 17:53:58 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int	add_to_env(char *str, char ***env)
 	}
 	tmp[i++] = ft_strdup(str);
 	tmp[i] = NULL;
+	free_env(*env);
 	*env = tmp;
 	return (0);
 }

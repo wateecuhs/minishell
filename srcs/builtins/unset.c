@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 19:22:51 by panger            #+#    #+#             */
-/*   Updated: 2024/01/12 17:13:59 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/12 17:55:54 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,10 @@ int	dup_env_unset(char ***env,  char **args)
 			if (!(tmp[j - 1]))
 				return (freetabn(tmp, j - 2), -1);
 		}
-		free((*env)[i++]);
+		i++;
 	}
-	free(*env);
 	tmp[j] = NULL;
+	free_env(*env);
 	*env = tmp;
 	return (0);
 }

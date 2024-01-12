@@ -32,7 +32,8 @@ SRCS_LIB	=		lib/ft_expand_var.c \
 					lib/ft_split_s.c \
 					lib/ft_freetab.c \
 					lib/ft_itoa.c \
-					lib/free.c
+					lib/free.c \
+					lib/find_in_env.c
 
 SRCS_EXEC	=		execution/get_data.c \
 					execution/prepare_exec.c \

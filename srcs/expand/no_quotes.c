@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 11:14:56 by panger            #+#    #+#             */
-/*   Updated: 2024/01/12 11:42:35 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/12 18:16:23 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,21 @@ int	loop_join(char *content, char *s, char **ret)
 			return (free(s), freetab(tab), 1);
 		i++;
 	}
+	freetab(tab);
 	return (0);
 }
 
 char	*expand_var_noquotes(char *s, size_t *start, size_t stop, char *content)
 {
 	char	*ret;
+	int		do_free;
 
+	do_free = 0;
 	if (!content)
+	{
 		content = ft_strdup("");
+		do_free = 1;
+	}
 	if (!content)
 		return (free(s), NULL);
 	ret = ft_strndup(s, *start);
@@ -52,6 +58,8 @@ char	*expand_var_noquotes(char *s, size_t *start, size_t stop, char *content)
 	if (!ret)
 		return (free(s), free(content), NULL);
 	free(s);
+	if (do_free)
+		free(content);
 	return (ret);
 }
 

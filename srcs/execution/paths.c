@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 13:49:30 by panger            #+#    #+#             */
-/*   Updated: 2024/01/12 15:20:29 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/12 18:35:48 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,11 @@ char	**get_paths(char **env)
 		if (ft_strncmp(env[i], "PATH=", 5) == 0)
 		{
 			paths = ft_split_s(&env[i][5], ":");
+			return (paths);
 		}
 		i++;
 	}
-	return (paths);
+	return (NULL);
 }
 
 char	*join_paths(char *s1, char *s2)
@@ -49,9 +50,9 @@ char	*join_paths(char *s1, char *s2)
 	return (ret);
 }
 
-void	handle_error(char *cmd)
+void	handle_error(char *cmd, int err)
 {
-	if (errno == 13)
+	if (errno == 13 && err == 0)
 		perror_prefix(cmd);
 	else
 	{
@@ -72,9 +73,11 @@ char	*find_path(char *cmd, char **env)
 	{
 		if (access(cmd, F_OK) != -1 && access(cmd, X_OK) != -1)
 			return (cmd);
-		return (handle_error(cmd), NULL);
+		return (handle_error(cmd, 0), NULL);
 	}
 	paths = get_paths(env);
+	if (!paths)
+		return (handle_error(cmd, 1), NULL);
 	while (paths[j])
 	{
 		temp = join_paths(paths[j++], cmd);
@@ -83,6 +86,6 @@ char	*find_path(char *cmd, char **env)
 		free(temp);
 	}
 	freetab(paths);
-	handle_error(cmd);
+	handle_error(cmd, 0);
 	return (NULL);
 }

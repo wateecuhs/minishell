@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 17:23:52 by panger            #+#    #+#             */
-/*   Updated: 2024/01/12 13:26:31 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/12 18:09:11 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	count_words_in_block(t_token *tokens)
 	node = tokens;
 	while (node && node->type != PIPE)
 	{
-		if (node->type == WORD)
+		if (node->type == WORD && ft_strcmp(node->value, "") != 0)
 			i++;
 		if (node->type == REDIRECT_IN || node->type == REDIRECT_OUT
 			|| node->type == REDIRECT_APPEND || node->type == HEREDOC)

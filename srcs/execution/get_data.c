@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 17:57:42 by panger            #+#    #+#             */
-/*   Updated: 2024/01/10 14:48:47 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/12 18:12:05 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*get_cmd(t_token *token)
 	node = token;
 	while (node && node->type != PIPE)
 	{
-		if (node->type == WORD)
+		if (node->type == WORD && ft_strcmp(node->value, "") != 0)
 		{
 			tmp = ft_strdup(node->value);
 			if (!tmp)
@@ -48,7 +48,7 @@ char	**get_args(t_token *token)
 	node = token;
 	while (node && node->type != PIPE)
 	{
-		if (node->type == WORD)
+		if (node->type == WORD && ft_strcmp(node->value, "") != 0)
 		{
 			ret[i++] = ft_strdup(node->value);
 			if (!(ret[i - 1]))
