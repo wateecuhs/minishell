@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:07:51 by panger            #+#    #+#             */
-/*   Updated: 2024/01/12 14:11:51 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/12 15:11:33 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int	case_arg(char **args, char ***env)
 	while (ft_strncmp(tmp[j], "PWD=", 4) != 0)
 		j++;
 	if (chdir(args[1]) == -1)
-		return (perror("minishell:"), 1);
+		return (perror_prefix(args[1]), 1);
+	free(tmp[i]);
 	tmp[i] = ft_strjoin("OLDPWD", &tmp[j][3]);
 	free(tmp[j]);
 	tmp[j] = ft_strjoin_free2("PWD=", getcwd(NULL, 0));
@@ -54,7 +55,8 @@ int	case_empty(char ***env)
 	if (!tmp[k])
 		return (write(2, "minishell: cd: HOME not set\n", 28), 1);
 	if (chdir(&tmp[k][5]) == -1)
-		return (perror("minishell:"), 1);
+		return (perror_prefix(&tmp[k][5]), 1);
+	free(tmp[i]);
 	tmp[i] = ft_strjoin("OLDPWD", &tmp[j][3]);
 	free(tmp[j]);
 	tmp[j] = ft_strjoin_free2("PWD=", getcwd(NULL, 0));

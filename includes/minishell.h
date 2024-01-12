@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 15:55:28 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/12 14:11:36 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/12 16:12:15 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ void	free_env(char **env);
 void	free_single_block(t_block *blocks);
 void	free_and_exit(t_block *blocks, char **env, int exitcode);
 int		is_cmd_builtin(char *cmd);
+int		exec_builtin_in_fork(t_block *blocks, char ***env, int fds[4], t_block *head);
 
 //gnl
 char	*get_next_line(int fd);
@@ -160,9 +161,9 @@ int 	check_if_broken_enum(char *str);
 //builtins
 int		builtin_cd(char **args, char ***env);
 int		builtin_export(char **args, char ***env, int fds[4]);
-int		builtin_env(int fds[4], char ***env);
-int		builtin_pwd(void);
-int		builtin_echo(char **args, char **env);
+int		builtin_env(int fd[2], char ***env);
+int		builtin_pwd(int fd[2]);
+int		builtin_echo(char **args, int fd[2]);
 int		builtin_unset(char ***env, char **args);
 int		builint_exit(t_block *head, char ***env);
 

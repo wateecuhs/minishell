@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 15:21:36 by panger            #+#    #+#             */
-/*   Updated: 2024/01/12 13:59:55 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/12 16:14:52 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,17 @@ int	is_cmd_builtin(char *cmd)
 int	exec_builtin(t_block *blocks, char ***env, int fds[4], t_block *head)
 {
 	if (strcmp(blocks->cmd, "echo") == 0)
-		return (builtin_echo(blocks->args, *env));
+		return (builtin_echo(blocks->args, &fds[2]));
 	else if (strcmp(blocks->cmd, "cd") == 0)
 		return (builtin_cd(blocks->args, env));
 	else if (strcmp(blocks->cmd, "pwd") == 0)
-		return (builtin_pwd());
+		return (builtin_pwd(&fds[2]));
 	else if (strcmp(blocks->cmd, "export") == 0)
-		return (builtin_export(blocks->args, env, fds));
+		return (builtin_export(blocks->args, env, &fds[2]));
 	else if (strcmp(blocks->cmd, "unset") == 0)
 		return (builtin_unset(env, blocks->args));
 	else if (strcmp(blocks->cmd, "env") == 0)
-		return (builtin_env(fds, env));
+		return (builtin_env(&fds[2], env));
 	else if (strcmp(blocks->cmd, "exit") == 0)
 		return (builint_exit(head, env));
 	return (0);

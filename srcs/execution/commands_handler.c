@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:29:27 by panger            #+#    #+#             */
-/*   Updated: 2024/01/12 14:17:05 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/12 15:20:40 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,13 @@ void	command_exec(t_block *block, int fd[4], char ***env, t_block *head)
 	int		exit_code;
 
 	exit_code = 0;
-	if (dup_job(&fd[2]) == -1)
-		free_and_exit(head, *env, 1);
 	if (is_cmd_builtin(block->cmd) == 0)
 	{
-		exec_builtin(block, env, fd, head);
-		exit(0);
+		exit_code = exec_builtin(block, env, fd, head);
+		free_and_exit(head, *env, exit_code);
 	}
+	if (dup_job(&fd[2]) == -1)
+		free_and_exit(head, *env, 1);
 	if (!(block->cmd))
 		free_and_exit(head, *env, 0);
 	path = find_path(block->cmd, *env);
@@ -99,7 +99,6 @@ int	wait_pids(t_block *blocks, int code)
 int	fork_exec(t_block *block, int fds[4], char ***env, t_block *head)
 {
 	int	pid;
-	t_block	*tmp;
 
 	if (is_cmd_builtin(block->cmd) == 0 && head == block && block->next == NULL)
 	{

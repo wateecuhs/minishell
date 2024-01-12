@@ -1,15 +1,9 @@
-cmd is the first word after you remove all redirections
-only one cmd in "blocks" (a block is delimited by start, end or pipe)
+export
 
-< test < Makefile cat -e > out1 > out2 > out3 < in4 | echo test | wc > outfile
+if no args
+	print list in format : declare -x key="value"
 
-get each block into strings without their redirections
-
-eg:
-	cat -e
-	echo test
-	wc
-
-join non redirection words within a block into an array of strings
-join these arrays into an array
-iterate over blocks in commands handler, get the fds then execute the array of strings
+if args
+	-> if already in env and env has no value for key -> replace
+	-> if already in env and env has value for key -> if
+	-> if not in env -> replace

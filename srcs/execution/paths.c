@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 13:49:30 by panger            #+#    #+#             */
-/*   Updated: 2024/01/11 17:22:28 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/12 15:20:29 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@ char	*join_paths(char *s1, char *s2)
 
 void	handle_error(char *cmd)
 {
-	int	tmp;
-
 	if (errno == 13)
 		perror_prefix(cmd);
 	else

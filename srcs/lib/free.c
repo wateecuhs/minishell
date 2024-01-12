@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 19:36:16 by panger            #+#    #+#             */
-/*   Updated: 2024/01/12 12:37:13 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/12 15:33:59 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	free_and_exit(t_block *blocks, char **env, int exitcode)
 	free_env(env);
 	exit(exitcode);
 }
+
 void	free_env(char **env)
 {
 	int	i;

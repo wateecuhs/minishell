@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/11 11:26:59 by panger            #+#    #+#             */
-/*   Updated: 2024/01/12 11:09:03 by panger           ###   ########.fr       */
+/*   Created: 2024/01/12 15:43:24 by panger            #+#    #+#             */
+/*   Updated: 2024/01/12 16:17:01 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,29 +23,13 @@ int	in_env(char *string, char **env)
 		j = 0;
 		while (env[i][j] && env[i][j] == string[j] && string[j] != '=')
 			j++;
-		if (env[i][j] == '=' || env[i][j] == '\0')
-			return (0);
+		if ((env[i][j] == '\0' || env[i][j] == '=') && string[j] == '=')
+			return (2);
+		if ((env[i][j] == '\0' && string[j] == '\0') || (env[i][j] == '=' && string[j] == '\0'))
+			return (1);
 		i++;
 	}
-	return (1);
-}
-
-int	check_name(char *s)
-{
-	size_t	i;
-
-	i = 0;
-	if (is_valid_char(s[i]) == 0)
-		return (-1);
-	if (ft_isdigit(s[i]) == 1)
-		return (-1);
-	while (s[i] && s[i] != '=' && s[i] != '\n')
-		i++;
-	if (s[i] == '\0' || s[i] == '=')
-	{
-		return (0);
-	}
-	return (-1);
+	return (0);
 }
 
 int	replace_env(char *str, char ***env)
@@ -54,7 +38,6 @@ int	replace_env(char *str, char ***env)
 	size_t	j;
 
 	i = 0;
-	write(2, "replacing env\n", 14);
 	while ((*env)[i])
 	{
 		j = 0;
@@ -96,50 +79,47 @@ int	add_to_env(char *str, char ***env)
 	return (0);
 }
 
-int	export(char *str, char ***env)
+int	print_export(char **env, int fd[2])
 {
-	int		i;
-	char	*tmp;
-	int		fd;
+	size_t	i;
+	int		stop;
 
-	tmp = expand_word(str, *env);
-	if (!tmp)
-		return (-1);
 	i = 0;
-	if (in_env(str, *env) == 0)
-		return (replace_env(str, env));
-	if (check_name(tmp) == -1)
+	while (env[i])
 	{
-		fd = dup(1);
-		dup2(2, 1);
-		printf("bash: export: '%s': not a valid identifier\n", tmp);
-		dup2(fd, 1);
-		return (0);
+		write(fd[OUT], "declare -x ", 11);
+		stop = ft_strchr(env[i], '=');
+		if (stop == -1)
+			write(fd[OUT], env[i], ft_strlen(env[i]));
+		else
+		{
+			write(fd[OUT], env[i], stop + 1);
+			write(fd[OUT], "\"", 1);
+			write(fd[OUT], &env[i][stop + 1], ft_strlen(env[i]) - stop + 1);
+			write(fd[OUT], "\"", 1);
+		}
+		write(fd[OUT], "\n", 1);
+		i++;
 	}
-	if (add_to_env(tmp, env) == -1)
-		return (-1);
 	return (0);
 }
 
-int	builtin_export(char **args, char ***env, int fds[4])
+int	builtin_export(char **args, char ***env, int fd[2])
 {
 	size_t	i;
-	size_t	j;
+	int		value;
 
 	if (ft_tablen(args) == 1)
+		return (print_export(*env, fd));
+	i = 1;
+	while (args[i])
 	{
-		j = 0;
-		while ((*env)[j])
-			printf("declare -x \"%s\"\n", (*env)[j++]);
-	}
-	else
-	{
-		i = 1;
-		while (args[i])
-		{
-			export(args[i], env);
-			i++;
-		}
+		value = in_env(args[i], *env);
+		if (value == 2)
+			replace_env(args[i], env);
+		else if (value == 0)
+			add_to_env(args[i], env);
+		i++;
 	}
 	return (0);
 }

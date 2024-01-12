@@ -6,13 +6,13 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:42:00 by panger            #+#    #+#             */
-/*   Updated: 2024/01/11 17:49:01 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/12 15:08:08 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	builtin_env(int fds[4], char ***env)
+int	builtin_env(int fd[2], char ***env)
 {
 	int	i;
 
@@ -21,7 +21,8 @@ int	builtin_env(int fds[4], char ***env)
 	{
 		if (ft_strchr((*env)[i], '=') != -1)
 		{
-			printf("%s\n", (*env)[i]);
+			write(fd[WRITE], (*env)[i], ft_strlen((*env)[i]));
+			write(fd[WRITE], "\n", 1);
 		}
 		i++;
 	}
