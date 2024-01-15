@@ -1,3 +1,2 @@
 echo -nnnnnnnnnnn
-ctrl d renvoie pas la derniere valeur
 export test="echo la"

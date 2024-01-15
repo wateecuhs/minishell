@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 15:55:28 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/15 13:58:57 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/15 15:47:41 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ char	*ft_strjoin_free2(char *s1, char *s2);
 void	freetabn(char **tab, size_t n);
 int		dup_env(char ***env);
 char	*ft_itoa(int n);
-char	*expand_word(char *s, char **env);
+char	*expand_word(t_token *token, char *s, char **env);
 void	free_blocks(t_block *blocks);
 
 char	**ft_split_s(char *s, char *c);
@@ -139,7 +139,7 @@ char	*ft_strjoin(char *s1, char *s2);
 int		exec_builtin(t_block *blocks, char ***env, int fds[4], t_block *head);
 int		expand_dquotes_var(char **src, size_t *i, char **env);
 int		dup_job(int fd[2]);
-int		expand_word_var(char **src, size_t *i, char **env);
+int		expand_word_var(t_token *token, char **src, size_t *i, char **env);
 void	free_env(char **env);
 void	free_single_block(t_block *blocks);
 void	free_and_exit(t_block *blocks, char **env, int exitcode);

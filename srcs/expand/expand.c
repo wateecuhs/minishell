@@ -6,13 +6,13 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 18:55:11 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/15 13:04:40 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/15 15:24:44 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*expand_word(char *s, char **env)
+char	*expand_word(t_token *token, char *s, char **env)
 {
 	size_t	i;
 	int		val;
@@ -33,7 +33,7 @@ char	*expand_word(char *s, char **env)
 		}
 		if (s[i] == '$')
 		{
-			if (expand_word_var(&s, &i, env) == -1)
+			if (expand_word_var(token, &s, &i, env) == -1)
 				return (free(s), NULL);
 		}
 		i++;
@@ -54,7 +54,7 @@ int	expand(t_token *head, char **env)
 			tmp = tmp->next;
 		if (tmp->type == WORD)
 		{
-			tmp->value = expand_word(tmp->value, env);
+			tmp->value = expand_word(tmp, tmp->value, env);
 			if (tmp->value == NULL)
 				return (-1);
 		}

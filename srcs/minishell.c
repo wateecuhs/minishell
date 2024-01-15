@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 16:12:09 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/15 12:41:49 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/15 15:03:29 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,5 @@ int	main(int argc, char **argv, char **env)
 				lst_free(tokens);
 		}
 	}
-	return (0);
+	return (g_status_code);
 }

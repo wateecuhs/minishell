@@ -6,70 +6,61 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 11:14:56 by panger            #+#    #+#             */
-/*   Updated: 2024/01/15 17:28:33 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/15 16:36:35 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	has_spaces(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == ' ')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-int	loop_join(t_token *token, char *content, char **ret, char *endofstr)
+int	loop_join(char *content, char *s, char **ret)
 {
 	size_t	i;
 	char	**tab;
-	t_token *tmp;
 
 	i = 0;
-	if (!content)
-	{
-		*ret = ft_strjoin_free(*ret, endofstr);
-		return (0);
-	}
 	tab = ft_split(content, ' ');
 	if (!tab)
 		return (1);
-	if (content[0] != ' ')
-	{
-		*ret = ft_strjoin_free(*ret, tab[i++]);
-		if (has_spaces(content) == 0)
-			*ret = ft_strjoin_free(*ret, endofstr);
-	}
 	while (tab[i])
 	{
-		tmp = lst_new(WORD, ft_strdup(tab[i]));
-		tmp->next = token->next;
-		token->next = tmp;
-		token = token->next;
+		*ret = ft_strjoin_free(*ret, tab[i]);
+		if (!*ret)
+			return (free(s), freetab(tab), 1);
+		if (tab[i + 1] != NULL)
+			*ret = ft_strjoin_free(*ret, " ");
+		if (!*ret)
+			return (free(s), freetab(tab), 1);
 		i++;
 	}
 	freetab(tab);
 	return (0);
 }
 
-char	*expand_var_noquotes(t_token *token, size_t *start, size_t stop, char *content)
+char	*expand_var_noquotes(char *s, size_t *start, size_t stop, char *content)
 {
 	char	*ret;
+	int		do_free;
 
-	ret = ft_strndup(token->value, *start);
+	do_free = 0;
+	if (!content)
+	{
+		content = ft_strdup("");
+		do_free = 1;
+	}
+	if (!content)
+		return (free(s), NULL);
+	ret = ft_strndup(s, *start);
 	if (!ret)
-		return (free(token->value), free(content), NULL);
-	if (loop_join(token, content, &ret, &(token->value)[stop + 1]) == 1)
-		return (free(token->value), free(content), NULL);
+		return (free(s), free(content), NULL);
+	if (loop_join(content, s, &ret) == 1)
+		return (free(s), free(content), NULL);
 	*start = ft_strlen(ret) - 1;
-	free(token->value);
+	ret = ft_strjoin_free(ret, &s[stop + 1]);
+	if (!ret)
+		return (free(s), free(content), NULL);
+	free(s);
+	if (do_free)
+		free(content);
 	return (ret);
 }
 
@@ -87,11 +78,11 @@ int	expand_word_var(t_token *token, char **src, size_t *i, char **env)
 		if (!tmp)
 			return (-1);
 		tmp = parse_env(env, tmp);
-		s = expand_var_noquotes(token, i, env_var, tmp);
+		s = expand_var_noquotes(s, i, env_var, tmp);
+		if (!s)
+			return (free(tmp), -1);
 		if (tmp)
 			free(tmp);
-		if (!s)
-			return (-1);
 	}
 	*src = s;
 	return (0);

@@ -1,0 +1,12 @@
+config
+includes
+Makefile
+minishell
+minishell_tester
+out
+out1
+README.txt
+srcs
+suppress_valgrind.txt
+tests
+todo.txt
