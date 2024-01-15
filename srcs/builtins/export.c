@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 15:43:24 by panger            #+#    #+#             */
-/*   Updated: 2024/01/12 17:53:58 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/15 14:20:59 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int	check_name(char *s)
 		return (-1);
 	if (ft_isdigit(s[i]) == 1)
 		return (-1);
-	while (s[i] && s[i] != '=' && s[i] != '\n')
+	while (s[i] && is_valid_char(s[i]) == 1 && s[i] != '=' && s[i] != '\n')
 		i++;
 	if (s[i] == '\0' || s[i] == '=')
 	{
@@ -126,7 +126,6 @@ int	check_name(char *s)
 int	builtin_export(char **args, char ***env, int fd[2])
 {
 	size_t	i;
-	int		value;
 	int		exit_code;
 
 	if (ft_tablen(args) == 1)
@@ -137,9 +136,9 @@ int	builtin_export(char **args, char ***env, int fd[2])
 	{
 		if (check_name(args[i]) == -1)
 		{
-			write(fd[OUT], "bash: export: '", 15);
-			write(fd[OUT], args[i], ft_strlen(args[i]));
-			write(fd[OUT], "': not a valid identifier\n", 27);
+			write(2, "minishell: export: '", 20);
+			write(2, args[i], ft_strlen(args[i]));
+			write(2, "': not a valid identifier\n", 27);
 			exit_code = 1;
 			i++;
 			continue ;

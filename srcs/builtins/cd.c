@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:07:51 by panger            #+#    #+#             */
-/*   Updated: 2024/01/12 18:51:57 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/15 14:51:23 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	case_arg(char **args, char ***env)
 	j = 0;
 	while (ft_strncmp(tmp[j], "PWD=", 4) != 0)
 		j++;
-	
 	if (chdir(args[1]) == -1)
 		return (perror_prefix(args[1]), 1);
 	free(tmp[i]);
@@ -44,6 +43,8 @@ int	case_empty(char ***env)
 	int	k;
 
 	tmp = *env;
+	if (tmp == NULL)
+		return (0);
 	i = 0;
 	while (tmp[i] && ft_strncmp(tmp[i], "OLDPWD=", 7) != 0)
 		i++;

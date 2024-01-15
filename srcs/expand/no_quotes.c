@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 11:14:56 by panger            #+#    #+#             */
-/*   Updated: 2024/01/12 18:16:23 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/15 12:30:37 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int	loop_join(char *content, char *s, char **ret)
 		*ret = ft_strjoin_free(*ret, tab[i]);
 		if (!*ret)
 			return (free(s), freetab(tab), 1);
-		*ret = ft_strjoin_free(*ret, " ");
+		if (tab[i + 1] != NULL)
+			*ret = ft_strjoin_free(*ret, " ");
 		if (!*ret)
 			return (free(s), freetab(tab), 1);
 		i++;

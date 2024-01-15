@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 16:12:09 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/12 14:54:09 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/15 12:41:49 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,25 @@ int	main(int argc, char **argv, char **env)
 		return (perror("minishell"), 1);
 	while (1)
 	{
+		handling_sig(1);
 		input = readline("shell42 $ ");
+		if (!input)
+		{
+			printf("exit\n");
+			free_env(env);
+			break ;
+		}
 		tokens = ft_calloc(1, sizeof(t_token));
 		if (tokens == NULL)
 			return (1);
-		if (parsing(input, tokens) == 1)
-		{
-			//free(tokens);
-			//rl_clear_history();
-			//return (1);
-		}
 		if (*input)
 			add_history(input);
-		free(input);
-		execution_hub(tokens, &env);
+		if (parsing(input, tokens) == 0)
+		{
+			free(input);
+			if (execution_hub(tokens, &env) == -1)
+				lst_free(tokens);
+		}
 	}
 	return (0);
 }

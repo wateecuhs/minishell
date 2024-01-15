@@ -1,9 +1,0 @@
-export
-
-if no args
-	print list in format : declare -x key="value"
-
-if args
-	-> if already in env and env has no value for key -> replace
-	-> if already in env and env has value for key -> if
-	-> if not in env -> replace

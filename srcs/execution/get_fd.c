@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 14:45:19 by panger            #+#    #+#             */
-/*   Updated: 2024/01/12 10:45:38 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/15 11:24:37 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	get_fd(int fd[4], t_block *block, int i)
 {
 	int	in;
 	int	out;
+	t_redirs *tmp;
 
 	in = fd[2 + IN];
 	if (i == 0)
@@ -65,13 +66,14 @@ void	get_fd(int fd[4], t_block *block, int i)
 	out	= fd[WRITE];
 	if (block->next == NULL)
 		out = 1;
-	while (block->redirs)
+	tmp = block->redirs;
+	while (tmp)
 	{
-		if (block->redirs->type == REDIRECT_IN || block->redirs->type == HEREDOC)
-			get_in(&in, block->redirs);
-		if (block->redirs->type == REDIRECT_OUT || block->redirs->type == REDIRECT_APPEND)
-			get_out(&out, block->redirs);
-		block->redirs = block->redirs->next;
+		if (tmp->type == REDIRECT_IN || tmp->type == HEREDOC)
+			get_in(&in, tmp);
+		if (tmp->type == REDIRECT_OUT || tmp->type == REDIRECT_APPEND)
+			get_out(&out, tmp);
+		tmp = tmp->next;
 		if (in == -1 || out == -1)
 			break;
 	}

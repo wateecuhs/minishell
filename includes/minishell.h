@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 15:55:28 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/12 18:39:25 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/15 13:58:57 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <signal.h>
+# include <limits.h>
 
 # define IN 0
 # define OUT 1
@@ -101,8 +102,6 @@ char	**ft_split(char const *s, char c);
 void	*ft_calloc(size_t count, size_t size);
 void	lst_addback_blocks(t_block **lst, t_block *new);
 void	lst_addback_redirs(t_redirs **lst, t_redirs *new);
-void	print_lst(t_token *lst);
-void 	free_tokens(t_token *tokens);
 int		command_receiver(t_block *blocks, char ***env);
 void	get_fd(int fd[4], t_block *block, int i);
 int		ft_strcmp_hd(char *s1, char *s2);
@@ -165,7 +164,7 @@ int		builtin_env(int fd[2], char ***env);
 int		builtin_pwd(int fd[2]);
 int		builtin_echo(char **args, int fd[2]);
 int		builtin_unset(char ***env, char **args, int fd[2]);
-int		builint_exit(t_block *head, char ***env);
+int		builint_exit(t_block *head, char ***env, char **args);
 
 //static
 extern int g_status_code;

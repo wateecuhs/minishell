@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:29:27 by panger            #+#    #+#             */
-/*   Updated: 2024/01/12 18:04:01 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/15 14:27:25 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,16 @@
 
 int	dup_job(int fd[2])
 {
-	if (fd[IN] == -1 || fd[OUT] == -1)
-		return (-1);
 	if (fd[IN] != 0)
 	{
 		if (dup2(fd[IN], STDIN_FILENO) == -1)
-			return (-1);
+			return (perror_prefix("Broken pipe"), -1);
 		close(fd[IN]);
 	}
 	if (fd[OUT] != 1)
 	{
 		if (dup2(fd[OUT], STDOUT_FILENO) == -1)
-			return (-1);
+			return (perror_prefix("Broken pipe"), -1);
 		close(fd[OUT]);
 	}
 	return (0);
@@ -50,6 +48,8 @@ void	command_exec(t_block *block, int fd[4], char ***env, t_block *head)
 	int		exit_code;
 
 	exit_code = 0;
+	if (fd[2 + IN] == -1 || fd[2 + OUT] == -1)
+		free_and_exit(head, *env, 1);
 	if (is_cmd_builtin(block->cmd) == 0)
 	{
 		exit_code = exec_builtin(block, env, fd, head);
@@ -102,7 +102,12 @@ int	fork_exec(t_block *block, int fds[4], char ***env, t_block *head)
 
 	if (is_cmd_builtin(block->cmd) == 0 && head == block && block->next == NULL)
 	{
-		exec_builtin(block, env, fds, head);
+		if (fds[2 + IN] == -1 || fds[2 + OUT] == -1)
+		{
+			g_status_code = 1;
+			return (-1);
+		}
+		g_status_code = exec_builtin(block, env, fds, head);
 		return (-1);
 	}
 	pid = fork();

@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 15:21:36 by panger            #+#    #+#             */
-/*   Updated: 2024/01/12 16:52:39 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/15 13:45:29 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,6 @@ int	exec_builtin(t_block *blocks, char ***env, int fds[4], t_block *head)
 	else if (strcmp(blocks->cmd, "env") == 0)
 		return (builtin_env(&fds[2], env));
 	else if (strcmp(blocks->cmd, "exit") == 0)
-		return (builint_exit(head, env));
+		return (builint_exit(head, env, blocks->args));
 	return (0);
 }

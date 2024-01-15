@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: waticouz <waticouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/22 23:25:02 by waticouz          #+#    #+#             */
-/*   Updated: 2023/12/29 16:12:01 by waticouz         ###   ########.fr       */
+/*   Updated: 2024/01/15 11:32:23 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	*ft_strdup(char *s)
 	char	*dest;
 
 	srclen = 0;
+	if (!s)
+		return (NULL);
 	while (s[srclen])
 		srclen++;
 	i = 0;

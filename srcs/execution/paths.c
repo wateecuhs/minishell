@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 13:49:30 by panger            #+#    #+#             */
-/*   Updated: 2024/01/12 18:35:48 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/15 14:29:03 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*join_paths(char *s1, char *s2)
 	temp2 = ft_strjoin(s1, "/");
 	temp = ft_strdup(s2);
 	i = 0;
-	while (temp[i] && temp[i] != ' ')
+	while (temp[i])
 		i++;
 	if (temp[i])
 		temp[i] = '\0';
@@ -54,6 +54,12 @@ void	handle_error(char *cmd, int err)
 {
 	if (errno == 13 && err == 0)
 		perror_prefix(cmd);
+	else if (err == 0)
+	{
+		write(2, "minishell: ", 11);
+		write(2, cmd, ft_strlen(cmd));
+		write(2, ": No such file or directory\n", 28);
+	}
 	else
 	{
 		write(2, "minishell: ", 11);
@@ -86,6 +92,6 @@ char	*find_path(char *cmd, char **env)
 		free(temp);
 	}
 	freetab(paths);
-	handle_error(cmd, 0);
+	handle_error(cmd, 1);
 	return (NULL);
 }
