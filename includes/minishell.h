@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 15:55:28 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/15 15:47:41 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/15 18:28:44 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ void	free_env(char **env);
 void	free_single_block(t_block *blocks);
 void	free_and_exit(t_block *blocks, char **env, int exitcode);
 int		is_cmd_builtin(char *cmd);
-char	*find_in_env(char *str, char **env);
+char	**find_in_env(char *str, char **env);
 
 //gnl
 char	*get_next_line(int fd);

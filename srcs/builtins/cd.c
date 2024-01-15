@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:07:51 by panger            #+#    #+#             */
-/*   Updated: 2024/01/15 14:51:23 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/15 18:52:35 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ int	case_empty(char ***env)
 	int	k;
 
 	tmp = *env;
-	if (tmp == NULL)
-		return (0);
 	i = 0;
 	while (tmp[i] && ft_strncmp(tmp[i], "OLDPWD=", 7) != 0)
 		i++;
