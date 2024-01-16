@@ -6,41 +6,11 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:29:27 by panger            #+#    #+#             */
-/*   Updated: 2024/01/15 16:01:58 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/16 13:23:43 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	dup_job(int fd[2])
-{
-	if (fd[IN] != 0)
-	{
-		if (dup2(fd[IN], STDIN_FILENO) == -1)
-			return (perror_prefix("Broken pipe"), -1);
-		close(fd[IN]);
-	}
-	if (fd[OUT] != 1)
-	{
-		if (dup2(fd[OUT], STDOUT_FILENO) == -1)
-			return (perror_prefix("Broken pipe"), -1);
-		close(fd[OUT]);
-	}
-	return (0);
-}
-
-void	remove_empty(char ***env)
-{
-	int	i;
-
-	i = 0;
-	while ((*env)[i])
-	{
-		if (ft_strchr((*env)[i], '=') == -1)
-			(*env)[i] = NULL;
-		i++;
-	}
-}
 
 void	command_exec(t_block *block, int fd[4], char ***env, t_block *head)
 {
@@ -48,8 +18,7 @@ void	command_exec(t_block *block, int fd[4], char ***env, t_block *head)
 	int		exit_code;
 
 	exit_code = 0;
-	if (fd[2 + IN] == -1 || fd[2 + OUT] == -1)
-		free_and_exit(head, *env, 1);
+	check_fds(fd, head, env);
 	if (is_cmd_builtin(block->cmd) == 0)
 	{
 		exit_code = exec_builtin(block, env, fd, head);
@@ -57,7 +26,7 @@ void	command_exec(t_block *block, int fd[4], char ***env, t_block *head)
 	}
 	if (dup_job(&fd[2]) == -1)
 		free_and_exit(head, *env, 1);
-	if (!(block->cmd) )
+	if (!(block->cmd))
 		free_and_exit(head, *env, 0);
 	path = find_path(block->cmd, *env);
 	if (!path)
@@ -90,7 +59,7 @@ int	wait_pids(t_block *blocks, int code)
 		blocks = blocks->next;
 	}
 	if (WIFEXITED(g_status_code))
-		g_status_code = WEXITSTATUS(g_status_code);	
+		g_status_code = WEXITSTATUS(g_status_code);
 	if (code >= 0)
 		g_status_code = code;
 	return (g_status_code);
@@ -123,7 +92,7 @@ int	fork_exec(t_block *block, int fds[4], char ***env, t_block *head)
 
 int	command_receiver(t_block *blocks, char ***env)
 {
-	t_block *head;
+	t_block	*head;
 	int		fds[4];
 	int		i;
 	int		code;

@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 15:02:05 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/12 10:35:57 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/16 13:11:06 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	is_valid_char(int c)
 
 int	char_valid(char *s)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (s[i] == '=')

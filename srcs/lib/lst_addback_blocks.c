@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 18:12:38 by panger            #+#    #+#             */
-/*   Updated: 2024/01/08 18:38:13 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/16 13:10:48 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,5 @@ void	lst_addback_redirs(t_redirs **lst, t_redirs *new)
 	temp = *lst;
 	while (temp->next)
 		temp = temp->next;
-	temp->next = new;	
+	temp->next = new;
 }

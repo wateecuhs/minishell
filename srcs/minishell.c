@@ -6,13 +6,13 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 16:12:09 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/15 15:03:29 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/16 13:20:54 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int g_status_code;
+int	g_status_code;
 
 // Main function for testing
 int	main(int argc, char **argv, char **env)
@@ -28,11 +28,7 @@ int	main(int argc, char **argv, char **env)
 		handling_sig(1);
 		input = readline("shell42 $ ");
 		if (!input)
-		{
-			printf("exit\n");
-			free_env(env);
-			break ;
-		}
+			return (printf("exit\n"), free_env(env), g_status_code);
 		tokens = ft_calloc(1, sizeof(t_token));
 		if (tokens == NULL)
 			return (1);

@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 17:57:42 by panger            #+#    #+#             */
-/*   Updated: 2024/01/12 18:12:05 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/16 10:58:16 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*get_cmd(t_token *token)
 {
-	t_token *node;
+	t_token	*node;
 	char	*tmp;
 
 	node = token;
@@ -38,7 +38,7 @@ char	*get_cmd(t_token *token)
 char	**get_args(t_token *token)
 {
 	char	**ret;
-	t_token *node;
+	t_token	*node;
 	int		i;
 
 	i = 0;
@@ -65,7 +65,7 @@ char	**get_args(t_token *token)
 
 t_redirs	*assign_redir(t_token *token)
 {
-	t_redirs *ret;
+	t_redirs	*ret;
 
 	ret = (t_redirs *)malloc(sizeof(t_redirs));
 	if (!ret)
@@ -74,7 +74,11 @@ t_redirs	*assign_redir(t_token *token)
 	ret->type = token->type;
 	ret->value = ft_strdup(token->next->value);
 	if (ret->type == HEREDOC)
+	{
 		ret->heredoc_fd = get_heredoc(token->next->value);
+		if (ret->heredoc_fd == -1)
+			return (free(ret->value), free(ret), NULL);
+	}
 	else
 		ret->heredoc_fd = -1;
 	if (!(ret->value))
@@ -84,8 +88,8 @@ t_redirs	*assign_redir(t_token *token)
 
 t_redirs	*get_redirs(t_token *token)
 {
-	t_token *node;
-	t_redirs *ret;
+	t_token		*node;
+	t_redirs	*ret;
 
 	node = token;
 	ret = NULL;
@@ -93,10 +97,10 @@ t_redirs	*get_redirs(t_token *token)
 	{
 		if (node->type == REDIRECT_IN || node->type == REDIRECT_OUT
 			|| node->type == REDIRECT_APPEND || node->type == HEREDOC)
-			{
-				lst_addback_redirs(&ret, assign_redir(node));
-				node = node->next;
-			}
+		{
+			lst_addback_redirs(&ret, assign_redir(node));
+			node = node->next;
+		}
 		node = node->next;
 	}
 	return (ret);

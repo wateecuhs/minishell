@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 13:49:30 by panger            #+#    #+#             */
-/*   Updated: 2024/01/15 15:08:41 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/16 13:13:00 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,26 @@ char	*join_paths(char *s1, char *s2)
 	return (ret);
 }
 
+int	is_dir(char *path)
+{
+	struct stat	statbuf;
+
+	if (stat(path, &statbuf) == 0)
+		return (0);
+	if (S_ISDIR(statbuf.st_mode) == 1)
+		return (1);
+	return (0);
+}
+
 void	handle_error(char *cmd, int err)
 {
+	if (is_dir(cmd) == 1 && err == 0)
+	{
+		write(2, "minishell: ", 11);
+		write(2, cmd, ft_strlen(cmd));
+		write(2, ": Is a directory\n", 17);
+		return ;
+	}
 	if (errno == 13 && err == 0)
 		perror_prefix(cmd);
 	else if (err == 0)
@@ -70,14 +88,15 @@ void	handle_error(char *cmd, int err)
 
 char	*find_path(char *cmd, char **env)
 {
-	int		j;
-	char	**paths;
-	char	*temp;
+	int			j;
+	char		**paths;
+	char		*temp;
 
 	j = 0;
 	if (ft_strchr(cmd, '/') != -1)
 	{
-		if (access(cmd, F_OK) != -1 && access(cmd, X_OK) != -1)
+		if (access(cmd, F_OK) != -1 && access(cmd, X_OK) != -1
+			&& is_dir(cmd) != 1)
 			return (cmd);
 		return (handle_error(cmd, 0), NULL);
 	}
@@ -87,11 +106,10 @@ char	*find_path(char *cmd, char **env)
 	while (paths[j])
 	{
 		temp = join_paths(paths[j++], cmd);
-		if (access(temp, F_OK) != -1 && access(temp, X_OK) != -1)
-				return (freetab(paths), temp);
+		if (access(temp, F_OK) != -1 && access(temp, X_OK) != -1
+			&& is_dir(temp) != 1)
+			return (freetab(paths), temp);
 		free(temp);
 	}
-	freetab(paths);
-	handle_error(cmd, 1);
-	return (NULL);
+	return (freetab(paths), handle_error(cmd, 1), NULL);
 }

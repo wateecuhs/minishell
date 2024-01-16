@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 18:36:52 by panger            #+#    #+#             */
-/*   Updated: 2024/01/15 18:28:46 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/16 13:09:03 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	**find_in_env(char *str, char **env)
 {
 	size_t	i;
-	int 	equal_pos;
+	int		equal_pos;
 
 	i = 0;
 	while (env[i])

@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 16:27:17 by panger            #+#    #+#             */
-/*   Updated: 2024/01/12 13:18:12 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/16 13:33:26 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ static int	nothing_after_pipe(char *str, int i)
 	int	before;
 
 	before = i;
-	// before -= 2;
 	while (before >= 0 && str[before] != '|')
 		before--;
 	before--;
-	while (before >= 0 && (str[before] == ' ' || str[before] == '\t' || str[before] == '\n'))
+	while (before >= 0 && (str[before] == ' ' || str[before] == '\t'
+			|| str[before] == '\n'))
 		before--;
 	if (before <= 0 || str[before] == '|')
 		return (1);
@@ -58,30 +58,38 @@ static int	nothing_after_pipe(char *str, int i)
 	return (0);
 }
 
+int	sub_error(char curr, char next)
+{
+	if (curr == '<')
+	{
+		if (next == '<')
+			return (printf("parse error near '<<'\n"), 1);
+		else
+			return (printf("parse error near '<'\n"), 1);
+	}
+	else if (curr == '>')
+	{
+		if (next == '>')
+			return (printf("parse error near '>>'\n"), 1);
+		else
+			return (printf("parse error near '>'\n"), 1);
+	}
+	return (0);
+}
+
 static int	find_error(char *str, int i, int initial)
 {
 	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\n')
 		i++;
 	if (str[i] == '|' || str[initial - 1] == '|')
 	{
-		if (nothing_after_pipe(str, i) == 1 || str[initial - 1] == '>' || str[initial - 1] == '<')
+		if (nothing_after_pipe(str, i) == 1 || str[initial - 1] == '>'
+			|| str[initial - 1] == '<')
 			return (printf("parse error near '|'\n"), 1);
 		return (0);
 	}
-	else if (str[i] == '<')
-	{
-		if (str[i + 1] == '<')
-			return (printf("parse error near '<<'\n"), 1);
-		else
-			return (printf("parse error near '<'\n"), 1);
-	}
-	else if (str[i] == '>')
-	{
-		if (str[i + 1] == '>')
-			return (printf("parse error near '>>'\n"), 1);
-		else
-			return (printf("parse error near '>'\n"), 1);
-	}
+	else if (sub_error(str[i], str[i + 1]) == 1)
+		return (1);
 	if (str[i] == '\0')
 		return (printf("parse error near '\\n'\n"), 1);
 	return (0);
@@ -106,7 +114,7 @@ int	check_if_broken_enum(char *str)
 		else if (str[i] == '|' || str[i] == '<' || str[i] == '>')
 		{
 			if ((str[i + 1] == '<' || str[i + 1] == '>') && str[i
-				+ 1] == str[i])
+					+ 1] == str[i])
 				i++;
 			if (find_error(str, i + 1, i + 1) == 1)
 				return (1);

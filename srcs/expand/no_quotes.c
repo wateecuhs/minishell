@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 11:14:56 by panger            #+#    #+#             */
-/*   Updated: 2024/01/15 17:28:33 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/16 13:30:07 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,20 @@ int	has_spaces(char *str)
 	return (0);
 }
 
+void	idk(t_token *token, char *value)
+{
+	t_token	*tmp;
+
+	tmp = lst_new(WORD, ft_strdup(value));
+	tmp->next = token->next;
+	token->next = tmp;
+	token = token->next;
+}
+
 int	loop_join(t_token *token, char *content, char **ret, char *endofstr)
 {
 	size_t	i;
 	char	**tab;
-	t_token *tmp;
 
 	i = 0;
 	if (!content)
@@ -49,17 +58,15 @@ int	loop_join(t_token *token, char *content, char **ret, char *endofstr)
 	}
 	while (tab[i])
 	{
-		tmp = lst_new(WORD, ft_strdup(tab[i]));
-		tmp->next = token->next;
-		token->next = tmp;
-		token = token->next;
+		idk(token, tab[i]);
 		i++;
 	}
 	freetab(tab);
 	return (0);
 }
 
-char	*expand_var_noquotes(t_token *token, size_t *start, size_t stop, char *content)
+char	*expand_var_noquotes(t_token *token, size_t *start,
+			size_t stop, char *content)
 {
 	char	*ret;
 

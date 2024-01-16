@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 17:34:56 by panger            #+#    #+#             */
-/*   Updated: 2024/01/10 17:09:43 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/16 13:09:45 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	freetab(char **tab)
 	}
 	free(tab);
 }
+
 void	freetabn(char **tab, size_t n)
 {
 	size_t	i;

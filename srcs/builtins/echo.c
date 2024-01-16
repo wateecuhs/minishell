@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 16:56:55 by panger            #+#    #+#             */
-/*   Updated: 2024/01/15 17:45:56 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/16 13:06:14 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	is_n(char *str)
 	return (1);
 }
 
-int	builtin_echo(char **args,int fd[2])
+int	builtin_echo(char **args, int fd[2])
 {
 	int	i;
 	int	nl;

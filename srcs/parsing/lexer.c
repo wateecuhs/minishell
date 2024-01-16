@@ -6,23 +6,23 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 16:27:09 by panger            #+#    #+#             */
-/*   Updated: 2024/01/10 17:37:26 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/16 13:08:45 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	get_token_type(char *tokenValue)
+int	get_token_type(char *tokenvalue)
 {
-	if (ft_strcmp(tokenValue, "|") == 0)
+	if (ft_strcmp(tokenvalue, "|") == 0)
 		return (PIPE);
-	else if (ft_strcmp(tokenValue, "<") == 0)
+	else if (ft_strcmp(tokenvalue, "<") == 0)
 		return (REDIRECT_IN);
-	else if (ft_strcmp(tokenValue, ">") == 0)
+	else if (ft_strcmp(tokenvalue, ">") == 0)
 		return (REDIRECT_OUT);
-	else if (ft_strcmp(tokenValue, ">>") == 0)
+	else if (ft_strcmp(tokenvalue, ">>") == 0)
 		return (REDIRECT_APPEND);
-	else if (ft_strcmp(tokenValue, "<<") == 0)
+	else if (ft_strcmp(tokenvalue, "<<") == 0)
 		return (HEREDOC);
 	else
 		return (WORD);
@@ -46,7 +46,7 @@ int	len_to_quote(char *str)
 			return (i);
 		else if (compt == 2)
 		{
-			pos = i + 1; //check
+			pos = i + 1;
 			if (str[i + 1] == '\"' || str[i + 1] == '\'')
 				compt = 0;
 		}
@@ -82,7 +82,7 @@ int	len_to_space(char *str)
 
 int	tokenize(t_token **token, char *input)
 {
-	char	*tokenValue;
+	char	*tokenvalue;
 	int		i;
 
 	i = -1;
@@ -94,16 +94,16 @@ int	tokenize(t_token **token, char *input)
 			{
 				if (len_to_quote(input + i) == -1)
 					return (1);
-				tokenValue = ft_substr(input, i, len_to_quote(input + i));
+				tokenvalue = ft_substr(input, i, len_to_quote(input + i));
 			}
 			else
-				tokenValue = ft_substr(input, i, len_to_space(input + i));
-			if (tokenValue == NULL)
+				tokenvalue = ft_substr(input, i, len_to_space(input + i));
+			if (tokenvalue == NULL)
 				return (1);
-			if (ft_lstadd_back(token, lst_new(get_token_type(tokenValue),
-						tokenValue)) == 1)
+			if (ft_lstadd_back(token, lst_new(get_token_type(tokenvalue),
+						tokenvalue)) == 1)
 				return (1);
-			i += ft_strlen(tokenValue) - 1;
+			i += ft_strlen(tokenvalue) - 1;
 		}
 	}
 	return (0);

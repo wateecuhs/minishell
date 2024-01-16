@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 15:43:24 by panger            #+#    #+#             */
-/*   Updated: 2024/01/15 14:20:59 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/16 13:04:53 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ int	in_env(char *string, char **env)
 			j++;
 		if ((env[i][j] == '\0' || env[i][j] == '=') && string[j] == '=')
 			return (2);
-		if ((env[i][j] == '\0' && string[j] == '\0') || (env[i][j] == '=' && string[j] == '\0'))
+		if ((env[i][j] == '\0' && string[j] == '\0')
+			|| (env[i][j] == '=' && string[j] == '\0'))
 			return (1);
 		i++;
 	}
@@ -103,24 +104,6 @@ int	print_export(char **env, int fd[2])
 		i++;
 	}
 	return (0);
-}
-
-int	check_name(char *s)
-{
-	size_t	i;
-
-	i = 0;
-	if (is_valid_char(s[i]) == 0)
-		return (-1);
-	if (ft_isdigit(s[i]) == 1)
-		return (-1);
-	while (s[i] && is_valid_char(s[i]) == 1 && s[i] != '=' && s[i] != '\n')
-		i++;
-	if (s[i] == '\0' || s[i] == '=')
-	{
-		return (0);
-	}
-	return (-1);
 }
 
 int	builtin_export(char **args, char ***env, int fd[2])

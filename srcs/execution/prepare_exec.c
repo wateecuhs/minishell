@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 17:23:52 by panger            #+#    #+#             */
-/*   Updated: 2024/01/12 18:09:11 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/16 13:13:16 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_block	*get_block(t_token *token)
 {
-	t_block *ret;
+	t_block	*ret;
 
 	ret = (t_block *)malloc(sizeof(t_block));
 	if (!ret)
@@ -38,7 +38,7 @@ t_token	*next_block(t_token *tokens)
 
 t_block	*words_to_blocks(t_token *tokens)
 {
-	t_token *lst;
+	t_token	*lst;
 	t_block	*blocks;
 
 	blocks = NULL;
@@ -54,7 +54,7 @@ t_block	*words_to_blocks(t_token *tokens)
 int	count_blocks(t_token *tokens)
 {
 	int		i;
-	t_token *node;
+	t_token	*node;
 
 	i = 1;
 	node = tokens;
@@ -70,7 +70,7 @@ int	count_blocks(t_token *tokens)
 int	count_words_in_block(t_token *tokens)
 {
 	int		i;
-	t_token *node;
+	t_token	*node;
 
 	i = 0;
 	node = tokens;

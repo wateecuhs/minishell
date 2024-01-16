@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 19:22:51 by panger            #+#    #+#             */
-/*   Updated: 2024/01/12 17:55:54 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/16 13:26:30 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	in_args(char *env_str, char **args)
 	return (0);
 }
 
-int	dup_env_unset(char ***env,  char **args)
+int	dup_env_unset(char ***env, char **args)
 {
 	char	**tmp;
 	int		len;
@@ -68,7 +68,7 @@ int	check_name_unset(char *s)
 		return (-1);
 	if (ft_isdigit(s[i]) == 1)
 		return (-1);
-	while (s[i] && s[i] != '=' && s[i] != '\n')
+	while (s[i] && is_valid_char(s[i]) == 1 && s[i] != '=' && s[i] != '\n')
 		i++;
 	if (s[i] == '\0')
 		return (0);
