@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 14:17:36 by panger            #+#    #+#             */
-/*   Updated: 2024/01/16 13:12:19 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/16 13:51:27 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ void	ft_putnbr(unsigned int nb)
 
 static void	error_heredoc(char *limiter, int line)
 {
-	char	*tmp;
-
 	write(2, "minishell : warning: here-document at line ", 43);
 	ft_putnbr(line);
 	write(2, " delimited by end-of-file (wanted '", 35);

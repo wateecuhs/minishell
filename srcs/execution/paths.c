@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 13:49:30 by panger            #+#    #+#             */
-/*   Updated: 2024/01/16 13:13:00 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/16 14:36:36 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	is_dir(char *path)
 
 void	handle_error(char *cmd, int err)
 {
-	if (is_dir(cmd) == 1 && err == 0)
+	if (err == 0 && is_dir(cmd) == 1)
 	{
 		write(2, "minishell: ", 11);
 		write(2, cmd, ft_strlen(cmd));

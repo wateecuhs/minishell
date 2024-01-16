@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 15:55:28 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/16 13:38:00 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/16 13:51:47 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,7 @@ int			check_name(char *s);
 void		check_fds(int fd[4], t_block *head, char ***env);
 void		remove_empty(char ***env);
 int			is_line_to_pop(char *env_line, char *str);
+void		handling_sig(int mod);
 
 //gnl
 char		*get_next_line(int fd);

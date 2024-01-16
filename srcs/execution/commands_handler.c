@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:29:27 by panger            #+#    #+#             */
-/*   Updated: 2024/01/16 13:23:43 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/16 15:03:28 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	wait_pids(t_block *blocks, int code)
 			waitpid(blocks->pid, &g_status_code, 0);
 		blocks = blocks->next;
 	}
-	if (WIFEXITED(g_status_code))
+	if (WIFEXITED(g_status_code)) //WIFSIGNALED -> a regarder
 		g_status_code = WEXITSTATUS(g_status_code);
 	if (code >= 0)
 		g_status_code = code;
@@ -92,7 +92,7 @@ int	fork_exec(t_block *block, int fds[4], char ***env, t_block *head)
 
 int	command_receiver(t_block *blocks, char ***env)
 {
-	t_block	*head;
+	t_block *head;
 	int		fds[4];
 	int		i;
 	int		code;
@@ -100,8 +100,9 @@ int	command_receiver(t_block *blocks, char ***env)
 	i = 0;
 	code = -1;
 	head = blocks;
-	while (blocks)
+	while (blocks && g_status_code != 131)
 	{
+		handling_sig(2);
 		if (pipe(fds) == -1)
 			error_msg(NULL);
 		get_fd(fds, blocks, i);

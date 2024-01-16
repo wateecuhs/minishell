@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 11:43:58 by panger            #+#    #+#             */
-/*   Updated: 2024/01/15 14:01:56 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/16 14:40:24 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	ft_is_valid_exit(char *str)
 	i = 0;
 	if (!str)
 		return (0);
+	while (str[i] && (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13)))
+		i++;
 	if (str[i] == '-' || str[i] == '+')
 		i++;
 	while (str[i])
@@ -39,6 +41,8 @@ int	ft_atoi_exit(char *str)
 	i = 0;
 	tot = 0;
 	minus = 1;
+	while (str[i] && (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13)))
+		i++;
 	if (str[i] == '-' || str[i] == '+')
 	{
 		if (str[i] == '-')

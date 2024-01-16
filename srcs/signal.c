@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 19:57:59 by dcindrak          #+#    #+#             */
-/*   Updated: 2024/01/16 13:15:11 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/16 14:21:48 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,16 +54,20 @@ void	handling_sig(int mod)
 {
 	if (mod == 1)
 	{
+		signal(SIGINT, SIG_IGN);
 		signal(SIGINT, sig_handler);
 		signal(SIGQUIT, SIG_IGN);
 	}
 	if (mod == 2)
 	{
+		signal(SIGINT, SIG_IGN);
+		signal(SIGQUIT, SIG_IGN);
 		signal(SIGINT, sig_child_handler);
 		signal(SIGQUIT, sig_child_handler);
 	}
 	if (mod == 3)
 	{
+		signal(SIGINT, SIG_IGN);
 		signal(SIGINT, sig_heredoc_handler);
 		signal(SIGQUIT, SIG_IGN);
 	}
