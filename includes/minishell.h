@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 15:55:28 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/16 13:51:47 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/17 12:08:37 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include <signal.h>
 # include <limits.h>
 # include <sys/stat.h>
+# include <signal.h>
 
 # define IN 0
 # define OUT 1
