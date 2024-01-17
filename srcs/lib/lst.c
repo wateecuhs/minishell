@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 15:50:07 by dcindrak          #+#    #+#             */
-/*   Updated: 2024/01/16 13:17:50 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/17 18:07:11 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ t_token	*lst_new(t_tokentype type, char *value)
 	new->type = type;
 	new->value = value;
 	new->next = NULL;
+	new->ignore = 0;
 	return (new);
 }
 

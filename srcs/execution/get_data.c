@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 17:57:42 by panger            #+#    #+#             */
-/*   Updated: 2024/01/17 17:14:15 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/17 17:22:27 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	**get_args(t_token *token)
 	return (ret);
 }
 
-t_redirs	*assign_redir(t_token *token)
+t_redirs	*assign_redir(t_token *token, char **env)
 {
 	t_redirs	*ret;
 
@@ -76,13 +76,13 @@ t_redirs	*assign_redir(t_token *token)
 	if (!(ret->value))
 		return (free(ret), NULL);
 	if (ret->type == HEREDOC)
-		ret->heredoc_fd = get_heredoc(token->next->value);
+		ret->heredoc_fd = get_heredoc(token->next->value, env);
 	else
 		ret->heredoc_fd = -1;
 	return (ret);
 }
 
-t_redirs	*get_redirs(t_token *token)
+t_redirs	*get_redirs(t_token *token, char **env)
 {
 	t_token		*node;
 	t_redirs	*ret;
@@ -94,7 +94,7 @@ t_redirs	*get_redirs(t_token *token)
 		if (node->type == REDIRECT_IN || node->type == REDIRECT_OUT
 			|| node->type == REDIRECT_APPEND || node->type == HEREDOC)
 		{
-			lst_addback_redirs(&ret, assign_redir(node));
+			lst_addback_redirs(&ret, assign_redir(node, env));
 			node = node->next;
 		}
 		node = node->next;

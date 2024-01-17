@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:07:51 by panger            #+#    #+#             */
-/*   Updated: 2024/01/16 13:37:54 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/17 18:34:46 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,14 @@ int	add_to_env_cd(char *str, char ***env)
 	return (0);
 }
 
-int	case_arg(char **args, char ***env)
+int	case_arg(char *path, char ***env)
 {
 	char	**pwd;
 	char	**oldpwd;
 
+	if (chdir(path) == -1)
+		return (perror_prefix(path), 1);
 	oldpwd = find_in_env("OLDPWD", *env);
-	if (chdir(args[1]) == -1)
-		return (perror_prefix(args[1]), 1);
 	pop_from_env(env, "OLDPWD");
 	pwd = find_in_env("PWD", *env);
 	if (pwd)
@@ -108,12 +108,24 @@ int	case_empty(char ***env)
 int	builtin_cd(char **args, char ***env)
 {
 	char	**tmp;
+	char	**tmp_oldpwd;
 
 	tmp = *env;
 	if (ft_tablen(args) > 2)
 		return (write(2, "minishell: cd: too many arguments\n", 34), 1);
 	if (ft_tablen(args) == 2)
-		return (case_arg(args, env));
+	{
+		if (ft_strcmp(args[1], "~") == 0)
+			return (case_empty(env));
+		else if (ft_strcmp(args[1], "-") == 0)
+		{
+			tmp_oldpwd = find_in_env("OLDPWD", *env);
+			if (!tmp_oldpwd)
+				return (write(2, "minishell: cd: OLDPWD not set\n", 30), 1);
+			return (case_arg((&(*tmp_oldpwd)[7]), env));
+		}
+		return (case_arg(args[1], env));
+	}
 	else
 		return (case_empty(env));
 	return (0);

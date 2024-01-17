@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 15:07:33 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/15 12:27:43 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/17 17:30:44 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,8 @@ int	expand_double_quotes(char **src, size_t *i, char **env)
 	char	*s;
 
 	s = *src;
-	s = ft_offset(s, *i);
+	if (s[*i] == '"')
+		s = ft_offset(s, *i);
 	while (s[*i] && s[*i] != '"')
 	{
 		if (s[*i] == '$')

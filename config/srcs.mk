@@ -44,6 +44,7 @@ SRCS_EXEC	=		execution/get_data.c \
 					execution/errors.c \
 					execution/paths.c \
 					execution/heredoc.c \
+					execution/heredoc_tools.c \
 					execution/cmd_handling_tools.c
 
 SRCS_BUILTINS=		builtins/cd.c \

@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 15:55:28 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/17 12:08:37 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/17 18:21:56 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_token
 	char			*value;
 	struct s_token	*next;
 	struct s_token	*prev;
+	int				ignore;
 }	t_token;
 
 typedef struct s_redirs
@@ -117,21 +118,19 @@ void		free_blocks(t_block *blocks);
 char		**ft_split_s(char *s, char *c);
 void		freetab(char **tab);
 char		*has_heredoc(t_token *tokens);
-int			get_heredoc(char *limiter);
+int			get_heredoc(char *limiter, char **env);
 
 int			expand(t_token *head, char **env);
 int			expand_double_quotes(char **src, size_t *i, char **env);
 int			get_var_name(char *s, size_t i);
 char		*parse_env(char **env, char *to_find);
 int			expand_single_quotes(char **src, size_t *i);
-int			count_blocks(t_token *tokens);
-int			count_words_in_block(t_token *tokens);
-t_block		*words_to_blocks(t_token *tokens);
+t_block		*words_to_blocks(t_token *tokens, char **env);
 int			execution_hub(t_token *tokens, char ***env);
 char		*get_cmd(t_token *token);
 char		**get_args(t_token *token);
-t_redirs	*assign_redir(t_token *token);
-t_redirs	*get_redirs(t_token *token);
+t_redirs	*assign_redir(t_token *token, char **env);
+t_redirs	*get_redirs(t_token *token, char **env);
 int			parsing(char *input, t_token *tokens);
 int			*set_fd_to_use(int *fd, int fd_in, int fd_out);
 char		*find_path(char *cmd, char **env);
@@ -153,6 +152,7 @@ void		check_fds(int fd[4], t_block *head, char ***env);
 void		remove_empty(char ***env);
 int			is_line_to_pop(char *env_line, char *str);
 void		handling_sig(int mod);
+char		*expand_limiter(char *s, char **env);
 
 //gnl
 char		*get_next_line(int fd);

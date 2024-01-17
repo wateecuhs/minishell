@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 16:56:55 by panger            #+#    #+#             */
-/*   Updated: 2024/01/16 13:06:14 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/17 17:44:47 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	builtin_echo(char **args, int fd[2])
 	if (ft_tablen(args) <= 1)
 		return (write(fd[OUT], "\n", 1), 0);
 	i = 1;
-	if (args[1][0] == '-' && is_n(&args[1][1]))
+	while (args[i][0] == '-' && is_n(&args[i][1]))
 	{
 		nl = 1;
 		i++;

@@ -1,2 +1,2 @@
-echo -nnnnnnnnnnn
-export test="echo la"
+signaux
+heredoc qui peut crash si trop de chars	

@@ -2,7 +2,7 @@ config
 includes
 Makefile
 minishell
-out
+newfile
 README.txt
 srcs
 suppress_valgrind.txt

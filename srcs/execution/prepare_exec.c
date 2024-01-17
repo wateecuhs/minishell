@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 17:23:52 by panger            #+#    #+#             */
-/*   Updated: 2024/01/17 17:14:00 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/17 17:23:15 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	check_hd(t_redirs *redir)
 	return (1);
 }
 
-t_block	*get_block(t_token *token)
+t_block	*get_block(t_token *token, char **env)
 {
 	t_block	*ret;
 
@@ -36,7 +36,7 @@ t_block	*get_block(t_token *token)
 	ret->next = NULL;
 	ret->cmd = get_cmd(token);
 	ret->args = get_args(token);
-	ret->redirs = get_redirs(token);
+	ret->redirs = get_redirs(token, env);
 	if (check_hd(ret->redirs) == 0)
 	{
 		free_single_block(ret);
@@ -55,7 +55,7 @@ t_token	*next_block(t_token *tokens)
 	return (tokens);
 }
 
-t_block	*words_to_blocks(t_token *tokens)
+t_block	*words_to_blocks(t_token *tokens, char **env)
 {
 	t_token	*lst;
 	t_block	*blocks;
@@ -65,7 +65,7 @@ t_block	*words_to_blocks(t_token *tokens)
 	lst = tokens;
 	while (lst)
 	{
-		tmp = get_block(lst);
+		tmp = get_block(lst, env);
 		if (!tmp)
 		{
 			free_blocks(blocks);

@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 14:17:36 by panger            #+#    #+#             */
-/*   Updated: 2024/01/17 17:14:19 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/17 17:29:27 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,12 @@ static void	error_heredoc(char *limiter, int line)
 	write(2, "')\n", 3);
 }
 
-int	get_heredoc(char *limiter)
+int	get_heredoc(char *limiter, char **env)
 {
 	char	*string;
 	int		p[2];
 	int		line;
+	size_t	i;
 
 	pipe(p);
 	g_status_code = 0;
@@ -51,6 +52,8 @@ int	get_heredoc(char *limiter)
 	while (g_status_code != 130 && string != NULL && ft_strcmp_hd(string,
 			limiter) != 0)
 	{
+		i = 0;
+		expand_double_quotes(&string, &i, env);
 		if (write(p[WRITE], string, ft_strlen(string)) == -1)
 			perror_prefix("write error");
 		free(string);

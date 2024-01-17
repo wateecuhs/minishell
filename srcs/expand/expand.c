@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 18:55:11 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/15 15:24:44 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/17 18:27:03 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,13 @@ int	expand(t_token *head, char **env)
 	while (tmp)
 	{
 		if (tmp->type == HEREDOC)
+		{
+			tmp->next->value = expand_limiter(tmp->next->value, env);
+			if (tmp->next->value == NULL)
+				return (-1);
 			tmp = tmp->next;
-		if (tmp->type == WORD)
+		}
+		else if (tmp->type == WORD && tmp->ignore == 0)
 		{
 			tmp->value = expand_word(tmp, tmp->value, env);
 			if (tmp->value == NULL)
