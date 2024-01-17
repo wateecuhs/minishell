@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:29:27 by panger            #+#    #+#             */
-/*   Updated: 2024/01/16 15:03:28 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/17 15:46:44 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,14 @@ int	fork_exec(t_block *block, int fds[4], char ***env, t_block *head)
 		g_status_code = exec_builtin(block, env, fds, head);
 		return (-1);
 	}
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	pid = fork();
 	if (pid == -1)
 		error_msg(NULL);
 	if (pid == 0)
 	{
+		handling_sig(2);
 		close(fds[READ]);
 		command_exec(block, fds, env, head);
 	}
@@ -115,5 +118,6 @@ int	command_receiver(t_block *blocks, char ***env)
 	close(fds[IN]);
 	close(fds[OUT]);
 	i = wait_pids(head, code);
+	handling_sig(1);
 	return (i);
 }

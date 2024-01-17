@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 17:57:42 by panger            #+#    #+#             */
-/*   Updated: 2024/01/16 10:58:16 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/17 15:43:57 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,6 @@ t_redirs	*assign_redir(t_token *token)
 	if (ret->type == HEREDOC)
 	{
 		ret->heredoc_fd = get_heredoc(token->next->value);
-		if (ret->heredoc_fd == -1)
-			return (free(ret->value), free(ret), NULL);
 	}
 	else
 		ret->heredoc_fd = -1;

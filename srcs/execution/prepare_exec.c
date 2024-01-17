@@ -6,11 +6,25 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 17:23:52 by panger            #+#    #+#             */
-/*   Updated: 2024/01/16 13:13:16 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/17 15:44:13 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	check_hd(t_redirs *redir)
+{
+	t_redirs	*tmp;
+
+	tmp = redir;
+	while (tmp)
+	{
+		if (tmp->type == HEREDOC && tmp->heredoc_fd == -1)
+			return (0);
+		tmp = tmp->next;
+	}
+	return (1);
+}
 
 t_block	*get_block(t_token *token)
 {
@@ -23,6 +37,11 @@ t_block	*get_block(t_token *token)
 	ret->cmd = get_cmd(token);
 	ret->args = get_args(token);
 	ret->redirs = get_redirs(token);
+	if (check_hd(ret->redirs) == 0)
+	{
+		free_single_block(ret);
+		return (NULL);
+	}
 	ret->pid = -1;
 	return (ret);
 }

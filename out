@@ -1,0 +1,9 @@
+config
+includes
+Makefile
+minishell
+out
+README.txt
+srcs
+suppress_valgrind.txt
+todo.txt
