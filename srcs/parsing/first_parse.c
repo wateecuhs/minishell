@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 16:27:17 by panger            #+#    #+#             */
-/*   Updated: 2024/01/16 13:33:26 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/16 15:34:11 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,18 @@ static int	nothing_after_pipe(char *str, int i)
 	return (0);
 }
 
-int	sub_error(char curr, char next)
+int	sub_error(char *str, int i)
 {
-	if (curr == '<')
+	if (str[i] == '<')
 	{
-		if (next == '<')
+		if (str[i + 1] == '<')
 			return (printf("parse error near '<<'\n"), 1);
 		else
 			return (printf("parse error near '<'\n"), 1);
 	}
-	else if (curr == '>')
+	else if (str[i] == '>')
 	{
-		if (next == '>')
+		if (str[i + 1] == '>')
 			return (printf("parse error near '>>'\n"), 1);
 		else
 			return (printf("parse error near '>'\n"), 1);
@@ -88,7 +88,7 @@ static int	find_error(char *str, int i, int initial)
 			return (printf("parse error near '|'\n"), 1);
 		return (0);
 	}
-	else if (sub_error(str[i], str[i + 1]) == 1)
+	else if (sub_error(str, i) == 1)
 		return (1);
 	if (str[i] == '\0')
 		return (printf("parse error near '\\n'\n"), 1);

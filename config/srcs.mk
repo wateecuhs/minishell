@@ -36,14 +36,14 @@ SRCS_LIB	=		lib/ft_expand_var.c \
 					lib/free.c \
 					lib/find_in_env.c
 
-SRCS_EXEC	=		execution/get_data.c \
+SRCS_EXEC	=		execution/get_data_copy.c \
 					execution/prepare_exec.c \
 					execution/hub.c \
 					execution/get_fd.c \
 					execution/commands_handler.c\
 					execution/errors.c \
 					execution/paths.c \
-					execution/heredoc.c \
+					execution/heredoc_copy.c \
 					execution/cmd_handling_tools.c
 
 SRCS_BUILTINS=		builtins/cd.c \

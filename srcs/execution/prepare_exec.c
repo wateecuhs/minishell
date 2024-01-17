@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 17:23:52 by panger            #+#    #+#             */
-/*   Updated: 2024/01/16 13:13:16 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/17 12:34:22 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@ t_block	*get_block(t_token *token)
 	ret->cmd = get_cmd(token);
 	ret->args = get_args(token);
 	ret->redirs = get_redirs(token);
+	if (!ret->redirs)
+	{
+		free_single_block(ret);
+		return (NULL);
+	}
 	ret->pid = -1;
 	return (ret);
 }
@@ -40,11 +45,18 @@ t_block	*words_to_blocks(t_token *tokens)
 {
 	t_token	*lst;
 	t_block	*blocks;
+	t_block	*tmp;
 
 	blocks = NULL;
 	lst = tokens;
 	while (lst)
 	{
+		tmp = get_block(lst);
+		if (!tmp)
+		{
+			free_blocks(blocks);
+			return (NULL);
+		}
 		lst_addback_blocks(&blocks, get_block(lst));
 		lst = next_block(lst);
 	}
