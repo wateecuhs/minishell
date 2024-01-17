@@ -6,11 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 17:23:52 by panger            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/01/17 15:44:13 by panger           ###   ########.fr       */
-=======
-/*   Updated: 2024/01/17 12:34:22 by panger           ###   ########.fr       */
->>>>>>> 603c0bf6f9f746acf9765b0d265f1eb062b1a72e
+/*   Updated: 2024/01/17 15:57:34 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +37,7 @@ t_block	*get_block(t_token *token)
 	ret->cmd = get_cmd(token);
 	ret->args = get_args(token);
 	ret->redirs = get_redirs(token);
-<<<<<<< HEAD
 	if (check_hd(ret->redirs) == 0)
-=======
-	if (!ret->redirs)
->>>>>>> 603c0bf6f9f746acf9765b0d265f1eb062b1a72e
 	{
 		free_single_block(ret);
 		return (NULL);
