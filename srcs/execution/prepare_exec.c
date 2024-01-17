@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 17:23:52 by panger            #+#    #+#             */
-/*   Updated: 2024/01/17 15:57:34 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/17 17:14:00 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ t_block	*words_to_blocks(t_token *tokens)
 			free_blocks(blocks);
 			return (NULL);
 		}
-		lst_addback_blocks(&blocks, get_block(lst));
+		lst_addback_blocks(&blocks, tmp);
 		lst = next_block(lst);
 	}
 	return (blocks);

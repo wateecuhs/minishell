@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 14:17:36 by panger            #+#    #+#             */
-/*   Updated: 2024/01/17 15:44:29 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/17 17:14:19 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,15 @@ int	get_heredoc(char *limiter)
 	pipe(p);
 	g_status_code = 0;
 	line = 0;
-	while (1)
+	handling_sig(3);
+	string = get_next_line(0);
+	while (g_status_code != 130 && string != NULL && ft_strcmp_hd(string,
+			limiter) != 0)
 	{
-		string = get_next_line(0);
-		if (ft_strcmp_hd(string, limiter) == 0 || string == NULL || g_status_code == 130)
-			break ;
-		write(p[WRITE], string, ft_strlen(string));
+		if (write(p[WRITE], string, ft_strlen(string)) == -1)
+			perror_prefix("write error");
 		free(string);
+		string = get_next_line(0);
 		line++;
 	}
 	close(p[WRITE]);
