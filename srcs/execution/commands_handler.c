@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:29:27 by panger            #+#    #+#             */
-/*   Updated: 2024/01/18 14:02:09 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/18 18:34:03 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,10 @@ void	command_exec(t_block *block, int fd[4], char ***env, t_block *head)
 		free_and_exit(head, *env, 9);
 	if (!(block->cmd))
 		free_and_exit(head, *env, 0);
-	block->cmd = find_path(block->cmd, *env);
+	block->cmd = find_path(block->cmd, *env, &exit_code);
 	if (!block->cmd)
 	{
-		if (errno == 13)
-			free_and_exit(head, *env, 126);
-		free_and_exit(head, *env, 127);
+		free_and_exit(head, *env, exit_code);
 	}
 	remove_empty(env);
 	execve(block->cmd, block->args, *env);

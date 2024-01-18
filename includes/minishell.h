@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 15:55:28 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/18 18:12:55 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/18 18:27:22 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ t_redirs	*assign_redir(t_token *token, char **env);
 int			get_redirs(t_token *token, char **env, t_redirs **ret);
 int			parsing(char *input, t_token *tokens);
 int			*set_fd_to_use(int *fd, int fd_in, int fd_out);
-char		*find_path(char *cmd, char **env);
+char		*find_path(char *cmd, char **env, int *exit_code);
 void		perror_prefix(char *string);
 void		error_msg(char *string);
 char		*ft_strjoin(char *s1, char *s2);
