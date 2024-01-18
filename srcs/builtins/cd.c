@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:07:51 by panger            #+#    #+#             */
-/*   Updated: 2024/01/18 16:50:53 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/18 18:12:43 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,13 @@ int	add_to_env_cd(char *str, char ***env)
 	len = ft_tablen(*env);
 	tmp = (char **)malloc(sizeof(char *) * (len + 2));
 	if (!tmp)
-		return (perror_prefix("malloc"), -1);
+		return (perror_prefix("malloc"), free(str), -1);
 	i = 0;
 	while ((*env)[i])
 	{
 		tmp[i] = ft_strdup((*env)[i]);
 		if (!(tmp[i]))
-			return (freetab(tmp), -1);
+			return (free(str), freetab(tmp), -1);
 		i++;
 	}
 	tmp[i++] = ft_strdup(str);

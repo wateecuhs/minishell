@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 19:36:16 by panger            #+#    #+#             */
-/*   Updated: 2024/01/18 17:04:03 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/18 17:09:46 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	free_env(char **env)
 void	free_single_block(t_block *blocks)
 {
 	int			i;
-	t_redirs	*tmp2;
 
 	if (blocks->cmd)
 		free(blocks->cmd);
@@ -51,7 +50,6 @@ void	free_blocks(t_block *blocks)
 {
 	int			i;
 	t_block		*tmp1;
-	t_redirs	*tmp2;
 
 	while (blocks)
 	{
