@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcindrak <dcindrak@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 19:36:16 by panger            #+#    #+#             */
-/*   Updated: 2024/01/18 15:28:56 by dcindrak         ###   ########.fr       */
+/*   Updated: 2024/01/18 17:04:03 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,7 @@ void	free_single_block(t_block *blocks)
 	while (blocks->args[i])
 		free(blocks->args[i++]);
 	free(blocks->args);
-	while (blocks->redirs)
-	{
-		free(blocks->redirs->value);
-		tmp2 = blocks->redirs->next;
-		free(blocks->redirs);
-		blocks->redirs = tmp2;
-	}
+	free_redir(blocks->redirs);
 	free(blocks);
 }
 
@@ -67,13 +61,7 @@ void	free_blocks(t_block *blocks)
 		while (blocks->args[i])
 			free(blocks->args[i++]);
 		free(blocks->args);
-		while (blocks->redirs)
-		{
-			free(blocks->redirs->value);
-			tmp2 = blocks->redirs->next;
-			free(blocks->redirs);
-			blocks->redirs = tmp2;
-		}
+		free_redir(blocks->redirs);
 		tmp1 = blocks->next;
 		free(blocks);
 		blocks = tmp1;
@@ -86,7 +74,8 @@ void	free_redir(t_redirs *redirs)
 
 	while (redirs)
 	{
-		free(redirs->value);
+		if (redirs->value)
+			free(redirs->value);
 		tmp = redirs->next;
 		free(redirs);
 		redirs = tmp;

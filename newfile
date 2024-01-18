@@ -1,9 +1,0 @@
-config
-includes
-Makefile
-minishell
-newfile
-README.txt
-srcs
-suppress_valgrind.txt
-todo.txt

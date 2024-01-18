@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_data.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcindrak <dcindrak@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 17:57:42 by panger            #+#    #+#             */
-/*   Updated: 2024/01/18 16:36:12 by dcindrak         ###   ########.fr       */
+/*   Updated: 2024/01/18 16:50:31 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,27 +26,27 @@ int	check_hd(t_redirs *redir)
 	return (1);
 }
 
-char	*get_cmd(t_token *token)
+int	get_cmd(t_token *token, char **str)
 {
 	t_token	*node;
-	char	*tmp;
 
 	node = token;
 	while (node && node->type != PIPE)
 	{
 		if (node->type == WORD && ft_strcmp(node->value, "") != 0)
 		{
-			tmp = ft_strdup(node->value);
-			if (!tmp)
-				return (NULL);
-			return (tmp);
+			*str = ft_strdup(node->value);
+			if (!(*str))
+				return (-1);
+			return (0);
 		}
 		if (node->type == REDIRECT_IN || node->type == REDIRECT_OUT
 			|| node->type == REDIRECT_APPEND || node->type == HEREDOC)
 			node = node->next;
 		node = node->next;
 	}
-	return (NULL);
+	*str = NULL;
+	return (0);
 }
 
 char	**get_args(t_token *token)
@@ -66,7 +66,7 @@ char	**get_args(t_token *token)
 		{
 			ret[i++] = ft_strdup(node->value);
 			if (!(ret[i - 1]))
-				return (free_env(ret), NULL);
+				return (freetab(ret), NULL);
 		}
 		if (node->type == REDIRECT_IN || node->type == REDIRECT_OUT
 			|| node->type == REDIRECT_APPEND || node->type == HEREDOC)
@@ -96,23 +96,25 @@ t_redirs	*assign_redir(t_token *token, char **env)
 	return (ret);
 }
 
-t_redirs	*get_redirs(t_token *token, char **env)
+int	get_redirs(t_token *token, char **env, t_redirs **ret)
 {
 	t_token		*node;
-	t_redirs	*ret;
+	t_redirs	*tmp;
 
 	node = token;
-	ret = NULL;
+	*ret = NULL;
 	while (node && node->type != PIPE)
 	{
 		if (node->type == REDIRECT_IN || node->type == REDIRECT_OUT
 			|| node->type == REDIRECT_APPEND || node->type == HEREDOC)
 		{
-			if (lst_addback_redirs(&ret, assign_redir(node, env)) == 1)
-				return (free_redir(ret), perror_prefix("malloc"), 0);
+			tmp = assign_redir(node, env);
+			if (!tmp)
+				return (-1);
+			lst_addback_redirs(ret, tmp);
 			node = node->next;
 		}
 		node = node->next;
 	}
-	return (ret);
+	return (0);
 }

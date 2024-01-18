@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 15:43:24 by panger            #+#    #+#             */
-/*   Updated: 2024/01/18 13:46:08 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/18 16:48:06 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,12 @@ int	add_to_env(char *str, char ***env)
 	{
 		tmp[i] = ft_strdup((*env)[i]);
 		if (!(tmp[i]))
-			return (freetabn(tmp, i - 1), -1);
+			return (freetab(tmp), -1);
 		i++;
 	}
 	tmp[i++] = ft_strdup(str);
 	if (!tmp[i - 1])
-		return (freetabn(tmp, i - 2), -1);
+		return (freetab(tmp), -1);
 	tmp[i] = NULL;
 	free_env(*env);
 	*env = tmp;

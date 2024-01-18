@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcindrak <dcindrak@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:07:51 by panger            #+#    #+#             */
-/*   Updated: 2024/01/18 14:21:17 by dcindrak         ###   ########.fr       */
+/*   Updated: 2024/01/18 16:50:53 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	pop_from_env(char ***env, char *str)
 		{
 			tmp[j++] = ft_strdup((*env)[i]);
 			if (!(tmp[j - 1]))
-				return (freetabn(tmp, j - 2), -1);
+				return (freetab(tmp), -1);
 		}
 		i++;
 	}
@@ -56,12 +56,12 @@ int	add_to_env_cd(char *str, char ***env)
 	{
 		tmp[i] = ft_strdup((*env)[i]);
 		if (!(tmp[i]))
-			return (freetabn(tmp, i - 1), -1);
+			return (freetab(tmp), -1);
 		i++;
 	}
 	tmp[i++] = ft_strdup(str);
 	if (!tmp[i - 1])
-		return (freetabn(tmp, i - 2), free(str), -1);
+		return (freetab(tmp), free(str), -1);
 	tmp[i] = NULL;
 	free_env(*env);
 	*env = tmp;

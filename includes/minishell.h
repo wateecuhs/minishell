@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcindrak <dcindrak@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 15:55:28 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/18 16:34:28 by dcindrak         ###   ########.fr       */
+/*   Updated: 2024/01/18 16:49:53 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,12 +101,11 @@ char		*ft_substr(char const *s, unsigned int start, size_t len);
 char		**ft_split(char const *s, char c);
 void		*ft_calloc(size_t count, size_t size);
 void		lst_addback_blocks(t_block **lst, t_block *new);
-int			lst_addback_redirs(t_redirs **lst, t_redirs *new);
+void		lst_addback_redirs(t_redirs **lst, t_redirs *new);
 int			command_receiver(t_block *blocks, char ***env);
 void		get_fd(int fd[4], t_block *block, int i);
 int			ft_strcmp_hd(char *s1, char *s2);
 char		*ft_strjoin_free2(char *s1, char *s2);
-void		freetabn(char **tab, size_t n);
 int			dup_env(char ***env);
 char		*ft_itoa(int n);
 char		*expand_word(t_token *token, char *s, char **env);
@@ -126,10 +125,10 @@ char		*parse_env(char **env, char *to_find);
 int			expand_single_quotes(char **src, size_t *i);
 t_block		*words_to_blocks(t_token *tokens, char **env);
 int			execution_hub(t_token *tokens, char ***env);
-char		*get_cmd(t_token *token);
+int			get_cmd(t_token *token, char **str);
 char		**get_args(t_token *token);
 t_redirs	*assign_redir(t_token *token, char **env);
-t_redirs	*get_redirs(t_token *token, char **env);
+int			get_redirs(t_token *token, char **env, t_redirs **ret);
 int			parsing(char *input, t_token *tokens);
 int			*set_fd_to_use(int *fd, int fd_in, int fd_out);
 char		*find_path(char *cmd, char **env);

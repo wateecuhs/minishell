@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcindrak <dcindrak@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 16:12:09 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/18 14:23:08 by dcindrak         ###   ########.fr       */
+/*   Updated: 2024/01/18 16:55:21 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ int	main(int argc, char **argv, char **env)
 		if (parsing(input, tokens) == 0)
 		{
 			free(input);
-			if (execution_hub(tokens, &env) == -1)
-				lst_free(tokens);
+			execution_hub(tokens, &env);
 		}
 	}
 	return (g_status_code);

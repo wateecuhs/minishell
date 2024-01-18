@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prepare_exec.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcindrak <dcindrak@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 17:23:52 by panger            #+#    #+#             */
-/*   Updated: 2024/01/18 16:34:17 by dcindrak         ###   ########.fr       */
+/*   Updated: 2024/01/18 16:50:09 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ t_block	*get_block(t_token *token, char **env)
 	if (!ret)
 		return (perror_prefix("malloc"), NULL);
 	ret->next = NULL;
-	ret->cmd = get_cmd(token);
+	if (get_cmd(token, &(ret->cmd)) == -1)
+		return (free(ret), NULL);
 	ret->args = get_args(token);
 	if (!ret->args)
 		return (free(ret->cmd), free(ret), NULL);
-	ret->redirs = get_redirs(token, env);
-	if (ret->redirs == 0)
+	if (get_redirs(token, env, &(ret->redirs)) == -1)
 		return (free(ret->cmd), free_env(ret->args), free(ret), NULL);
 	if (check_hd(ret->redirs) == 0)
 	{
