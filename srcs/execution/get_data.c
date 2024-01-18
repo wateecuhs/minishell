@@ -6,11 +6,25 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 17:57:42 by panger            #+#    #+#             */
-/*   Updated: 2024/01/17 17:22:27 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/18 12:36:30 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	check_hd(t_redirs *redir)
+{
+	t_redirs	*tmp;
+
+	tmp = redir;
+	while (tmp)
+	{
+		if (tmp->type == HEREDOC && tmp->heredoc_fd == -1)
+			return (0);
+		tmp = tmp->next;
+	}
+	return (1);
+}
 
 char	*get_cmd(t_token *token)
 {

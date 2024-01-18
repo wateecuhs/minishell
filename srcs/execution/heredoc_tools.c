@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 18:18:44 by panger            #+#    #+#             */
-/*   Updated: 2024/01/17 18:26:00 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/18 12:31:23 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,9 @@ int	remove_quotes(char **src, size_t *i, char quote_type)
 	return (*i);
 }
 
-char	*expand_limiter(char *s, char **env)
+char	*expand_limiter(char *s)
 {
 	size_t	i;
-	int		val;
 
 	i = 0;
 	if (!s)

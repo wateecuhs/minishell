@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 18:55:11 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/17 18:27:03 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/18 12:49:25 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,18 @@ char	*expand_word(t_token *token, char *s, char **env)
 	i = 0;
 	if (!s)
 		return (NULL);
-	while (s[i])
+	while (s[i] && i < ft_strlen(s))
 	{
 		if (s[i] == '\'')
 			expand_single_quotes(&s, &i);
-		if (s[i] == '"')
+		else if (s[i] == '"')
 		{
 			val = expand_double_quotes(&s, &i, env);
 			if (val == -1)
 				return (free(s), NULL);
 			i = val - 1;
 		}
-		if (s[i] == '$')
+		else if (s[i] == '$')
 		{
 			if (expand_word_var(token, &s, &i, env) == -1)
 				return (free(s), NULL);
@@ -52,7 +52,7 @@ int	expand(t_token *head, char **env)
 	{
 		if (tmp->type == HEREDOC)
 		{
-			tmp->next->value = expand_limiter(tmp->next->value, env);
+			tmp->next->value = expand_limiter(tmp->next->value);
 			if (tmp->next->value == NULL)
 				return (-1);
 			tmp = tmp->next;

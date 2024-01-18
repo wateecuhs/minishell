@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 13:49:30 by panger            #+#    #+#             */
-/*   Updated: 2024/01/16 14:36:36 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/18 12:25:50 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ int	is_dir(char *path)
 {
 	struct stat	statbuf;
 
-	if (stat(path, &statbuf) == 0)
-		return (0);
+	if (stat(path, &statbuf) == -1)
+		return (perror_prefix("stat"), 0);
 	if (S_ISDIR(statbuf.st_mode) == 1)
 		return (1);
 	return (0);

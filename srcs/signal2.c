@@ -1,39 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   signal2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/22 22:45:42 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/18 12:48:56 by panger           ###   ########.fr       */
+/*   Created: 2024/01/18 12:32:19 by panger            #+#    #+#             */
+/*   Updated: 2024/01/18 12:35:14 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-size_t	ft_strlen(char *str)
+void	child(int sig)
 {
-	size_t	i;
-
-	if (!str)
-		return (0);
-	i = 0;
-	while (str[i])
+	(void)sig;
+	if (g_status_code == 2)
 	{
-		i++;
+		g_status_code = 130;
+		write(1, "\n", 1);
 	}
-	return (i);
-}
-
-int	ft_tablen(char **s)
-{
-	unsigned int	i;
-
-	if (!s)
-		return (0);
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
+	if (g_status_code == 131)
+		write(1, "Quit (core dumped)\n", 19);
 }

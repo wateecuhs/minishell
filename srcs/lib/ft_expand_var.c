@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 14:42:04 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/10 17:43:47 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/18 13:01:52 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,14 @@
 char	*ft_expand_var(char	*s, size_t start, size_t stop, char *content)
 {
 	char	*ret;
+	int		free_content;
 
+	free_content = 0;
 	if (!content)
+	{
+		free_content = 1;
 		content = ft_strdup("");
+	}
 	if (!content)
 		return (free(s), NULL);
 	ret = ft_strndup(s, start);
@@ -30,5 +35,7 @@ char	*ft_expand_var(char	*s, size_t start, size_t stop, char *content)
 	if (!ret)
 		return (free(s), free(content), NULL);
 	free(s);
+	if (free_content == 1)
+		free(content);
 	return (ret);
 }

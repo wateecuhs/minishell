@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 15:43:24 by panger            #+#    #+#             */
-/*   Updated: 2024/01/16 14:05:06 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/18 13:05:26 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,26 +84,9 @@ int	add_to_env(char *str, char ***env)
 int	print_export(char **env, int fd[2])
 {
 	size_t	i;
-	size_t	j;
-	char	*tmp;
 	int		stop;
 
-	i = 0;
-	while (env[i])
-	{
-		j = 0;
-		while (env[j])
-		{
-			if (i != j && ft_strcmp(env[i], env[j]) < 0)
-			{
-				tmp = env[i];
-				env[i] = env[j];
-				env[j] = tmp;
-			}
-			j++;
-		}
-		i++;
-	}
+	env = sort_env(env);
 	i = 0;
 	while (env[i])
 	{

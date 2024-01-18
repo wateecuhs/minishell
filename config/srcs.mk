@@ -1,6 +1,7 @@
 SRCS		=		minishell.c \
 					dup_env.c \
 					signal.c \
+					signal2.c \
 					$(SRCS_LIB) \
 					$(SRCS_EXPAND) \
 					$(SRCS_GNL) \

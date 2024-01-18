@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:29:27 by panger            #+#    #+#             */
-/*   Updated: 2024/01/17 17:37:01 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/18 12:25:10 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	wait_pids(t_block *blocks, int code)
 			waitpid(blocks->pid, &g_status_code, 0);
 		blocks = blocks->next;
 	}
-	if (WIFEXITED(g_status_code)) //WIFSIGNALED -> a regarder
+	if (WIFEXITED(g_status_code))
 		g_status_code = WEXITSTATUS(g_status_code);
 	if (code >= 0)
 		g_status_code = code;
@@ -79,8 +79,7 @@ int	fork_exec(t_block *block, int fds[4], char ***env, t_block *head)
 		g_status_code = exec_builtin(block, env, fds, head);
 		return (-1);
 	}
-	// signal(SIGINT, SIG_IGN);
-	// signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, SIG_IGN);
 	pid = fork();
 	if (pid == -1)
 		error_msg(NULL);
@@ -90,12 +89,13 @@ int	fork_exec(t_block *block, int fds[4], char ***env, t_block *head)
 		close(fds[READ]);
 		command_exec(block, fds, env, head);
 	}
+	signal(SIGCHLD, child);
 	return (pid);
 }
 
 int	command_receiver(t_block *blocks, char ***env)
 {
-	t_block *head;
+	t_block	*head;
 	int		fds[4];
 	int		i;
 	int		code;
@@ -103,8 +103,7 @@ int	command_receiver(t_block *blocks, char ***env)
 	i = 0;
 	code = -1;
 	head = blocks;
-	
-	while (blocks && g_status_code != 131)
+	while (blocks)
 	{
 		if (pipe(fds) == -1)
 			error_msg(NULL);
@@ -118,6 +117,5 @@ int	command_receiver(t_block *blocks, char ***env)
 	close(fds[IN]);
 	close(fds[OUT]);
 	i = wait_pids(head, code);
-	handling_sig(1);
 	return (i);
 }

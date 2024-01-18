@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 11:43:58 by panger            #+#    #+#             */
-/*   Updated: 2024/01/16 14:40:24 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/18 13:02:24 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,9 @@ int	ft_atoi_exit(char *str)
 	}
 	while (str[i])
 	{
-		tot = tot * 10 + (str[i] - '0');
+		tot = tot * 10 + (str[i++] - '0');
 		if (tot > LLONG_MAX)
 			return (-1);
-		i++;
 	}
 	i = tot % 256;
 	if (minus == -1)

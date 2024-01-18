@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 15:55:28 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/17 18:21:56 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/18 13:05:08 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ void		freetab(char **tab);
 char		*has_heredoc(t_token *tokens);
 int			get_heredoc(char *limiter, char **env);
 
+int			count_words_in_block(t_token *tokens);
 int			expand(t_token *head, char **env);
 int			expand_double_quotes(char **src, size_t *i, char **env);
 int			get_var_name(char *s, size_t i);
@@ -152,7 +153,11 @@ void		check_fds(int fd[4], t_block *head, char ***env);
 void		remove_empty(char ***env);
 int			is_line_to_pop(char *env_line, char *str);
 void		handling_sig(int mod);
-char		*expand_limiter(char *s, char **env);
+char		*expand_limiter(char *s);
+void		child(int sig);
+int			check_hd(t_redirs *redir);
+int			expand_heredoc(char **src, char **env);
+char		**sort_env(char **env);
 
 //gnl
 char		*get_next_line(int fd);

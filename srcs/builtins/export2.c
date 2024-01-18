@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:04:36 by panger            #+#    #+#             */
-/*   Updated: 2024/01/16 13:05:20 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/18 13:04:58 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,29 @@ int	check_name(char *s)
 		return (0);
 	}
 	return (-1);
+}
+
+char	**sort_env(char **env)
+{
+	size_t	i;
+	size_t	j;
+	char	*tmp;
+
+	i = 0;
+	while (env[i])
+	{
+		j = 0;
+		while (env[j])
+		{
+			if (i != j && ft_strcmp(env[i], env[j]) < 0)
+			{
+				tmp = env[i];
+				env[i] = env[j];
+				env[j] = tmp;
+			}
+			j++;
+		}
+		i++;
+	}
+	return (env);
 }
