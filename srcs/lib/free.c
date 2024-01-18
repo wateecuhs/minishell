@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dcindrak <dcindrak@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 19:36:16 by panger            #+#    #+#             */
-/*   Updated: 2024/01/15 11:25:29 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/18 15:28:56 by dcindrak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,18 @@ void	free_blocks(t_block *blocks)
 		tmp1 = blocks->next;
 		free(blocks);
 		blocks = tmp1;
+	}
+}
+
+void	free_redir(t_redirs *redirs)
+{
+	t_redirs	*tmp;
+
+	while (redirs)
+	{
+		free(redirs->value);
+		tmp = redirs->next;
+		free(redirs);
+		redirs = tmp;
 	}
 }

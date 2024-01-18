@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_data.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dcindrak <dcindrak@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 17:57:42 by panger            #+#    #+#             */
-/*   Updated: 2024/01/18 13:27:21 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/18 16:36:12 by dcindrak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*get_cmd(t_token *token)
 		{
 			tmp = ft_strdup(node->value);
 			if (!tmp)
-				return (perror_prefix("malloc"), NULL);
+				return (NULL);
 			return (tmp);
 		}
 		if (node->type == REDIRECT_IN || node->type == REDIRECT_OUT
@@ -66,7 +66,7 @@ char	**get_args(t_token *token)
 		{
 			ret[i++] = ft_strdup(node->value);
 			if (!(ret[i - 1]))
-				return (NULL);
+				return (free_env(ret), NULL);
 		}
 		if (node->type == REDIRECT_IN || node->type == REDIRECT_OUT
 			|| node->type == REDIRECT_APPEND || node->type == HEREDOC)
@@ -108,7 +108,8 @@ t_redirs	*get_redirs(t_token *token, char **env)
 		if (node->type == REDIRECT_IN || node->type == REDIRECT_OUT
 			|| node->type == REDIRECT_APPEND || node->type == HEREDOC)
 		{
-			lst_addback_redirs(&ret, assign_redir(node, env));
+			if (lst_addback_redirs(&ret, assign_redir(node, env)) == 1)
+				return (free_redir(ret), perror_prefix("malloc"), 0);
 			node = node->next;
 		}
 		node = node->next;

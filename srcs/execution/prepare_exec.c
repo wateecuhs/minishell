@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prepare_exec.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dcindrak <dcindrak@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 17:23:52 by panger            #+#    #+#             */
-/*   Updated: 2024/01/18 13:27:26 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/18 16:34:17 by dcindrak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,11 @@ t_block	*get_block(t_token *token, char **env)
 	ret->next = NULL;
 	ret->cmd = get_cmd(token);
 	ret->args = get_args(token);
+	if (!ret->args)
+		return (free(ret->cmd), free(ret), NULL);
 	ret->redirs = get_redirs(token, env);
+	if (ret->redirs == 0)
+		return (free(ret->cmd), free_env(ret->args), free(ret), NULL);
 	if (check_hd(ret->redirs) == 0)
 	{
 		free_single_block(ret);

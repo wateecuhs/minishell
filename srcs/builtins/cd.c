@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dcindrak <dcindrak@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:07:51 by panger            #+#    #+#             */
-/*   Updated: 2024/01/18 13:56:41 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/18 14:21:17 by dcindrak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,10 +114,8 @@ int	case_empty(char ***env)
 
 int	builtin_cd(char **args, char ***env)
 {
-	char	**tmp;
 	char	**tmp_oldpwd;
 
-	tmp = *env;
 	if (ft_tablen(args) > 2)
 		return (write(2, "minishell: cd: too many arguments\n", 34), 1);
 	if (ft_tablen(args) == 2)

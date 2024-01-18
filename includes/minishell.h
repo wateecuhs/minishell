@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dcindrak <dcindrak@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 15:55:28 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/18 13:46:15 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/18 16:34:28 by dcindrak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ char		*ft_substr(char const *s, unsigned int start, size_t len);
 char		**ft_split(char const *s, char c);
 void		*ft_calloc(size_t count, size_t size);
 void		lst_addback_blocks(t_block **lst, t_block *new);
-void		lst_addback_redirs(t_redirs **lst, t_redirs *new);
+int			lst_addback_redirs(t_redirs **lst, t_redirs *new);
 int			command_receiver(t_block *blocks, char ***env);
 void		get_fd(int fd[4], t_block *block, int i);
 int			ft_strcmp_hd(char *s1, char *s2);
@@ -111,6 +111,7 @@ int			dup_env(char ***env);
 char		*ft_itoa(int n);
 char		*expand_word(t_token *token, char *s, char **env);
 void		free_blocks(t_block *blocks);
+void		free_redir(t_redirs *redirs);
 
 char		**ft_split_s(char *s, char *c);
 void		freetab(char **tab);

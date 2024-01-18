@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dcindrak <dcindrak@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 16:12:09 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/18 13:58:43 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/18 14:23:08 by dcindrak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	init_value(char ***env, int argc, char **argv)
 	(void)argv;
 	g_status_code = 0;
 	if (dup_env(env) == -1)
-		return (perror("minishell"), -1);
+		return (-1);
 	return (0);
 }
 
@@ -40,7 +40,7 @@ int	main(int argc, char **argv, char **env)
 			return (printf("exit\n"), free_env(env), g_status_code);
 		tokens = ft_calloc(1, sizeof(t_token));
 		if (tokens == NULL)
-			return (1);
+			return (free_env(env), 1);
 		if (*input)
 			add_history(input);
 		if (parsing(input, tokens) == 0)

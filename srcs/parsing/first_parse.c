@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   first_parse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dcindrak <dcindrak@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 16:27:17 by panger            #+#    #+#             */
-/*   Updated: 2024/01/16 15:34:11 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/18 14:34:05 by dcindrak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	check_unclosed(char *str)
 	}
 	if (quote != 0)
 	{
-		printf("Error: quote not closed\n");
+		write(2, "Error: quote not closed\n", 24);
 		return (1);
 	}
 	return (0);
@@ -63,16 +63,16 @@ int	sub_error(char *str, int i)
 	if (str[i] == '<')
 	{
 		if (str[i + 1] == '<')
-			return (printf("parse error near '<<'\n"), 1);
+			return (write(2, "parse error near '<<'\n", 22), 1);
 		else
-			return (printf("parse error near '<'\n"), 1);
+			return (write(2, "parse error near '<'\n", 21), 1);
 	}
 	else if (str[i] == '>')
 	{
 		if (str[i + 1] == '>')
-			return (printf("parse error near '>>'\n"), 1);
+			return (write(2, "parse error near '>>'\n", 22), 1);
 		else
-			return (printf("parse error near '>'\n"), 1);
+			return (write(2, "parse error near '>'\n", 21), 1);
 	}
 	return (0);
 }
@@ -85,13 +85,13 @@ static int	find_error(char *str, int i, int initial)
 	{
 		if (nothing_after_pipe(str, i) == 1 || str[initial - 1] == '>'
 			|| str[initial - 1] == '<')
-			return (printf("parse error near '|'\n"), 1);
+			return (write(2, "parse error near '|'\n", 21), 1);
 		return (0);
 	}
 	else if (sub_error(str, i) == 1)
 		return (1);
 	if (str[i] == '\0')
-		return (printf("parse error near '\\n'\n"), 1);
+		return (write(2, "parse error near '\\n'\n", 22), 1);
 	return (0);
 }
 
