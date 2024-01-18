@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:07:51 by panger            #+#    #+#             */
-/*   Updated: 2024/01/18 13:39:32 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/18 13:56:41 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ int	add_to_env_cd(char *str, char ***env)
 int	case_arg(char *path, char ***env)
 {
 	char	**pwd;
-	char	**oldpwd;
 
 	if (chdir(path) == -1)
 		return (perror_prefix(path), 1);
@@ -93,7 +92,6 @@ int	case_arg(char *path, char ***env)
 int	case_empty(char ***env)
 {
 	char	**pwd;
-	char	**oldpwd;
 	char	**home;
 
 	home = find_in_env("HOME", *env);

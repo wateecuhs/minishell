@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 13:49:30 by panger            #+#    #+#             */
-/*   Updated: 2024/01/18 12:25:50 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/18 13:58:16 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,8 @@ void	handle_error(char *cmd, int err)
 		write(2, "minishell: ", 11);
 		write(2, cmd, ft_strlen(cmd));
 		write(2, ": Is a directory\n", 17);
-		return ;
 	}
-	if (errno == 13 && err == 0)
+	else if (errno == 13 && err == 0)
 		perror_prefix(cmd);
 	else if (err == 0)
 	{
@@ -84,6 +83,7 @@ void	handle_error(char *cmd, int err)
 		write(2, cmd, ft_strlen(cmd));
 		write(2, ": command not found\n", 20);
 	}
+	free(cmd);
 }
 
 char	*find_path(char *cmd, char **env)
@@ -108,7 +108,7 @@ char	*find_path(char *cmd, char **env)
 		temp = join_paths(paths[j++], cmd);
 		if (access(temp, F_OK) != -1 && access(temp, X_OK) != -1
 			&& is_dir(temp) != 1)
-			return (freetab(paths), temp);
+			return (freetab(paths), free(cmd), temp);
 		free(temp);
 	}
 	return (freetab(paths), handle_error(cmd, 1), NULL);

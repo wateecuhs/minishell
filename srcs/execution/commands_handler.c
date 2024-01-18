@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:29:27 by panger            #+#    #+#             */
-/*   Updated: 2024/01/18 13:36:21 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/18 14:02:09 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	command_exec(t_block *block, int fd[4], char ***env, t_block *head)
 {
-	char	*path;	
 	int		exit_code;
 
 	exit_code = 0;
@@ -28,15 +27,15 @@ void	command_exec(t_block *block, int fd[4], char ***env, t_block *head)
 		free_and_exit(head, *env, 9);
 	if (!(block->cmd))
 		free_and_exit(head, *env, 0);
-	path = find_path(block->cmd, *env);
-	if (!path)
+	block->cmd = find_path(block->cmd, *env);
+	if (!block->cmd)
 	{
 		if (errno == 13)
 			free_and_exit(head, *env, 126);
 		free_and_exit(head, *env, 127);
 	}
 	remove_empty(env);
-	execve(path, block->args, *env);
+	execve(block->cmd, block->args, *env);
 	perror_prefix(block->cmd);
 	free_and_exit(head, *env, 126);
 }
@@ -82,7 +81,7 @@ int	fork_exec(t_block *block, int fds[4], char ***env, t_block *head)
 	signal(SIGINT, SIG_IGN);
 	pid = fork();
 	if (pid == -1)
-		error_msg(NULL);
+		perror_prefix("fork");
 	if (pid == 0)
 	{
 		handling_sig(2);
@@ -106,7 +105,7 @@ int	command_receiver(t_block *blocks, char ***env)
 	while (blocks)
 	{
 		if (pipe(fds) == -1)
-			error_msg(NULL);
+			return (perror_prefix("pipe"), -1);
 		get_fd(fds, blocks, i);
 		if (!(blocks->cmd) || code == -1)
 			blocks->pid = fork_exec(blocks, fds, env, head);
