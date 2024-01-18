@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 16:26:31 by panger            #+#    #+#             */
-/*   Updated: 2024/01/08 16:26:42 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/18 13:28:18 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		return (NULL);
 	tab = (char *)malloc(sizeof(char) * (len + 1));
 	if (!tab)
-		return (NULL);
+		return (perror_prefix("malloc"), NULL);
 	while (s[i])
 	{
 		if (i >= start && b < len)

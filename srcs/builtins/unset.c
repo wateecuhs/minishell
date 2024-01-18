@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 19:22:51 by panger            #+#    #+#             */
-/*   Updated: 2024/01/16 13:26:30 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/18 13:47:40 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	dup_env_unset(char ***env, char **args)
 	len = ft_tablen(*env);
 	tmp = (char **)malloc(sizeof(char *) * (len + 1));
 	if (!tmp)
-		return (-1);
+		return (perror_prefix("malloc"), -1);
 	i = 0;
 	j = 0;
 	while ((*env)[i])
@@ -95,6 +95,7 @@ int	builtin_unset(char ***env, char **args, int fd[2])
 		}
 		i++;
 	}
-	dup_env_unset(env, &args[1]);
+	if (dup_env_unset(env, &args[1]) == -1)
+		return (1);
 	return (exit_code);
 }

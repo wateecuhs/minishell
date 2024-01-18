@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:29:27 by panger            #+#    #+#             */
-/*   Updated: 2024/01/18 12:25:10 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/18 13:36:21 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	command_exec(t_block *block, int fd[4], char ***env, t_block *head)
 		free_and_exit(head, *env, exit_code);
 	}
 	if (dup_job(&fd[2]) == -1)
-		free_and_exit(head, *env, 1);
+		free_and_exit(head, *env, 9);
 	if (!(block->cmd))
 		free_and_exit(head, *env, 0);
 	path = find_path(block->cmd, *env);

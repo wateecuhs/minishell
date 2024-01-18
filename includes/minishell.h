@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 15:55:28 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/18 13:05:08 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/18 13:46:15 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,15 +84,12 @@ int			ft_strncmp(char *s1, char *s2, size_t n);
 int			ft_tablen(char **s);
 size_t		ft_strlen(char *str);
 char		*ft_strjoin_free(char *s1, char *s2);
-char		*ft_strns1join(char *s1, char *s2, size_t size);
-char		*ft_strns2join(char *s1, char *s2, size_t size);
 char		*ft_strndup(char *s, int size);
 int			ft_isalnum(int c);
 int			ft_isdigit(int c);
 char		*ft_strdup(char *s);
 int			is_valid_char(int c);
 int			ft_strchr(const char *s, int c);
-int			ft_strnchr_dollar(const char *s, int len);
 char		*ft_expand_var(char	*s, size_t start, size_t stop, char *content);
 char		*ft_offset(char *s, int i);
 void		lst_free(t_token *lst);
@@ -158,6 +155,7 @@ void		child(int sig);
 int			check_hd(t_redirs *redir);
 int			expand_heredoc(char **src, char **env);
 char		**sort_env(char **env);
+int			non_valid_identifier(char *str);
 
 //gnl
 char		*get_next_line(int fd);

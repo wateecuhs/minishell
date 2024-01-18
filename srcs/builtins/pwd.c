@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 17:45:12 by panger            #+#    #+#             */
-/*   Updated: 2024/01/16 13:05:58 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/18 13:46:34 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	builtin_pwd(int fd[2])
 	tmp = getcwd(NULL, 0);
 	if (!tmp)
 	{
-		perror("minishell");
+		perror_prefix("getcwd");
 		return (1);
 	}
 	write(fd[OUT], tmp, ft_strlen(tmp));

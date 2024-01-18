@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: waticouz <waticouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:02:44 by panger            #+#    #+#             */
-/*   Updated: 2023/12/29 16:17:17 by waticouz         ###   ########.fr       */
+/*   Updated: 2024/01/18 13:27:33 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*ft_strdupset(char const *s, int start, int stop)
 		count++;
 	trg = (char *)malloc((stop - start + 1) * sizeof(char));
 	if (!trg)
-		return (NULL);
+		return (perror_prefix("malloc"), NULL);
 	while (s[start] && start < stop)
 	{
 		trg[i] = s[start];
@@ -49,7 +49,7 @@ char	*ft_stradd(char *s1, char *s2, int size)
 		return (ft_strdup(s1));
 	str = (char *)malloc(sizeof(char) * (ft_strlen(s1) + size + 1));
 	if (!str)
-		return (NULL);
+		return (perror_prefix("malloc"), NULL);
 	i = 0;
 	while (s1[i])
 	{

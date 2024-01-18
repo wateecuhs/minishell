@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 15:43:24 by panger            #+#    #+#             */
-/*   Updated: 2024/01/18 13:05:26 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/18 13:46:08 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	add_to_env(char *str, char ***env)
 	len = ft_tablen(*env);
 	tmp = (char **)malloc(sizeof(char *) * (len + 2));
 	if (!tmp)
-		return (-1);
+		return (perror_prefix("malloc"), -1);
 	i = 0;
 	while ((*env)[i])
 	{
@@ -75,6 +75,8 @@ int	add_to_env(char *str, char ***env)
 		i++;
 	}
 	tmp[i++] = ft_strdup(str);
+	if (!tmp[i - 1])
+		return (freetabn(tmp, i - 2), -1);
 	tmp[i] = NULL;
 	free_env(*env);
 	*env = tmp;
@@ -118,19 +120,18 @@ int	builtin_export(char **args, char ***env, int fd[2])
 	exit_code = 0;
 	while (args[i])
 	{
-		if (check_name(args[i]) == -1)
-		{
-			write(2, "minishell: export: '", 20);
-			write(2, args[i], ft_strlen(args[i]));
-			write(2, "': not a valid identifier\n", 27);
+		if (non_valid_identifier(args[i]) == 1)
 			exit_code = 1;
-			i++;
-			continue ;
+		else if (in_env(args[i], *env) == 2)
+		{
+			if (replace_env(args[i], env) == -1)
+				return (1);
 		}
-		if (in_env(args[i], *env) == 2)
-			replace_env(args[i], env);
 		else if (in_env(args[i], *env) == 0)
-			add_to_env(args[i], env);
+		{
+			if (add_to_env(args[i], env) == -1)
+				return (1);
+		}
 		i++;
 	}
 	return (exit_code);

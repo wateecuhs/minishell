@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:42:00 by panger            #+#    #+#             */
-/*   Updated: 2024/01/16 13:06:03 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/18 13:41:09 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,10 @@ int	builtin_env(int fd[2], char ***env)
 	{
 		if (ft_strchr((*env)[i], '=') != -1)
 		{
-			write(fd[WRITE], (*env)[i], ft_strlen((*env)[i]));
-			write(fd[WRITE], "\n", 1);
+			if (write(fd[WRITE], (*env)[i], ft_strlen((*env)[i])) == -1)
+				perror_prefix("Write");
+			if (write(fd[WRITE], "\n", 1) == -1)
+				perror_prefix("Write");
 		}
 		i++;
 	}

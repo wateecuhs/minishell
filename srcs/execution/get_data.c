@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 17:57:42 by panger            #+#    #+#             */
-/*   Updated: 2024/01/18 12:36:30 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/18 13:27:21 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*get_cmd(t_token *token)
 		{
 			tmp = ft_strdup(node->value);
 			if (!tmp)
-				return (perror("malloc"), NULL);
+				return (perror_prefix("malloc"), NULL);
 			return (tmp);
 		}
 		if (node->type == REDIRECT_IN || node->type == REDIRECT_OUT
@@ -58,7 +58,7 @@ char	**get_args(t_token *token)
 	i = 0;
 	ret = (char **)malloc(sizeof(char *) * (count_words_in_block(token) + 1));
 	if (!ret)
-		return (NULL);
+		return (perror_prefix("malloc"), NULL);
 	node = token;
 	while (node && node->type != PIPE)
 	{
@@ -83,7 +83,7 @@ t_redirs	*assign_redir(t_token *token, char **env)
 
 	ret = (t_redirs *)malloc(sizeof(t_redirs));
 	if (!ret)
-		return (NULL);
+		return (perror_prefix("malloc"), NULL);
 	ret->next = NULL;
 	ret->type = token->type;
 	ret->value = ft_strdup(token->next->value);

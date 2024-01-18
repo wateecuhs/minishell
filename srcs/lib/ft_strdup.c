@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/22 23:25:02 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/15 11:32:23 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/18 13:28:00 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*ft_strdup(char *s)
 	i = 0;
 	dest = (char *)malloc((srclen + 1) * sizeof(char));
 	if (!dest)
-		return (NULL);
+		return (perror_prefix("malloc"), NULL);
 	while (i < srclen)
 	{
 		dest[i] = s[i];
@@ -44,7 +44,7 @@ char	*ft_strndup(char *s, int size)
 	i = 0;
 	dest = (char *)malloc((size + 1) * sizeof(char));
 	if (!dest)
-		return (NULL);
+		return (perror_prefix("malloc"), NULL);
 	while (i < (size_t)size)
 	{
 		dest[i] = s[i];

@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 13:26:33 by panger            #+#    #+#             */
-/*   Updated: 2024/01/09 13:50:26 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/18 13:27:47 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ char	**ft_split_s(char *s, char *c)
 		return (NULL);
 	tab = (char **)malloc((count_words(s, c) + 1) * sizeof(char *));
 	if (tab == NULL)
-		return (NULL);
+		return (perror_prefix("malloc"), NULL);
 	while (s[i])
 	{
 		if (in_charset(s[i], c) == 0)

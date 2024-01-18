@@ -6,11 +6,23 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:04:36 by panger            #+#    #+#             */
-/*   Updated: 2024/01/18 13:04:58 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/18 13:46:04 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	non_valid_identifier(char *str)
+{
+	if (check_name(str) == -1)
+	{
+		write(2, "minishell: export: '", 20);
+		write(2, str, ft_strlen(str));
+		write(2, "': not a valid identifier\n", 27);
+		return (1);
+	}
+	return (0);
+}
 
 int	check_name(char *s)
 {

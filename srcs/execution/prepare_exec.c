@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 17:23:52 by panger            #+#    #+#             */
-/*   Updated: 2024/01/18 12:36:26 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/18 13:27:26 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_block	*get_block(t_token *token, char **env)
 
 	ret = (t_block *)malloc(sizeof(t_block));
 	if (!ret)
-		return (NULL);
+		return (perror_prefix("malloc"), NULL);
 	ret->next = NULL;
 	ret->cmd = get_cmd(token);
 	ret->args = get_args(token);

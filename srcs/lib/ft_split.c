@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcindrak <dcindrak@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 12:58:35 by dcindrak          #+#    #+#             */
-/*   Updated: 2024/01/06 11:56:17 by dcindrak         ###   ########.fr       */
+/*   Updated: 2024/01/18 13:27:53 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static char	*ft_find(int *ind, const char *src, char charset)
 		tail++;
 	tab = malloc((tail + 1) * sizeof(char));
 	if (!tab)
-		return (NULL);
+		return (perror_prefix("malloc"), NULL);
 	while (i < tail)
 	{
 		tab[i++] = src[*ind];
@@ -78,7 +78,7 @@ char	**ft_split(char const *s, char c)
 		heigh = ft_dup(s, c) + 1;
 		tab = malloc(sizeof(char *) * heigh);
 		if (!tab)
-			return (NULL);
+			return (perror_prefix("malloc"), NULL);
 		while (i < heigh - 1)
 			tab[i++] = ft_find(&n, s, c);
 		tab[i] = 0;

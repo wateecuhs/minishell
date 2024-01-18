@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 11:24:44 by panger            #+#    #+#             */
-/*   Updated: 2024/01/16 13:09:22 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/18 13:27:40 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*ft_itoa(int n)
 	nb = (long int)n;
 	str = (char *)malloc(sizeof(char) * (len + 1));
 	if (!str)
-		return (NULL);
+		return (perror_prefix("malloc"), NULL);
 	str[len] = '\0';
 	if (nb < 0)
 	{
