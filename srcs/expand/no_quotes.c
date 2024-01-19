@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 11:14:56 by panger            #+#    #+#             */
-/*   Updated: 2024/01/18 17:27:38 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/19 10:01:38 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,9 @@ char	*expand_var_noquotes(t_token *token, size_t *start,
 	ret = ft_strndup(token->value, *start);
 	if (!ret)
 		return (free(token->value), free(content), NULL);
+	*start = ft_strlen(ret) + ft_strlen(content) - 1;
 	if (loop_join(token, content, &ret, &(token->value)[stop + 1]) == 1)
 		return (free(token->value), free(content), NULL);
-	*start = ft_strlen(ret) - 1;
 	free(token->value);
 	return (ret);
 }
@@ -102,5 +102,6 @@ int	expand_word_var(t_token *token, char **src, size_t *i, char **env)
 			return (-1);
 	}
 	*src = s;
+	token->value = s;
 	return (0);
 }
