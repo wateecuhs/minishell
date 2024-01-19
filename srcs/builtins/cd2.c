@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:37:02 by panger            #+#    #+#             */
-/*   Updated: 2024/01/16 13:37:50 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/19 18:01:22 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,11 @@ int	is_line_to_pop(char *env_line, char *str)
 		return (0);
 	}
 	return (1);
+}
+
+void	write_error(void)
+{
+	write(2, "minishell: cd: Could not access the given path..", 48);
+	write(2, " Did you delete any parent directory ?", 38);
+	write(2, " Try 'cd ~' to go back HOME\n", 28);
 }

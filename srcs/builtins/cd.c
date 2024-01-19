@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:07:51 by panger            #+#    #+#             */
-/*   Updated: 2024/01/18 18:12:43 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/19 18:01:17 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,16 @@ int	add_to_env_cd(char *str, char ***env)
 	return (free(str), 0);
 }
 
+
 int	case_arg(char *path, char ***env)
 {
 	char	**pwd;
+	char	*tmp;
 
+	tmp = getcwd(NULL, 0);
+	if (!tmp)
+		return (write_error(), 1);
+	free(tmp);
 	if (chdir(path) == -1)
 		return (perror_prefix(path), 1);
 	if (pop_from_env(env, "OLDPWD") == -1)

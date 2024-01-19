@@ -1,2 +1,0 @@
-signaux
-heredoc qui peut crash si trop de chars	

@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 15:55:28 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/18 18:27:22 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/19 18:01:26 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 # define FATAL 128
 # define USAGE_ERROR 258
 
-typedef enum s_type
+typedef enum e_type
 {
 	WORD,
 	PIPE,
@@ -156,6 +156,7 @@ int			check_hd(t_redirs *redir);
 int			expand_heredoc(char **src, char **env);
 char		**sort_env(char **env);
 int			non_valid_identifier(char *str);
+void		write_error(void);
 
 //gnl
 char		*get_next_line(int fd);
