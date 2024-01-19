@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 13:49:30 by panger            #+#    #+#             */
-/*   Updated: 2024/01/18 18:40:34 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/19 18:45:20 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,9 @@ void	handle_error(char *cmd, int err, int *exit_code)
 	}
 	else
 	{
-		write(2, "minishell: ", 11);
+		write(2, "minishell: '", 12);
 		write(2, cmd, ft_strlen(cmd));
-		write(2, ": command not found\n", 20);
+		write(2, "': command not found\n", 21);
 		*exit_code = 127;
 	}
 	free(cmd);

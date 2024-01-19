@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:07:51 by panger            #+#    #+#             */
-/*   Updated: 2024/01/19 18:01:17 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/19 18:52:09 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ int	add_to_env_cd(char *str, char ***env)
 	*env = tmp;
 	return (free(str), 0);
 }
-
 
 int	case_arg(char *path, char ***env)
 {

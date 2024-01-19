@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 11:14:56 by panger            #+#    #+#             */
-/*   Updated: 2024/01/19 10:01:38 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/19 18:19:12 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,22 @@ int	has_spaces(char *str)
 	return (0);
 }
 
-void	make_next(t_token *token, char *value)
+int	make_next(t_token *token, char *value)
 {
 	t_token	*tmp;
+	char	*value_dup;
 
-	tmp = lst_new(WORD, ft_strdup(value));
+	value_dup = ft_strdup(value);
+	if (!value_dup)
+		return (-1);
+	tmp = lst_new(WORD, value_dup);
+	if (!tmp)
+		return (free(value_dup), -1);
 	tmp->next = token->next;
 	tmp->ignore = 1;
 	token->next = tmp;
 	token = token->next;
+	return (0);
 }
 
 int	loop_join(t_token *token, char *content, char **ret, char *endofstr)
@@ -59,8 +66,8 @@ int	loop_join(t_token *token, char *content, char **ret, char *endofstr)
 	}
 	while (tab[i])
 	{
-		make_next(token, tab[i]);
-		i++;
+		if (make_next(token, tab[i++]) == -1)
+			return (freetab(tab), 1);
 	}
 	freetab(tab);
 	return (0);

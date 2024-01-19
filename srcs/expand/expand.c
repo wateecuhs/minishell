@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 18:55:11 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/18 17:33:21 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/19 18:52:33 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,27 @@ char	*expand_word(t_token *token, char *s, char **env)
 	return (s);
 }
 
+void	empty_cmd(t_token *head, t_token *token)
+{
+	t_token	*tmp;
+
+	tmp = head;
+	while (tmp && tmp != token)
+		tmp = tmp->next;
+	if (!tmp)
+		return ;
+	tmp = tmp->prev;
+	while (tmp && tmp->type != PIPE)
+	{
+		if (tmp->type == WORD)
+			return ;
+		tmp = tmp->prev;
+	}
+	if (ft_strcmp(token->value, "\"\"") == 0
+		|| ft_strcmp(token->value, "''") == 0)
+		token->ignore = 1;
+}
+
 int	expand(t_token *head, char **env)
 {
 	t_token	*tmp;
@@ -59,6 +80,7 @@ int	expand(t_token *head, char **env)
 		}
 		else if (tmp->type == WORD && tmp->ignore == 0)
 		{
+			empty_cmd(head, tmp);
 			tmp->value = expand_word(tmp, tmp->value, env);
 			if (tmp->value == NULL)
 				return (-1);
