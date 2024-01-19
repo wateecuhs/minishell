@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 19:57:59 by dcindrak          #+#    #+#             */
-/*   Updated: 2024/01/18 12:35:18 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/19 12:19:58 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	sig_handler(int sig)
 	if (sig == SIGINT)
 	{
 		g_status_code = 130;
-		write(0, "\n", 1);
+		write(2, "\n", 1);
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
@@ -30,7 +30,7 @@ static void	sig_child_handler(int sig)
 	if (sig == SIGINT)
 	{
 		g_status_code = 130;
-		write(1, "\n", 1);
+		write(2, "\n", 1);
 		rl_replace_line("", 0);
 		rl_on_new_line();
 	}
@@ -46,7 +46,7 @@ static void	sig_heredoc_handler(int sig)
 	if (sig == SIGINT)
 	{
 		g_status_code = 130;
-		write(0, "\n", 1);
+		write(2, "\n", 1);
 		rl_replace_line("", 0);
 		rl_on_new_line();
 	}
