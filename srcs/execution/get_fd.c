@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 14:45:19 by panger            #+#    #+#             */
-/*   Updated: 2024/01/16 13:14:28 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/19 19:02:30 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	get_out(int *fd, t_redirs *redirs)
 		else if (redirs->type == REDIRECT_APPEND)
 			*fd = open(redirs->value, O_CREAT | O_WRONLY | O_APPEND, 0644);
 		if (*fd == -1)
-			return (perror(redirs->value), -1);
+			return (perror_prefix(redirs->value), -1);
 	}
 	return (0);
 }
@@ -43,7 +43,7 @@ int	get_in(int *fd, t_redirs *redirs)
 			close(*fd);
 		*fd = open(redirs->value, O_RDONLY);
 		if (*fd == -1)
-			return (perror(redirs->value), -1);
+			return (perror_prefix(redirs->value), -1);
 	}
 	if (redirs->type == HEREDOC)
 	{
