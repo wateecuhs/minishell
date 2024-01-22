@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 14:17:36 by panger            #+#    #+#             */
-/*   Updated: 2024/01/22 11:17:21 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/22 11:21:53 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,12 @@ int	get_heredoc(char *limiter, char **env, char **hd_data)
 	g_status_code = 0;
 	line = 0;
 	string = NULL;
-	printf("here\n");
 	while (1)
 	{
 		write(2, "> ", 2);
 		tmp = get_next_line(0);
-		if (ft_strcmp_hd(tmp, limiter) == 0 || tmp == NULL || g_status_code == 130)
+		if (ft_strcmp_hd(tmp, limiter) == 0 || tmp == NULL
+			|| g_status_code == 130)
 			break ;
 		expand_heredoc(&tmp, env);
 		string = ft_strjoin_free(string, tmp);
