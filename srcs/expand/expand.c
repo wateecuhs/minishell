@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 18:55:11 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/22 15:12:04 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/22 15:14:46 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,12 @@ int	expand(t_token *head, char **env)
 				return (-1);
 			tmp = tmp->next;
 		}
-		else if (tmp->type == WORD && tmp->ignore == 0)
+		else if (tmp->type == WORD && tmp->ignore == 0
+			&& empty_cmd(head, tmp) != 1)
 		{
-			if (empty_cmd(head, tmp) != 1)
-			{
-				tmp->value = expand_word(tmp, tmp->value, env);
-				if (tmp->value == NULL)
-					return (-1);
-			}
+			tmp->value = expand_word(tmp, tmp->value, env);
+			if (tmp->value == NULL)
+				return (-1);
 		}
 		if (tmp)
 			tmp = tmp->next;
