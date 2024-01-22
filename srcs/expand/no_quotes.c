@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 11:14:56 by panger            #+#    #+#             */
-/*   Updated: 2024/01/19 18:19:12 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/22 15:40:26 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	loop_join(t_token *token, char *content, char **ret, char *endofstr)
 	tab = ft_split(content, ' ');
 	if (!tab)
 		return (1);
-	if (content[0] != ' ')
+	if (content[0] != ' ' && content[0] != '\0')
 	{
 		*ret = ft_strjoin_free(*ret, tab[i++]);
 		if (has_spaces(content) == 0)
