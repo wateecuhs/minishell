@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 17:57:42 by panger            #+#    #+#             */
-/*   Updated: 2024/01/22 10:55:32 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/22 13:56:02 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,15 @@ t_redirs	*assign_redir(t_token *token, char **env)
 	ret->next = NULL;
 	ret->type = token->type;
 	if (ret->type == HEREDOC)
+	{
 		ret->heredoc_fd = get_heredoc(token->next->value, env, &(ret->value));
+		if (ret->heredoc_fd == -1)
+		{
+			if (ret->value)
+				free(ret->value);
+			return (free(ret), NULL);
+		}
+	}
 	else
 	{
 		ret->heredoc_fd = -1;
@@ -113,7 +121,7 @@ int	get_redirs(t_token *token, char **env, t_redirs **ret)
 		{
 			tmp = assign_redir(node, env);
 			if (!tmp)
-				return (-1);
+				return (free_redir(*ret), -1);
 			lst_addback_redirs(ret, tmp);
 			node = node->next;
 		}
