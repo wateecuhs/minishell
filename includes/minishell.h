@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 15:55:28 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/22 12:14:25 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/22 16:04:04 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int			is_hd(t_redirs *redirs);
 
 int			count_words_in_block(t_token *tokens);
 int			expand(t_token *head, char **env);
-int			expand_double_quotes(char **src, size_t *i, char **env);
+int			expand_double_quotes(char **src, size_t *i, char **env, t_token *token);
 int			get_var_name(char *s, size_t i);
 char		*parse_env(char **env, char *to_find);
 int			expand_single_quotes(char **src, size_t *i);

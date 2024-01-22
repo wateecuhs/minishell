@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 15:07:33 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/18 13:02:00 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/22 16:04:10 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	expand_dquotes_var(char **src, size_t *i, char **env)
 	return (0);
 }
 
-int	expand_double_quotes(char **src, size_t *i, char **env)
+int	expand_double_quotes(char **src, size_t *i, char **env, t_token *token)
 {
 	char	*s;
 
@@ -96,6 +96,7 @@ int	expand_double_quotes(char **src, size_t *i, char **env)
 	}
 	s = ft_offset(s, *i);
 	*src = s;
+	token->ignore = 1;
 	return (*i);
 }
 
