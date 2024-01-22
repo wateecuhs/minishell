@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 18:55:11 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/19 18:52:33 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/22 14:53:19 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*expand_word(t_token *token, char *s, char **env)
 	i = 0;
 	if (!s)
 		return (NULL);
-	while (s[i] && i < ft_strlen(s))
+	while (i < ft_strlen(s) && s[i])
 	{
 		if (s[i] == '\'')
 			expand_single_quotes(&s, &i);
