@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 15:55:28 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/22 11:22:10 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/22 12:14:25 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ char		**ft_split_s(char *s, char *c);
 void		freetab(char **tab);
 char		*has_heredoc(t_token *tokens);
 int			get_heredoc(char *limiter, char **env, char **hd_data);
+int			is_hd(t_redirs *redirs);
 
 int			count_words_in_block(t_token *tokens);
 int			expand(t_token *head, char **env);

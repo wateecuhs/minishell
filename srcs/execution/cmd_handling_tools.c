@@ -6,33 +6,11 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 13:21:33 by panger            #+#    #+#             */
-/*   Updated: 2024/01/22 11:17:09 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/22 12:13:41 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	check_fds(int fd[4], t_block *head, char ***env)
-{
-	if (fd[2 + IN] == -1 || fd[2 + OUT] == -1)
-		free_and_exit(head, *env, 1);
-}
-
-int	is_hd(t_redirs *redirs)
-{
-	int	redir;
-
-	redir = 0;
-	while (redirs)
-	{
-		if (redirs->type == HEREDOC)
-			redir = 1;
-		if (redirs->type == REDIRECT_IN)
-			redir = 0;
-		redirs = redirs->next;
-	}
-	return (redir);
-}
 
 t_redirs	*last_hd(t_redirs *redirs)
 {
@@ -50,10 +28,28 @@ t_redirs	*last_hd(t_redirs *redirs)
 	return (tmp);
 }
 
-int	handle_hd(t_redirs *hd, t_block *head, char **env)
+void	fork_child(t_redirs *hd, t_block *head, char **env, int p[2])
 {
 	int	i;
 	int	len;
+
+	i = 0;
+	close(p[READ]);
+	len = ft_strlen(hd->value);
+	while (i < len)
+	{
+		if ((len - i) / 512 == 0)
+			write(p[WRITE], &(hd->value)[i], (len - i) % 512);
+		else
+			write(p[WRITE], &(hd->value)[i], 512);
+		i += 512;
+	}
+	close(p[WRITE]);
+	free_and_exit(head, env, 0);
+}
+
+int	handle_hd(t_redirs *hd, t_block *head, char **env)
+{
 	int	p[2];
 	int	pid;
 
@@ -63,24 +59,10 @@ int	handle_hd(t_redirs *hd, t_block *head, char **env)
 	if (pid == -1)
 		return (perror_prefix("fork"), -1);
 	if (pid == 0)
-	{
-		i = 0;
-		close(p[READ]);
-		len = ft_strlen(hd->value);
-		while (i < len)
-		{
-			if ((len - i) / 512 == 0)
-				write(p[WRITE], &(hd->value)[i], (len - i) % 512);
-			else
-				write(p[WRITE], &(hd->value)[i], 512);
-			i += 512;
-		}
-		close(p[WRITE]);
-		free_and_exit(head, env, 0);
-	}
+		fork_child(hd, head, env, p);
 	close(p[WRITE]);
 	if (dup2(p[READ], STDIN_FILENO) == -1)
-			return (perror_prefix("Broken pipe"), -1);
+		return (perror_prefix("Broken pipe"), -1);
 	close(p[READ]);
 	return (0);
 }
@@ -92,10 +74,11 @@ int	dup_job(t_redirs *redirs, int fd[2], t_block *head, char **env)
 	if (is_hd(redirs) == 1)
 	{
 		tmp = last_hd(redirs);
-		handle_hd(tmp, head, env);
+		if (handle_hd(tmp, head, env) == -1)
+			return (-1);
 	}
 	else if (fd[IN] != 0)
-	{ 
+	{
 		if (dup2(fd[IN], STDIN_FILENO) == -1)
 			return (perror_prefix("Broken pipe"), -1);
 		close(fd[IN]);
