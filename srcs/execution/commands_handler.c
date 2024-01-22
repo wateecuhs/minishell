@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:29:27 by panger            #+#    #+#             */
-/*   Updated: 2024/01/18 18:34:03 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/22 10:42:05 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	command_exec(t_block *block, int fd[4], char ***env, t_block *head)
 		exit_code = exec_builtin(block, env, fd, head);
 		free_and_exit(head, *env, exit_code);
 	}
-	if (dup_job(&fd[2]) == -1)
+	if (dup_job(block->redirs, &fd[2], head, *env) == -1)
 		free_and_exit(head, *env, 9);
 	if (!(block->cmd))
 		free_and_exit(head, *env, 0);

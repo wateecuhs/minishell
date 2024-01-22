@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 17:57:42 by panger            #+#    #+#             */
-/*   Updated: 2024/01/19 18:47:50 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/22 10:55:32 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,15 @@ t_redirs	*assign_redir(t_token *token, char **env)
 		return (perror_prefix("malloc"), NULL);
 	ret->next = NULL;
 	ret->type = token->type;
-	ret->value = ft_strdup(token->next->value);
-	if (!(ret->value))
-		return (free(ret), NULL);
 	if (ret->type == HEREDOC)
-		ret->heredoc_fd = get_heredoc(token->next->value, env);
+		ret->heredoc_fd = get_heredoc(token->next->value, env, &(ret->value));
 	else
+	{
 		ret->heredoc_fd = -1;
+		ret->value = ft_strdup(token->next->value);
+		if (!(ret->value))
+			return (free(ret), NULL);
+	}
 	return (ret);
 }
 

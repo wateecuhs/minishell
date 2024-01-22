@@ -6,7 +6,7 @@
 /*   By: panger <panger@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 15:55:28 by waticouz          #+#    #+#             */
-/*   Updated: 2024/01/19 18:01:26 by panger           ###   ########.fr       */
+/*   Updated: 2024/01/22 10:41:33 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void		free_redir(t_redirs *redirs);
 char		**ft_split_s(char *s, char *c);
 void		freetab(char **tab);
 char		*has_heredoc(t_token *tokens);
-int			get_heredoc(char *limiter, char **env);
+int		get_heredoc(char *limiter, char **env, char **hd_data);
 
 int			count_words_in_block(t_token *tokens);
 int			expand(t_token *head, char **env);
@@ -138,7 +138,7 @@ char		*ft_strjoin(char *s1, char *s2);
 int			exec_builtin(t_block *blocks, char ***env,
 				int fds[4], t_block *head);
 int			expand_dquotes_var(char **src, size_t *i, char **env);
-int			dup_job(int fd[2]);
+int			dup_job(t_redirs *redirs, int fd[2], t_block *head, char **env);
 int			expand_word_var(t_token *token, char **src, size_t *i, char **env);
 void		free_env(char **env);
 void		free_single_block(t_block *blocks);
